@@ -1,0 +1,60 @@
+<%- include('../partials/header.ejs'); %>
+<div id="header">
+  <%- include('../partials/navbar.ejs'); %> 
+  <div id="products_search_container">
+    <!-- <input type="text" placeholder="Search products" id="search_products_input">
+    <i id="orders_back_btn" class="fas fa-arrow-left hidden"></i> -->
+    <!-- <i id="order_back_btn" class="fas fa-arrow-left hidden"></i> -->
+  </div>
+</div>
+<div id="main">
+  <div id="main_left">
+
+  </div>
+  <div id="main_center">
+    <input type="text" value="" placeholder="Search products" id="search_products_input">
+    <i id="orders_back_btn" class="fas fa-arrow-left hidden"></i>
+    <i id="order_info_back_btn" class="fas fa-arrow-left hidden"></i>
+  </div>
+  <div id="main_right">
+    
+  </div>
+  <div id="cart_btn_container">
+    <i id="cart_btn" class="fa-solid fa-shopping-basket"></i>
+  </div>
+  <div id="categories_btn_container">
+    <i id="categories_btn" class="fa-solid fa-fw fa-bars-progress"></i>
+    <p id="categories_btn_label">categories</p>
+  </div>
+  <div id="loading" class="is_loading"> 
+    <img id="loading_logo" src="/loading_logo.svg" alt="" width="229" height="156">
+  </div>
+  <div id="top_progress_bar">
+    <div id="top_progress"></div>
+  </div>
+</div>
+<div id="footer" class="hidden">
+  <p class="copyright">© 2022 Efood</p>
+</div>
+
+<%- include('../partials/rootClose.ejs'); %>
+
+<%- include('../partials/scripts.ejs'); %>
+
+<% if ( currentUser ) { %>
+
+<script>
+
+  window.user = {};
+  window.user.id = "<%- currentUser._id %>"
+  window.user.username = "<%- currentUser.username %>"
+  window.user.isLoggedIn = true;
+
+  const isLoggedIn = window.user.isLoggedIn;
+
+</script>
+
+<% } %>
+
+<script type="module" src="/scripts/controllers/shop.js"></script>
+<%- include('../partials/footer.ejs'); %>

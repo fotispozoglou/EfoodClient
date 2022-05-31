@@ -1,0 +1,19 @@
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const catchAsync = require('../utils/catchAsync.js');
+const users = require('../controllers/users.js');
+
+router.post('/generate/token', users.getAPIToken);
+
+router.route('/register')
+  .post(catchAsync(users.register));
+
+router.route('/login')
+  .post(passport.authenticate('local', { failureFlash: false, failureRedirect: '/shop' }), users.login);
+
+router.post('/admin/information', users.getUserInformation);
+
+router.get('/logout', users.logout)
+
+module.exports = router;

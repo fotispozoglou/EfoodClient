@@ -1,0 +1,53 @@
+#authentication_background {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  display: none;
+  top: 0;
+  background-color: rgba( 255, 255, 255, 0.9 );
+  z-index: 6000;
+}
+
+#authentication {
+  width: 44em;
+  margin: auto;
+  max-width: 90%;
+  margin-top: 20px;
+  flex-direction: column;
+}
+
+#authentication_back_btn:hover {
+  cursor: pointer;
+}
+
+#login_btn, #register_btn {
+  margin: 20px auto;
+}
+
+#login_form, #register_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.authentication_info_btn {
+  flex: none;
+  height: min-content !important;
+  border: none;
+  margin: 10px auto;
+  font-size: 0.95em;
+}
+
+#authentication_navigation_header {
+  display: flex;
+}
+
+#authentication_back_btn {
+  padding: 10px;
+  margin: 0px auto 0px 20px;
+}
+
+#authentication_login, #authentication_register {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

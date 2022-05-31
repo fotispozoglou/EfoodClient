@@ -1,0 +1,15 @@
+<div id="navbar">
+  <img id="header_logo" src="/logo.svg" alt="" width="129" height="56">
+  <% if ( currentUser ) { %>
+    <div id="orders_btn" class="navbar_icon_container">
+      <i class="fa-solid fa-bag-shopping navbar_icon"></i>
+    </div>
+    <div id="user_btn" class="navbar_icon_container">
+      <i class="fa-solid fa-fw fa-user navbar_icon"></i>
+    </div>
+  <% } else { %>
+    <div id="login_navigation_btn">
+      <i class="fa-solid fa-fw fa-arrow-right-to-bracket navbar_icon"></i>
+    </div>
+  <% } %>
+</div>

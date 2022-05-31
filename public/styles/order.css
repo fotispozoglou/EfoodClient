@@ -1,0 +1,280 @@
+.order_info {
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  width: 35em;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.order_info_body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.order_product {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 0.5px solid rgba(0,0,0,0.1);
+  padding: 4px;
+}
+
+.order_product_name, .order_product_price, .order_product_quantity {
+  padding: 10px;
+}
+
+.order_product_name {
+  flex: 1;
+  text-align: center;
+}
+
+.order_info_footer {
+  padding: 6px;
+  display: flex;
+}
+
+#complete_order_btn {
+  margin: auto;
+  transition: .25s opacity;
+}
+
+.order_cart_products {
+  flex: none;
+}
+
+.order_client_info_input {
+  width: auto;
+}
+
+.order_preview {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 20px;
+  background-color: #fbfbfb;
+  padding: 10px;
+  border: 2px solid #f2f2f2;
+  border-radius: 4px;
+  transition: .25s transform;
+}
+
+.order_preview:hover {
+  cursor: pointer;
+}
+
+.order_preview_date {
+  display: flex;
+  flex-direction: row;
+}
+
+.order_preview_date_text {
+  padding: 6px;
+}
+
+.order_preview_time {
+  display: flex;
+  flex-direction: row;
+}
+
+.order_preview_time_text {
+  padding: 6px;
+}
+
+.order_preview_price {
+  display: flex;
+  flex-direction: row;
+}
+
+.order_preview_price_text {
+  padding: 6px;
+}
+
+#orders {
+  flex: 1;
+  display: flex;
+  overflow: auto;
+}
+
+#orders .list {
+  max-width: 35em;
+  margin: 0 auto;
+}
+
+.order_preview_status {
+  padding: 4px 10px;
+  width: max-content;
+  border-radius: 20px;
+  margin-top: 5px;
+}
+
+.order_background {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 6000;
+  top: 0px;
+  background-color: var( --fixed-background );
+}
+
+.order {
+  width: 34em;
+  max-width: 90%;
+  max-height: 85%;
+  height: min-content;
+  margin: 20px auto auto auto;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(156, 147, 147, 0.32); /* 0 0 5px rgb(250, 162, 162); */
+  display: flex;
+  flex-direction: column;
+}
+
+.order_header {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.order_price_container {
+  display: flex;
+  flex-direction: column;
+  right: 5px;
+  position: absolute;
+}
+
+.order_total_price {
+  text-align: center;
+  padding: 2px;
+}
+
+.order_number, .total_price_label {
+  width: 100%;
+  text-align: center;
+  font-size: 0.8em;
+  color: grey;
+}
+
+.order_title {
+  width: 100%;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.order_title_container {
+  flex: 1;
+}
+
+.order_total_price {
+  height: min-content;
+  margin: auto;
+  padding: 4px 8px;
+}
+
+.order_back_btn {
+  left: 10px;
+  top: 10px;
+  position: absolute;
+}
+
+.order_back_btn:hover {
+  cursor: pointer;
+}
+
+.order_header_status {
+  margin: 10px;
+  border-radius: 4px;
+}
+
+.order_status_text {
+  font-size: 1.4em;
+  padding: 4px;
+  text-align: center;
+}
+
+.order_footer {
+  display: flex;
+  flex: 1;
+}
+
+.order_action {
+  margin: 10px;
+  flex: 1;
+}
+
+#orders {
+  display: none;
+}
+
+#orders_back_btn, #order_info_back_btn {
+  padding: 15px 12px 8px 15px;
+  margin-left: 10px;
+}
+
+#order_cart_container {
+  background-color: white;
+  border-radius: 6px;
+  margin: 10px;
+  padding: 20px 0 2px 0;
+  height: max-content;
+}
+
+#order_client_container {
+  background-color: white;
+  border-radius: 6px;
+  margin: 10px;
+  padding: 20px 8px;
+  height: max-content;
+}
+
+#order_cart_title, #order_client_title {
+  font-weight: bolder;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 2px;
+}
+ 
+/* Small screen devices (600px and above) */
+@media only screen and (min-width: 600px) {
+
+}
+ 
+/* Medium screen devices (768px and above) */
+@media only screen and (min-width: 768px) {
+
+}
+ 
+/* Big screen devices (889px and above) */
+@media only screen and (min-width: 889px) {
+
+}
+
+@media only screen and (min-width: 992px) {
+
+  .order_info_body {
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .order_info {
+    width: 100%;
+    margin: 0;
+  }
+
+  #order_cart_container {
+    width: 40%;
+    max-width: 35em;
+  }
+
+  #order_client_container {
+    width: 60%;
+    max-width: 35em;
+  }
+
+}
+ 
+/* Extra big screen devices (1200px and above) */
+@media only screen and (min-width: 1200px) {
+
+}
