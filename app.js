@@ -20,7 +20,7 @@ const MongoDBStore = require("connect-mongo");
 const { SERVER_IP } = require('./config/config.js');
 
 // MONGO STUFF 
-const dbUrl = 'mongodb://localhost:27017/efood'; // process.env.DB_URL
+const dbUrl =  process.env.DB_URL || 'mongodb://localhost:27017/efood'; // process.env.DB_URL
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -68,7 +68,7 @@ const sessionConfig = {
 }
 
 const corsOptions = {
-  origin: [`http://${ SERVER_IP }:8080`],
+  origin: [`https://efood-admin.herokuapp.com/`],
   optionsSuccessStatus: 200 
 }
 
@@ -94,7 +94,10 @@ app.use('/order', orderRoutes);
 app.use('/', usersRoutes);
 
 // LISTEN
-app.listen(8000, () => {
+
+const port = process.env.PORT;
+
+app.listen(port, () => {
 
   console.log("Client Server Started");
 
