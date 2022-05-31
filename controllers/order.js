@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { GENERAL, ORDER } = require('../config/statusCodes.js');
+const { API_URL } = require('../config/config.js');
 
 const jwt = require('jsonwebtoken');
 
@@ -32,7 +33,7 @@ module.exports.completeOrder = async ( req, res ) => {
     }
   };
 
-  await axios.post('http://127.0.0.1:3000/orders', { order: { products, client, user } }, config)
+  await axios.post(`${ API_URL }/orders`, { order: { products, client, user } }, config)
     .then(response => {
 
       if ( response.data.status === ORDER.HAS_PENDING_ORDER ) {
