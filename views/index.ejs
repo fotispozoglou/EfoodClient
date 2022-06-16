@@ -1,13 +1,116 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
+<%- include('./partials/header.ejs'); %>
+<style>
 
-  <a href="/shop">SHOP</a>
+  #navbar {
+    background: none;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  #root {
+    /* background-image: url(https://www.e-food.gr/cdn-cgi/image/w=360,h=440,f=auto,q=100/site-assets/img/bg/hero/home/Desktop/EF-afternoon-red.jpg); */
+    background-image: url(/back.png);
+    position: relative;
+    background-size: auto;
+    background-position: 50%;
+    background-repeat: no-repeat;
+  }
+
+  #main {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  body {
+    background-color: #EE4541;
+  }
+
+  #header {
+    position: static;
+  }
+
+  #authentication_background {
+    display: flex;
+  }
+
+  #login_navigation_btn {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translate(-50%, -50%);
+    padding: 4px;
+    background-color: #ee4541;
+    border-radius: 5px;
+  }
+
+  #login_navigation_btn i {
+    color: white;
+  }
+
+</style>
+<div id="header">
+  <div id="navbar">
+    <img id="header_logo" src="/logo_white.svg" alt="" width="129" height="56">
+    <% if ( !currentUser ) { %>
+      <div id="login_navigation_btn">
+        <i class="fa-solid fa-fw fa-arrow-right-to-bracket navbar_icon"></i>
+      </div>
+    <% } %>
+  </div>
+</div>
+<div id="main">
+  <div id="main_left">
+  </div>
+  <div id="main_center">
+    <a id="quick_order_submit" href="/shop">go to the shop</a>
+    <div id="menu_preview_container">
+      <div id="categories_preview">
+        <p id="categories_title">choose between <%= categories.length %> categories of products</p>
+        <div id="categories_preview_list">
+          <% for ( const category of categories ) { %>
+
+            <p class="product_category_preview_name"><%= category.name %></p>
   
-</body>
-</html>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <!-- <button id="quick_order_btn">Quick Order</button> -->
+    <div id="popular_products">
+      <p  id="popular_products_title">Popular Products</p>
+      <div id="popular_products_list">
+        <% for ( const product of products ) { %>
+
+          <p class="popular_product"><%= product.name %></p>
+  
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div id="main_right">
+  </div>
+</div>
+<div id="footer">
+  <p class="copyright">© 2022 Efood</p>
+</div>
+
+<%- include('./partials/rootClose.ejs'); %>
+
+<%- include('./partials/scripts.ejs'); %>
+
+<% if ( currentUser ) { %>
+
+<script>
+
+  window.user = {};
+  window.user.id = "<%- currentUser._id %>"
+  window.user.username = "<%- currentUser.username %>"
+  window.user.isLoggedIn = true;
+
+  const isLoggedIn = window.user.isLoggedIn;
+
+</script>
+
+<% } %>
+
+<script type="module" src="/scripts/controllers/index.js"></script>
+
+<%- include('./partials/footer.ejs'); %>

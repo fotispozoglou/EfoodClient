@@ -15,12 +15,14 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user.js');
 
+const mongoSanitize = require('express-mongo-sanitize');
+
 const MongoDBStore = require("connect-mongo");
 
 const { SERVER_IP } = require('./config/config.js');
 
 // MONGO STUFF 
-const dbUrl =  process.env.DB_URL || 'mongodb://localhost:27017/efood'; // process.env.DB_URL
+const dbUrl = 'mongodb://localhost:27017/efood'; // process.env.DB_URL
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -48,6 +50,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize());
 
 const secret = 'thisshouldbeabettersecret!'; // process.env.SECRET
 
@@ -95,7 +98,7 @@ app.use('/', usersRoutes);
 
 // LISTEN
 
-const port = process.env.PORT;
+const port = 8000;
 
 app.listen(port, () => {
 

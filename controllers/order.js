@@ -16,6 +16,8 @@ module.exports.completeOrder = async ( req, res ) => {
 
   const user = req.user;
 
+  console.log(req.user);
+
   if ( user === undefined || user === null ) {
 
     return res.send(JSON.stringify({ status: GENERAL.NOT_AUTHENTICATED }));
@@ -47,7 +49,7 @@ module.exports.completeOrder = async ( req, res ) => {
     })
     .catch(e => {  
 
-      console.log(e);
+      console.log(e.message);
 
       return res.send(JSON.stringify({ status: -100 }));
 

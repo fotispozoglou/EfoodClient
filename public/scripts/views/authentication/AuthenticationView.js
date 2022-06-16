@@ -75,7 +75,7 @@ export default new class AuthenticationView extends View {
 
     backBtn.addEventListener('click', () => {
 
-      this.hide();
+      this._element.classList.add('hidden');
 
     });
 

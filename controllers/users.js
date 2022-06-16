@@ -71,7 +71,15 @@ module.exports.getUserInformation = async ( req, res ) => {
 };
 
 module.exports.logout = (req, res) => {
-    req.logout();
+
+  req.logout(function(err) {
+    
+    if (err) { return next(err); }
+    
     res.clearCookie('api_token');
+      
     res.redirect('/shop');
+
+  });
+
 }
