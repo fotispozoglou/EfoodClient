@@ -1,39 +1,58 @@
+import { MESSAGE } from '../../config/types.js';
 import * as shopModel from '../../models/shop.js';
 import CartView from '../../views/cart/CartView.js';
+import { LONG } from '../../views/general/Notification.js';
 
 import ProductPreferences from '../../views/products/ProductPreferences.js';
 
 import * as orderController from '../order/order.js';
+import { controlRenderMessage } from '../shop.js';
 
 const controlRemoveCartProduct = async uuid => {
 
-  await shopModel.removeCartProduct( uuid );
+  const { data: removeData, error: removeError } = await shopModel.removeCartProduct( uuid );
 
-  const totalPrice = await shopModel.getCartProductsTotalPrice();
+  if ( removeError ) return controlRenderMessage("error removing product", MESSAGE.MESSAGE_ERROR, LONG);
+
+  const { data: { total }, error } = await shopModel.getCartProductsTotalPrice();
+
+  if ( error ) return controlRenderMessage("error calculating new total", MESSAGE.MESSAGE_ERROR, LONG);
 
   CartView.removeCartProduct( uuid );
 
-  CartView.updateTotalPrice( totalPrice.toFixed( 2 ) );
+  CartView.updateTotalPrice( total.toFixed( 2 ) );
 
 };
 
 const controlQuantityChange = async ( uuid, quantity ) => {
 
-  const updated = await shopModel.updateCartProductQuantity( uuid, quantity );
+  const { data, error } = await shopModel.updateCartProductQuantity( uuid, quantity );
+
+  if ( error ) { 
+    
+    controlRenderMessage("error updating quantity", MESSAGE.MESSAGE_ERROR, LONG);
+
+    return false;
+
+  }
 
   const totalPrice = await shopModel.getCartProductsTotalPrice();
 
   CartView.updateTotalPrice( totalPrice.toFixed( 2 ) );
 
+  return true;
+
 }
 
-const controlUpdateCartProduct = uuid => {
+const controlUpdateCartProduct = async uuid => {
 
-  const data = ProductPreferences.getViewData('all');
+  const productData = ProductPreferences.getViewData('all');
 
-  shopModel.updateCartProduct( uuid, data.tiers, data );
+  const { data, error } = await shopModel.updateCartProduct( uuid, productData.tiers, productData );
 
-  const { tiers, quantity, description } = data;
+  if ( error ) return controlRenderMessage("error updating product", MESSAGE.MESSAGE_ERROR, LONG);
+
+  const { tiers, quantity, description } = productData;
 
   CartView.updateCartProduct( uuid, quantity, description );
 
@@ -81,11 +100,32 @@ const controlRenderEditCartProduct = async uuid => {
 
 export const controlRenderCart = async () => {
 
-  const orderTotal = await shopModel.getCartProductsTotalPrice();
+  const { data, error } = await shopModel.getCartProductsTotalPrice();
+
+  if ( error ) {
+
+    shopModel.clearCart();  
+
+    CartView.render({
+      items: [],
+      orderTotal: 0,
+      itemMethods: {
+        onClick: uuid => { controlRenderEditCartProduct( uuid ); },
+        remove: uuid => { controlRemoveCartProduct( uuid ); },
+        quantityChange: ( uuid, quantity ) => { controlQuantityChange( uuid, quantity ) }
+      },
+      methods: {
+        onOrder: () => { orderController.controlRenderOrderInfo(); }
+      }
+    });
+    
+    return controlRenderMessage("error loading cart", MESSAGE.MESSAGE_ERROR, LONG);
+
+  }
 
   CartView.render({
     items: shopModel.state.cartProducts,
-    orderTotal,
+    orderTotal: data.total,
     itemMethods: {
       onClick: uuid => { controlRenderEditCartProduct( uuid ); },
       remove: uuid => { controlRemoveCartProduct( uuid ); },

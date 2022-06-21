@@ -187,10 +187,25 @@
   border-radius: 4px;
 }
 
+.order_header_status_error {
+  display: flex;
+  flex-direction: row;
+}
+
+.order_header_status_error_icon {
+  color: #d52d2d;
+}
+
+.order_header_status_error_text {
+  padding: 4px;
+}
+
 .order_status_text {
   font-size: 1.4em;
   padding: 4px;
   text-align: center;
+  background-color: rgb(255, 189, 86);
+  border-radius: 4px;
 }
 
 .order_footer {

@@ -370,7 +370,16 @@ input:focus, textarea:focus, select:focus{
 
 #orders_btn {
   margin: auto 20px auto auto;
+  position: relative;
   transition: .25s opacity;
+}
+
+#orders_error_icon {
+  color: red;
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  font-size: 0.8em;
 }
 
 #open_side_navbar {
@@ -735,7 +744,7 @@ textarea.input_field {
   opacity: 0.9;
   color: white;
   border-radius: 6px;
-  z-index: 100;
+  z-index: 100000;
 }
 
 .notification_icon_container {

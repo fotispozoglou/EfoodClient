@@ -9,6 +9,7 @@ export default class OrderPreview extends DOMElement {
   _orderID;
   _status;
   _methods;
+  _statusErrorContainer;
 
   constructor({ _id, time, totalPrice, orderID, status }, methods) {
     super("div");
@@ -17,20 +18,30 @@ export default class OrderPreview extends DOMElement {
     this._time = time;
     this._totalPrice = totalPrice;
     this._orderID = orderID;
-    this._status = status;
+    this._status = status.number;
     this._methods = methods;
 
   }
 
   getID() { return this._id }
 
+  showStatusError() {
+
+    this._statusErrorContainer.classList.remove('hidden');
+
+  }
+
+  hideStatusError() {
+
+    this._statusErrorContainer.classList.add('hidden');
+
+  }
+
   update( status ) {
 
-    console.log(status);
+    const { backgroundColor = '', color = '' } = statusColors.get( status.number );
 
-    const { backgroundColor = '', color = '' } = statusColors.get( status );
-
-    const { text = '' } = statusTexts.get( status );
+    const { text = '' } = statusTexts.get( status.number );
 
     this._statusElement.setText( text ).style(['backgroundColor', backgroundColor], ['color', color]);
 
@@ -83,7 +94,25 @@ export default class OrderPreview extends DOMElement {
 
     const totalPrice = new DOMElement("div").setClass('order_preview_price').append( totalPriceIcon, totalPriceText ).getElement();
 
-    this._element = new DOMElement("div").setClass('order_preview').on('click', () => { this._methods.onClick( this._id ) }).append( totalPrice, time, date, this._statusElement.getElement() ).getElement();
+    const statusErrorIcon = new DOMElement("i")
+      .setClass('fa-solid fa-triangle-exclamation order_header_status_error_icon')
+      .getElement();
+
+    const statusErrorText = new DOMElement("p")
+      .setClass('order_header_status_error_text')
+      .setText('order status may not be accurate')
+      .getElement();
+
+    this._statusErrorContainer = new DOMElement("div")
+      .setClass('order_header_status_error hidden')
+      .append( statusErrorIcon, statusErrorText )
+      .getElement();
+
+    this._element = new DOMElement("div")
+      .setClass('order_preview')
+      .on('click', () => { this._methods.onClick( this._id ) })
+      .append( totalPrice, time, date, this._statusElement.getElement(), this._statusErrorContainer )
+      .getElement();
 
     return this._element;
 

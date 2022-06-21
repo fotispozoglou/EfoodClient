@@ -8,8 +8,12 @@ const authBackground = document.querySelector("#authentication_background");
 
 authBackground.classList.add('hidden');
 
-openAuthenticationBtn.addEventListener('click', () => {
+if ( openAuthenticationBtn ) {
 
-  authBackground.classList.remove('hidden');
+  openAuthenticationBtn.addEventListener('click', () => {
 
-});
+    authBackground.classList.remove('hidden');
+  
+  });
+
+}

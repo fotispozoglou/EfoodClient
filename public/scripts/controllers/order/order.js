@@ -4,7 +4,7 @@ import * as orderModel from '../../models/order.js';
 
 import OrderView from "../../views/orders/OrderView.js";
 import { ORDER } from "../../config/statusCodes.js";
-import ViewManager, { menuRight, openOrdersBtn } from "../../views/ViewManager.js";
+import ViewManager, { menuRight, openOrdersBtn, ordersErrorIcon } from "../../views/ViewManager.js";
 
 import { renderOrder } from '../orders/orders.js';
 import ProductsView from "../../views/products/ProductsView.js";
@@ -15,8 +15,58 @@ import { LONG } from "../../views/general/Notification.js";
 
 import { MESSAGE } from '../../config/types.js';
 import statusColors from "../../config/colors.js";
+import { clearCart } from "../../models/shop.js";
+import { GENERAL } from "../../config/statusCodes.js";
 
-const controlOrderStatusChange = async ( status, orderID ) => {
+let hasOrderStatusError = false;
+
+const controlShowStatusError = async orderID => {
+
+  ordersErrorIcon.classList.remove('hidden');
+
+  OrdersView.showOrderStatusError( orderID );
+
+  if ( OrderView.isRendered() && OrderView.getOrderID() === orderID ) {
+
+    OrderView.showStatusError();
+
+  }
+
+};
+
+const controlHideStatusError = async orderID => {
+
+  ordersErrorIcon.classList.add('hidden');
+
+  OrdersView.hideOrderStatusError( orderID );
+
+  if ( OrderView.isRendered() && OrderView.getOrderID() === orderID ) {
+
+    OrderView.hideStatusError();
+
+  }
+
+};
+
+const controlOrderStatusChange = async ( response, orderID ) => {
+
+  const { status, error } = response;
+
+  if ( error ) {
+   
+    hasOrderStatusError = true;
+    
+    return controlShowStatusError( orderID );
+
+  }
+
+  if ( hasOrderStatusError ) {
+
+    controlHideStatusError( orderID );
+
+    hasOrderStatusError = false;
+
+  }
 
   OrderView.updateStatus( status );
 
@@ -24,16 +74,15 @@ const controlOrderStatusChange = async ( status, orderID ) => {
 
   if ( status != ORDER.STATUS_COMPLETED && status != ORDER.STATUS_CANCELED ) { 
 
-    const { backgroundColor } = statusColors.get( status );
+    const { backgroundColor } = statusColors.get( status.number );
 
-    openOrdersBtn.children[0].style.color = backgroundColor;
+    openOrdersBtn.style.color = backgroundColor;
 
   } else {
 
     const { backgroundColor } = statusColors.get( ORDER.NOTHING );
 
-    openOrdersBtn.children[0].style.color = backgroundColor;
-  
+    openOrdersBtn.style.color = backgroundColor;
 
   }
 
@@ -47,7 +96,7 @@ const controlOrderStatusChange = async ( status, orderID ) => {
 
 const controlStartCheckingOrderStatus = async orderID => {
 
-  orderModel.startCheckOrderInterval( orderID, status => { controlOrderStatusChange( status, orderID ); } );
+  orderModel.startCheckOrderInterval( orderID, response => { controlOrderStatusChange( response, orderID ); } );
 
 };
 
@@ -55,17 +104,23 @@ const controlCompleteOrder = async () => {
 
   const clientInfo = OrderInfo.getClientInfo();
 
-  await orderModel.loadCartProducts();
+  const { loaded, error: cartLoadError } = await orderModel.loadCartProducts();
 
-  const { status, orderID, order, error } = await orderModel.completeOrder( clientInfo );
+  if ( cartLoadError || !loaded ) {
+    
+    clearCart();
+    
+    return controlRenderMessage("error loading cart");
 
-  if ( status === ORDER.HAS_PENDING_ORDER || order.status === ORDER.STATUS_CANCELED ) {
+  }
 
-    return controlRenderMessage({ 
-      text: "You already have an active order",  
-      type: MESSAGE.MESSAGE_ERROR,
-      duration: LONG
-    });
+  const { orderStatus, status, orderID, order, error } = await orderModel.completeOrder( clientInfo );
+
+  if ( error ) return controlRenderMessage("error making order", MESSAGE.MESSAGE_ERROR);
+
+  if ( orderStatus === ORDER.HAS_PENDING_ORDER || order.status.number === ORDER.STATUS_CANCELED ) {
+
+    return controlRenderMessage("You already have an active order", MESSAGE.MESSAGE_ERROR);
 
   }
 
@@ -75,12 +130,12 @@ const controlCompleteOrder = async () => {
 
     OrderView.render({
       order,
-      stopCheckingStatus: () => { if ( order.status !== ORDER.STATUS_PENDING ) orderModel.stopCheckOrderInterval(); }
+      stopCheckingStatus: () => { if ( order.status.number !== ORDER.STATUS_PENDING ) orderModel.stopCheckOrderInterval(); }
     });
 
     renderOrder( order );
 
-    controlOrderStatusChange( order.status, orderID );
+    controlOrderStatusChange( { status: order.status }, orderID );
   
     controlStartCheckingOrderStatus( orderID ); 
 
@@ -90,14 +145,22 @@ const controlCompleteOrder = async () => {
 
 export const controlRenderOrderInfo = async () => {
 
-  const cartProducts = await getCartProducts();
+  const { data = [], error } = await getCartProducts();
+
+  if ( error ) {
+
+    clearCart();
+
+    return controlRenderMessage("error loading cart", MESSAGE.MESSAGE_ERROR);
+
+  }
 
   CartView.hide();
 
   menuRight.classList.add('hidden');
 
   OrderInfo.render({
-    cartProducts,
+    cartProducts: data.products,
     itemMethods: {
       completeOrder: controlCompleteOrder
     }

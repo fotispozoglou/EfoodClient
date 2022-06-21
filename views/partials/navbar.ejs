@@ -2,7 +2,8 @@
   <img id="header_logo" src="/logo.svg" alt="" width="129" height="56">
   <% if ( currentUser ) { %>
     <div id="orders_btn" class="navbar_icon_container">
-      <i class="fa-solid fa-bag-shopping navbar_icon"></i>
+      <i id="orders_error_icon" class="fa-solid fa-triangle-exclamation hidden"></i>
+      <i id="open_orders_btn" class="fa-solid fa-bag-shopping navbar_icon"></i>
     </div>
     <div id="user_btn" class="navbar_icon_container">
       <i class="fa-solid fa-fw fa-user navbar_icon"></i>

@@ -10,8 +10,13 @@ export const updateCartProduct = async ( uuid, data ) => {
   for ( const tier of tiers ) { for ( const selection of tier.selected ) { ingredients.push(`${ tier._id }.${ selection }`) } };
 
   return db.cart.update(uuid, { quantity, comments, ingredients, description }).then(function (updated) {
-    
-    return { description, quantity, status: updated };
+
+    return { data: { description, quantity, status: updated } };
+
+  })
+  .catch( error => {
+
+    return { error };
 
   });
 
@@ -19,24 +24,27 @@ export const updateCartProduct = async ( uuid, data ) => {
 
 export const getCartProductsTotalPrice = async (  ) => {
 
-  const totalPrice = await db.table("cart").toArray()
-      .then( result => {
+  return await db.table("cart").toArray()
+    .then( result => {
 
-        const values = result.map( p => p.quantity * p.price );
+      const values = result.map( p => p.quantity * p.price );
 
-        let total = 0;
+      let total = 0;
 
-        for ( const value of values ) {
+      for ( const value of values ) {
 
-          total += value;
+        total += value;
 
-        }
+      }
 
-        return total;
+      return { data: { total } };
 
-      });
-    
-  return totalPrice;
+    })
+    .catch( error => {
+
+      return { error };
+  
+    });
 
 };
 
@@ -44,7 +52,12 @@ export const updateProductQuantity = async ( cartID, value ) => {
 
   return db.cart.update(cartID, {quantity: value}).then( async function (updated) {
 
-    return updated;
+    return { data: { updated } };
+
+  })
+  .catch( error => {
+
+    return { error };
 
   });
 
@@ -58,15 +71,13 @@ export const removeCartProduct = async uuid => {
         .where("uuid").equals( uuid )
         .delete();
 
-    if ( deleteCount >= 1 ) return true;
+    if ( deleteCount >= 1 ) return { data: { removed: true } };
 
-    return false;
+    throw new Error("Can't remove product");
 
-  }).catch (e => {
+  }).catch (error => {
   
-    console.error (e);
-
-    return false;
+    return { error };
   
   });
 
@@ -78,15 +89,17 @@ export const addCartProduct = async data => {
 
   data.uuid = cartID;
 
-  return db.transaction('rw', db.cart, function () {
+  return db.transaction('rw', db.cart, async function () {
 
     db.cart.add( data, cartID );
 
-    return db.cart.get({ uuid: cartID }); 
+    const added = await db.cart.get({ uuid: cartID });
 
-  }).catch(function(err) {
+    return { data: { added } };
 
-    console.error(err.stack || err);
+  }).catch(function(error) {
+
+    return { error };
 
   });   
 
@@ -100,6 +113,14 @@ export const getCartProduct = async uuid => {
 
 export const getCartProducts = async () => {
 
-  return await db.table("cart").toArray().then(res => { return res; })
+  return await db.table("cart").toArray()
+    .then(products => { return { data: { products } }; })
+    .catch(error => { return { error } });
+
+};
+
+export const emptyCart = async () => {
+
+  return await db.table("cart").clear();
 
 };

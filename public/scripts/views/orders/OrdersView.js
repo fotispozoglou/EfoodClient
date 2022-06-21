@@ -6,7 +6,7 @@ import OrderPreview from './OrderPreview.js';
 import EmptyListItem from '../base/EmptyListItem.js';
 
 export const ordersBackBtn = document.querySelector("#orders_back_btn");
-const showOrdersBtn = document.querySelector("#orders_btn");
+const showOrdersBtn = document.querySelector("#open_orders_btn");
 
 export default new class OrdersView extends View {
   _parent = document.querySelector("#main_center");
@@ -34,6 +34,34 @@ export default new class OrdersView extends View {
 
   }
 
+  showOrderStatusError( orderID ) {
+
+    this._ordersList.customModify(function( element ) {
+
+      if ( element.getID() === orderID ) {
+
+        element.showStatusError();
+
+      }
+
+    });
+
+  }
+
+  hideOrderStatusError( orderID ) {
+
+    this._ordersList.customModify(function( element ) {
+
+      if ( element.getID() === orderID ) {
+
+        element.hideStatusError();
+
+      }
+
+    });
+
+  }
+
   _generateElement() {
 
     const { orders, onClick } = this._data;
@@ -46,7 +74,7 @@ export default new class OrdersView extends View {
 
   }
 
-  showElements() { showOrdersBtn.children[0].style.color= "#464646"; ordersBackBtn.classList.remove('hidden'); }
+  showElements() { showOrdersBtn.style.color= "#464646"; ordersBackBtn.classList.remove('hidden'); }
   hideElements() { ordersBackBtn.classList.add('hidden'); }
 
 }

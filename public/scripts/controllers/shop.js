@@ -11,13 +11,13 @@ import ProductsView from '../views/products/ProductsView.js';
 
 import { MESSAGE } from '../config/types.js';
 
-import { LONG } from '../views/general/Notification.js'
+import { DEFAULT_DURATION, LONG } from '../views/general/Notification.js'
 import ErrorView from '../views/ErrorView.js';
 import { GENERAL } from '../config/statusCodes.js';
 
-export const controlRenderMessage = message => {
+export const controlRenderMessage = ( message, type, duration = DEFAULT_DURATION ) => {
 
-  addNotification( message );
+  addNotification({ text: message, type, duration });
 
 };
 
@@ -76,7 +76,7 @@ const initializeItems = async () => {
 
   if ( perror ) return { error: perror };
 
-  const { status: cstatus, error: cerror } = await shopModel.loadCartProducts();
+  const { data: cdata, error: cerror } = await shopModel.loadCartProducts();
 
   if ( cerror ) return { error: cerror };
 
@@ -87,8 +87,6 @@ const initializeItems = async () => {
 const init = async () => {
 
   const { status, error } = await initializeItems();
-
-  console.log( error );
 
   if ( error ) {  hideLoader(); return ErrorView.render({ text: 'please try again in a moment' }); }
 

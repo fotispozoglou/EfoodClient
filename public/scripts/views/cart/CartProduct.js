@@ -59,9 +59,11 @@ export default class CartProduct extends DOMElement {
 
     this._quantityElement.onChange( quantityValue => { 
       
-      this._methods.quantityChange( this._uuid, quantityValue );
+      const updated = this._methods.quantityChange( this._uuid, quantityValue );
 
-      this._priceElement.setText( `${ (quantityValue * this._price).toFixed(2) }$` ); 
+      if ( updated ) return this._priceElement.setText( `${ (quantityValue * this._price).toFixed(2) }$` );
+
+      this._quantityElement.reverse();
 
     });
 

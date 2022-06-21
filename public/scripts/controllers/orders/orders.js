@@ -9,11 +9,60 @@ import { GENERAL, ORDER } from "../../config/statusCodes.js";
 import { controlRenderLogin } from '../authentication/authentication.js';
 import statusColors from "../../config/colors.js";
 
-import ViewManager, { openOrdersBtn } from "../../views/ViewManager.js";
+import ViewManager, { openOrdersBtn, ordersErrorIcon } from "../../views/ViewManager.js";
+import { controlRenderMessage } from "../shop.js";
+import { MESSAGE } from "../../config/types.js";
 
 let hasOrderNotification = false;
+let hasOrderStatusError = false;
 
-const controlOrderStatusChange = async ( status, orderID ) => {
+const controlShowStatusError = async orderID => {
+
+  ordersErrorIcon.classList.remove('hidden');
+
+  OrdersView.showOrderStatusError( orderID );
+
+  if ( OrderView.isRendered() && OrderView.getOrderID() === orderID ) {
+
+    OrderView.showStatusError();
+
+  }
+
+};
+
+const controlHideStatusError = async orderID => {
+
+  ordersErrorIcon.classList.add('hidden');
+
+  OrdersView.hideOrderStatusError( orderID );
+
+  if ( OrderView.isRendered() && OrderView.getOrderID() === orderID ) {
+
+    OrderView.hideStatusError();
+
+  }
+
+};
+
+const controlOrderStatusChange = async ( response, orderID ) => {
+
+  const { status, error } = response;
+
+  if ( error ) {
+   
+    hasOrderStatusError = true;
+    
+    return controlShowStatusError( orderID );
+
+  }
+
+  if ( hasOrderStatusError ) {
+
+    controlHideStatusError( orderID );
+
+    hasOrderStatusError = false;
+
+  }
 
   OrderView.updateStatus( status );
 
@@ -21,13 +70,13 @@ const controlOrderStatusChange = async ( status, orderID ) => {
 
   if ( status != ORDER.STATUS_COMPLETED && status != ORDER.STATUS_CANCELED ) { 
 
-    const { backgroundColor } = statusColors.get( status );
+    const { backgroundColor } = statusColors.get( status.number );
 
-    openOrdersBtn.children[0].style.color = backgroundColor;
+    openOrdersBtn.style.color = backgroundColor;
 
   } else {
 
-    let { backgroundColor } = statusColors.get( status );
+    let { backgroundColor } = statusColors.get( status.number );
 
     hasOrderNotification = true;
 
@@ -39,7 +88,7 @@ const controlOrderStatusChange = async ( status, orderID ) => {
 
     }
 
-    openOrdersBtn.children[0].style.color = backgroundColor;
+    openOrdersBtn.style.color = backgroundColor;
   
 
   }
@@ -70,29 +119,33 @@ const controlRemoveOrder = async orderID => {
 
 const controlRenderOrder = async orderID => {
 
-  const order = await ordersModel.loadOrder( orderID );
+  const { data, error } = await ordersModel.loadOrder( orderID );
+
+  if ( error ) return controlRenderMessage("error loading order", MESSAGE.MESSAGE_ERROR);
+
+  const { order } = data;
 
   if ( order.status === GENERAL.ERROR ) return;
 
   OrderView.render({
-    order: order.order,
+    order,
     stopCheckingStatus: stopCheckOrderInterval,
     removeOrder: controlRemoveOrder
   }); 
 
-  OrdersView.updateOrder( orderID, order.order.status );
+  OrdersView.updateOrder( orderID, order.status );
 
-  if ( order.order.status != ORDER.STATUS_COMPLETED && order.order.status != ORDER.STATUS_CANCELED ) { 
+  if ( order.status.number != ORDER.STATUS_COMPLETED && order.status.number != ORDER.STATUS_CANCELED ) { 
 
-    const { backgroundColor } = statusColors.get( order.order.status );
+    const { backgroundColor } = statusColors.get( order.status.number );
 
-    openOrdersBtn.children[0].style.color = backgroundColor;
+    openOrdersBtn.style.color = backgroundColor;
 
   }
 
-  if ( order.order.status !== ORDER.STATUS_COMPLETED && order.order.status !== ORDER.STATUS_CANCELED ) {
+  if ( order.status.number !== ORDER.STATUS_COMPLETED && order.status.number !== ORDER.STATUS_CANCELED ) {
 
-    controlStartCheckingOrderStatus( order.order._id );
+    controlStartCheckingOrderStatus( order._id );
 
   }
 
@@ -106,7 +159,20 @@ export const renderOrder = order => {
 
 export const controlRenderOrders = async () => {
 
-  const orders = await ordersModel.loadOrders();
+  const { data, error } = await ordersModel.loadOrders();
+
+  if ( error ) { 
+   
+    OrdersView.render({
+      orders: [],
+      onClick: controlRenderOrder
+    }); 
+
+    return controlRenderMessage("error loading orders", MESSAGE.MESSAGE_ERROR);
+
+  }
+
+  const { orders } = data;
 
   if ( orders.status === GENERAL.ERROR ) {
 
@@ -115,7 +181,7 @@ export const controlRenderOrders = async () => {
   }
 
   OrdersView.render({
-    orders: orders.orders,
+    orders,
     onClick: controlRenderOrder
   });  
 
@@ -123,7 +189,7 @@ export const controlRenderOrders = async () => {
 
     const {backgroundColor} = statusColors.get( ORDER.NOTHING );
 
-    openOrdersBtn.children[0].style.color = backgroundColor;
+    openOrdersBtn.style.color = backgroundColor;
 
     hasOrderNotification = false;
 
@@ -133,15 +199,17 @@ export const controlRenderOrders = async () => {
 
 export const checkUserHasActiveOrder = async () => {
 
-  const { data: { hasPendingOrders, orderID, orderStatus } } = await ordersModel.checkUserHasActiveOrder();
+  const { data, error } = await ordersModel.checkUserHasActiveOrder();
 
-  if ( hasPendingOrders ) {
+  if ( error ) return;
 
-    const { backgroundColor } = statusColors.get( orderStatus );
+  if ( data.hasPendingOrders ) {
 
-    openOrdersBtn.children[0].style.color = backgroundColor;
+    const { backgroundColor } = statusColors.get( data.orderStatus.number );
 
-    controlStartCheckingOrderStatus( orderID );
+    openOrdersBtn.style.color = backgroundColor;
+
+    controlStartCheckingOrderStatus( data.orderID );
 
   }
 

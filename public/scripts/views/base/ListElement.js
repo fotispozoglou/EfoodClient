@@ -111,10 +111,18 @@ export default class ListElement extends DOMElement {
 
       this._itemsIDS.push( item._id );
 
-      console.log(itemEL);
-
       if ( position === 'pre' ) this.prepend( itemEL.build() );
       else this.append( itemEL.build() );
+
+    }
+
+  }
+
+  customModify( callback ) {
+
+    for ( const element of this._itemsELS ) {
+
+      callback( element );
 
     }
 

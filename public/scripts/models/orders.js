@@ -20,19 +20,9 @@ export const removeOrder = async orderID => {
 
 };
 
-export const loadOrders = async handleError => {
+export const loadOrders = async () => {
 
-  const { data, error } = await GET(`${ API_SERVER_URL }/orders/all`);
-
-  if ( !error ) {
-
-    const { orders } = data;
-
-    return { orders, status: GENERAL.SUCCESS };
-
-  }
-
-  return { error };
+  return await GET(`${ API_SERVER_URL }/orders/all`);
 
 };
 
@@ -56,7 +46,7 @@ export const loadOrder = async orderID => {
 
     }
 
-    return { order, status: GENERAL.SUCCESS };
+    return { data: { order, status: GENERAL.SUCCESS } };
 
   }
 
@@ -65,8 +55,6 @@ export const loadOrder = async orderID => {
 };
 
 export const checkUserHasActiveOrder = async () => {
-
-  console.log("CHECKING");
 
   const { data, error } = await GET(`${ API_SERVER_URL }/orders/user/active`);
 

@@ -40,18 +40,18 @@ module.exports.completeOrder = async ( req, res ) => {
 
       if ( response.data.status === ORDER.HAS_PENDING_ORDER ) {
 
-        return res.send({ status: ORDER.HAS_PENDING_ORDER });
+        return res.send({ status: GENERAL.SUCCESS, orderStatus: ORDER.HAS_PENDING_ORDER });
 
       }
 
-      return res.send(JSON.stringify({ status: response.data.status, orderID: response.data.orderID, order: response.data.order }));
+      return res.send(JSON.stringify({ status: GENERAL.SUCCESS, orderStatus: response.data.status, orderID: response.data.orderID, order: response.data.order }));
 
     })
     .catch(e => {  
 
       console.log(e.message);
 
-      return res.send(JSON.stringify({ status: -100 }));
+      return res.send(JSON.stringify({ status: GENERAL.ERROR }));
 
     });
 

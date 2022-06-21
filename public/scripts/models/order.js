@@ -2,7 +2,7 @@ import * as productsDB from '../database/products.js';
 import { SERVER_URL, API_SERVER_URL } from '../config/config.js';
 
 import { GET, POST } from '../general/request.js';
-import { ORDER } from '../config/statusCodes.js';
+import { ORDER, GENERAL } from '../config/statusCodes.js';
 
 export const state = {
   cartProducts: [],
@@ -18,13 +18,13 @@ const checkOrderStatus = async ( orderID, responseCallback ) => {
 
   if ( !error ) {
 
-    return responseCallback( data.orderStatus );
+    return responseCallback({ status: data.orderStatus });
 
   }
 
-  stopCheckOrderInterval();
+  // stopCheckOrderInterval();
 
-  return { error };
+  return responseCallback({ error });
 
 };
 
@@ -54,11 +54,11 @@ export const completeOrder = async client => {
 
   const { data, error } = await POST(`${ SERVER_URL }/order`, { order });
 
-  if ( !error ) {
+  if ( !error && data.status === GENERAL.SUCCESS ) {
 
-    if ( data.status === ORDER.HAS_PENDING_ORDER || data.status === ORDER.STATUS_CANCELED ) {
+    if ( data.orderStatus === ORDER.HAS_PENDING_ORDER || data.orderStatus === ORDER.STATUS_CANCELED ) {
 
-      return { status: data.status };
+      return { orderStatus: data.orderStatus, status: data.status };
 
     }
 
@@ -80,13 +80,19 @@ export const completeOrder = async client => {
 
   }
 
-  return { error };
+  return data.status === GENERAL.ERROR ? { error: new Error("ERROR") } : { error };
 
 };
 
 export const loadCartProducts = async () => {
 
-  state.cartProducts = await productsDB.getCartProducts();
+  const { data, error } = await productsDB.getCartProducts();
+
+  if ( error ) return { error };
+
+  state.cartProducts = data.products;
+
+  return { loaded: true };
 
 };
 

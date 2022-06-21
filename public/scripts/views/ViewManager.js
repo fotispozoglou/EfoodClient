@@ -7,9 +7,11 @@ import AuthenticationView from './authentication/AuthenticationView.js';
 import CategoriesFilterView from "./products/CategoriesFilterView.js";
 
 export const openCartBtn = document.querySelector("#cart_btn_container");
-export const openOrdersBtn = document.querySelector("#orders_btn");
+export const openOrdersBtn = document.querySelector("#open_orders_btn");
+export const ordersErrorIcon = document.querySelector("#orders_error_icon");
 export const openAuthenticationBtn = document.querySelector("#login_navigation_btn");
 export const openCategoriesBtn = document.querySelector("#categories_btn_container");
+export const openOrdersContainer = document.querySelector("#orders_btn");
 
 export const menuRight = document.querySelector("#main_right");
 export const menuLeft = document.querySelector("#main_left");
@@ -117,7 +119,7 @@ export default new class ViewManager {
 
     }
 
-    openOrdersBtn.addEventListener('click', this._showOrders);
+    openOrdersContainer.addEventListener('click', this._showOrders);
 
     ordersBackBtn.addEventListener('click', this._showProducts);
 

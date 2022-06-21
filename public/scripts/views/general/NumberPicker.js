@@ -8,6 +8,7 @@ export default class NumberPicker extends DOMElement {
   _increaseBtn;
   _decreaseBtn;
   _numberElement;
+  _previousValue;
   _onChange = () => {};
 
   constructor( initialValue, maximumValue, minimumValue ) {
@@ -28,6 +29,8 @@ export default class NumberPicker extends DOMElement {
 
   setValue( value ) {
 
+    this._previousValue = this._value;
+
     this._value = value;
 
     this._updateText();
@@ -46,9 +49,17 @@ export default class NumberPicker extends DOMElement {
 
   }
 
+  reverse() {
+
+    this.setValue( this._previousValue );
+
+  }
+
   increase() {
 
     if ( this._value + 1 > this._maximumValue ) {
+
+      this._previousValue = this._value;
 
       this._value = this._initialValue;
 
@@ -57,6 +68,8 @@ export default class NumberPicker extends DOMElement {
       return this._updateText();
 
     }
+
+    this._previousValue = this._value;
 
     this._value += 1;
 
@@ -73,6 +86,8 @@ export default class NumberPicker extends DOMElement {
       return;
 
     }
+
+    this._previousValue = this._value;
 
     this._value -= 1;
 

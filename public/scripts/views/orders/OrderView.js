@@ -14,24 +14,44 @@ export default new class OrderVIew extends View {
   _statusText;
   _statusContainer;
   _isRendered = false;
+  _orderID = "";
+  _statusErrorContainer;
+
+  isRendered() { return this._isRendered; }
+
+  getOrderID() { return this._orderID; }
+
+  showStatusError() {
+
+    this._statusErrorContainer.classList.remove('hidden');
+
+  }
+
+  hideStatusError() {
+
+    this._statusErrorContainer.classList.add('hidden');
+
+  }
 
   updateStatus( status ) {
 
     if ( !this._isRendered ) return;
 
-    const { backgroundColor, color } = statusColors.get( status );
+    const { backgroundColor, color } = statusColors.get( status.number );
 
-    const { text } = statusTexts.get( status );
+    const { text } = statusTexts.get( status.number );
 
     this._statusText.setText( text ).style(['color', color]);
 
-    this._statusContainer.style(['backgroundColor', backgroundColor]);
+    this._statusText.style(['backgroundColor', backgroundColor]);
 
   }
 
   _generateElement() {
 
     const { _id, status, orderID, products, totalPrice } = this._data.order;
+
+    this._orderID = _id;
 
     const { stopCheckingStatus, removeOrder } = this._data;
 
@@ -51,13 +71,32 @@ export default new class OrderVIew extends View {
 
     const header = new DOMElement("div").setClass('order_header').append( backBtn, titleContainer, totalPriceContainer ).getElement();
 
-    const { backgroundColor, color } = statusColors.get( status );
+    const { backgroundColor, color } = statusColors.get( status.number );
 
-    const { text } = statusTexts.get( status );
+    const { text } = statusTexts.get( status.number );
 
-    this._statusText = new DOMElement("p").setClass('order_status_text').setText( text ).style(['color', color]);
+    this._statusText = new DOMElement("p")
+      .setClass('order_status_text')
+      .setText( text ).style(['color', color])
+      .style(['backgroundColor', backgroundColor]);
 
-    this._statusContainer = new DOMElement("div").setClass('order_header_status').style(['backgroundColor', backgroundColor]).append( this._statusText.getElement() );
+    const statusErrorIcon = new DOMElement("i")
+      .setClass('fa-solid fa-triangle-exclamation order_header_status_error_icon')
+      .getElement();
+
+    const statusErrorText = new DOMElement("p")
+      .setClass('order_header_status_error_text')
+      .setText('order status may not be accurate')
+      .getElement();
+
+    this._statusErrorContainer = new DOMElement("div")
+      .setClass('order_header_status_error hidden')
+      .append( statusErrorIcon, statusErrorText )
+      .getElement();
+    
+    this._statusContainer = new DOMElement("div")
+      .setClass('order_header_status')
+      .append( this._statusErrorContainer, this._statusText.getElement() );
 
     const productsList = new ListElement( products, OrderProduct, "", "", {} ).build();
 

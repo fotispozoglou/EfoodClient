@@ -66,9 +66,7 @@ export const addCartProduct = async ( product, productID, data ) => {
 
   mergedProduct.description = ingredientsNames.join(', ');
 
-  const addedProduct = await productsDB.addCartProduct( mergedProduct );
-
-  return addedProduct;
+  return await productsDB.addCartProduct( mergedProduct );
 
 };
 
@@ -90,9 +88,17 @@ export const loadCartProduct = async uuid => {
 
 export const loadCartProducts = async () => {
 
-  state.cartProducts = await productsDB.getCartProducts();
+  const { data, error } = await productsDB.getCartProducts();
 
-  return { status: GENERAL.SUCCESS };
+  if ( !error ) {
+
+    state.cartProducts = data.products;
+
+    return { data: { status: GENERAL.SUCCESS } };
+
+  }
+
+  return { error };
 
 };
 
@@ -139,5 +145,11 @@ export const loadProduct = async id => {
   }
 
   return { error, status: PRODUCTS.NOT_FOUND };
+
+};
+
+export const clearCart = async () => {
+
+  return await productsDB.emptyCart();
 
 };

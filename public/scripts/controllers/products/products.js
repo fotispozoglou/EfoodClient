@@ -15,15 +15,21 @@ import { PRODUCTS } from '../../config/statusCodes.js';
 
 const controlAddCartProduct = async ( product, productID ) => {
 
-  const data = ProductPreferences.getViewData('all');
+  const productData = ProductPreferences.getViewData('all');
 
-  const addedProduct = await shopModel.addCartProduct( product, productID, data );
+  const { data, error } = await shopModel.addCartProduct( product, productID, productData );
 
-  CartView.addCartProduct( addedProduct );
+  if ( error ) return controlRenderMessage("error adding product", MESSAGE.MESSAGE_ERROR, LONG);
 
-  const totalPrice = await shopModel.getCartProductsTotalPrice();
+  const { added } = data;
 
-  CartView.updateTotalPrice( totalPrice.toFixed( 2 ) );
+  CartView.addCartProduct( added );
+
+  const { data: totalData, error: totalError } = await shopModel.getCartProductsTotalPrice();
+
+  if ( totalError ) controlRenderMessage("order total may not be accurate", MESSAGE.MESSAGE_ERROR, LONG);
+
+  if ( !totalError ) CartView.updateTotalPrice( totalData.total.toFixed( 2 ) );
 
   ProductPreferences.onSuccess("Product Added Successfully");
 
@@ -41,9 +47,7 @@ const controlRenderAddCartProduct = async productID => {
 
     hideProgressBar();
 
-    const errorMessage = { text: "error loading product", type: MESSAGE.MESSAGE_ERROR, duration: LONG };
-
-    return controlRenderMessage( errorMessage );
+    return controlRenderMessage( "error loading product", MESSAGE.MESSAGE_ERROR, LONG );
 
   }
 
