@@ -88,7 +88,7 @@ const init = async () => {
 
   const { status, error } = await initializeItems();
 
-  if ( error ) {  hideLoader(); return ErrorView.render({ text: 'please try again in a moment' }); }
+  if ( error && navigator.onLine ) {  hideLoader(); return ErrorView.render({ text: 'please try again in a moment' }); }
 
   await renderViews();
 

@@ -1,3 +1,6 @@
+import { controlRenderProducts } from "../controllers/products/products.js";
+import ErrorView from "../views/ErrorView.js";
+
 const ensureAPIToken = async () => {
 
   const localCookie = getCookie('api_token');
@@ -41,7 +44,36 @@ const getCookie = name => {
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+let hasInternet = true;
+let hasInternetError = false;
+
+const handleNoConnection = () => {
+
+  hasInternetError = true;
+
+  ErrorView.render({ text: 'you are not connected' });
+
+};
+
+const handleHideError = () => {
+
+  ErrorView.hide();
+
+};
+
 const getRequestOptions = async ( method, body = {}) => {
+
+  if ( !navigator.onLine ) {
+
+    handleNoConnection();
+
+    return { error: Error("No Internet") };
+
+  };
+
+  if ( hasInternetError ) handleHideError();
+
+  hasInternetError = false;
 
   const { error = undefined } = await ensureAPIToken();
 
