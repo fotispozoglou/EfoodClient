@@ -1,6 +1,6 @@
 .order_info {
   flex: 1;
-  display: none;
+  display: flex;
   flex-direction: column;
   width: 35em;
   max-width: 100%;
@@ -45,6 +45,14 @@
 
 .order_client_info_input {
   width: auto;
+}
+
+#close_user_menu_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .order_preview {
@@ -98,6 +106,12 @@
 #orders .list {
   max-width: 35em;
   margin: 0 auto;
+  width: 100%;
+}
+
+.back_btn {
+  width: max-content;
+  margin: 20px auto 10px 5%;
 }
 
 .order_preview_status {
@@ -219,7 +233,8 @@
 }
 
 #orders {
-  display: none;
+  display: flex;
+  flex-direction: column;
 }
 
 #orders_back_btn, #order_info_back_btn {

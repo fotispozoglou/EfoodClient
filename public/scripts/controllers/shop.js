@@ -4,8 +4,9 @@ import * as productsController from './products/products.js';
 import * as cartController from './cart/cart.js';
 import * as authenticatationController from './authentication/authentication.js';
 import * as ordersController from './orders/orders.js';
+import * as userController from './user/user.js';
 
-import ViewManager from '../views/ViewManager.js';
+import ViewManager, { closeUserMenu, headerLogo, openAccountBtn, openCartBtn, openOrdersBtn, userMenu, userMenuBtn } from '../views/ViewManager.js';
 import { addNotification } from '../models/notifications.js';
 import ProductsView from '../views/products/ProductsView.js';
 
@@ -14,6 +15,10 @@ import { MESSAGE } from '../config/types.js';
 import { DEFAULT_DURATION, LONG } from '../views/general/Notification.js'
 import ErrorView from '../views/ErrorView.js';
 import { GENERAL } from '../config/statusCodes.js';
+import AccountView from '../views/user/AccountView.js';
+import AuthenticationView from '../views/authentication/AuthenticationView.js';
+import PrivacyView from '../views/user/PrivacyView.js';
+import SettingsView from '../views/user/SettingsView.js';
 
 export const controlRenderMessage = ( message, type, duration = DEFAULT_DURATION ) => {
 
@@ -39,33 +44,62 @@ const renderViews = async () => {
 
   hideLoader();
 
-  productsController.controlRenderProducts();
+  ViewManager.init( ProductsView, productsController.controlRenderProducts, {
+    items: shopModel.state.productsCategories,
+    itemMethods: {
+      onClick: productsController.controlRenderAddCartProduct
+    },
+    methods: {
+
+    }
+  });
+
+  // document.querySelector("#login_navigation_btn").addEventListener('click', () => {
+
+  //   ViewManager.render( AuthenticationView, () => {}, {}, false );
+
+  //   AuthenticationView.show();
+
+  // });
 
   productsController.controlRenderProductCategoriesFilter();
 
-  cartController.controlRenderCart();
+  openCartBtn.addEventListener('click', () => {
 
-  authenticatationController.controlRenderLogin();
+    cartController.controlRenderCart();
+
+  });
+
+  headerLogo.addEventListener('click', () => {
+
+    ViewManager.reset(ProductsView, productsController.controlRenderProducts, {
+      items: shopModel.state.productsCategories,
+      itemMethods: {
+        onClick: productsController.controlRenderAddCartProduct
+      },
+      methods: {
+  
+      }
+    });
+
+  });
+
+  // AuthenticationView.render({});
+
+  // AuthenticationView.show();
 
   document.querySelector("#footer").classList.remove('hidden');
-
-  if ( window.user && window.user.isLoggedIn ) {
-
-    await ordersController.controlRenderOrders();
-
-  }
 
 };
 
 const initializeListeners = () => {
-
-  ViewManager.init( ProductsView );
 
   const resizeOps = () => {
     document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
   };
 
   resizeOps();
+
   window.addEventListener("resize", resizeOps);
 
 };
@@ -97,6 +131,14 @@ const init = async () => {
   if ( window.user && window.user.isLoggedIn ) {
 
     ordersController.checkUserHasActiveOrder();
+
+    await userController.initUser();
+
+    openOrdersBtn.addEventListener('click', () => {
+
+      ordersController.controlRenderOrders();
+  
+    });
 
   }
 

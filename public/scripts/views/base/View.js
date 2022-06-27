@@ -34,7 +34,7 @@ export default class View {
 
   getType() { return this._type; }
 
-  getViewID() { return this._viewID }
+  getID() { return this._viewID }
 
   addDataElements( ...dataElements ) {  
 

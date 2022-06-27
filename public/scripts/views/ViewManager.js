@@ -1,10 +1,4 @@
-import View from "./base/View.js";
-import CartView from "./cart/CartView.js";
-import { orderInfoBackBtn } from "./orders/OrderInfoView.js";
-import OrdersView, { ordersBackBtn } from "./orders/OrdersView.js";
-import ProductsView, { searchProducts } from "./products/ProductsView.js";
-import AuthenticationView from './authentication/AuthenticationView.js';
-import CategoriesFilterView from "./products/CategoriesFilterView.js";
+import View, { MAIN } from "./base/View.js";
 
 export const openCartBtn = document.querySelector("#cart_btn_container");
 export const openOrdersBtn = document.querySelector("#open_orders_btn");
@@ -16,142 +10,92 @@ export const openOrdersContainer = document.querySelector("#orders_btn");
 export const menuRight = document.querySelector("#main_right");
 export const menuLeft = document.querySelector("#main_left");
 
+export const headerLogo = document.querySelector("#header_logo");
+
+export const userMenuBtn = document.querySelector("#user_btn");
+export const closeUserMenu = document.querySelector("#close_user_menu_container");
+export const userMenu = document.querySelector("#user_menu");
+export const openAccountBtn = document.querySelector("#user_menu_account");
+export const openPrivacyBtn = document.querySelector("#user_menu_privacy");
+export const openSettingsBtn = document.querySelector("#user_menu_settings");
+
+window.rViews = [];
+
 export default new class ViewManager {
-  _renderedView;
-  _previousRenderedView;
-  _navbarHeight;
-  _cart;
-  _showProducts = () => { 
-
-    menuRight.style.display = 'flex';
-    menuLeft.style.display = 'flex';
-
-    this.show( ProductsView, true ); 
+  _renderedViews = [  ];
+  _renderFunctions = [  ];
   
-  }
-  _showOrders = () => { 
+  init( view = View, renderFunction, data ) {
 
-    menuRight.style.display = 'none';
-    menuLeft.style.display = 'none';
-    
-    this.show( OrdersView, true ); 
-  
-  }
+    this._renderedViews = [ view ];
 
-  init( view = View ) {
+    this._renderFunctions = [ renderFunction ];
 
-    view.show();
-
-    this._renderedView = view;
-
-    this._previousRenderedView = view;
-
-    this._navbarHeight = document.querySelector("#navbar").getClientRects()[0].height;
-
-    this._cart = document.querySelector("#cart");
-
-    document.documentElement.style
-      .setProperty('--navbar-height', `${ this._navbarHeight + 20 }px`);
-
-    this.initializeListeners();
-
-    this.addResizeListener();
+    view.render( data );
 
   }
 
-  get selectedViewID() { return this._renderedView.getViewID(); }
+  reset( view = View, renderFunction, data ) {
 
-  show( view = View, hideCurrent = false ) {
+    if ( this._renderedViews.length > 1 ) {
 
-    if ( this._renderedView && hideCurrent ) { 
-      
-      this._renderedView.hide();
+      for ( let index = this._renderedViews.length - 1; index >= 1; index -= 1 ) {
 
-      this._renderedView.hideElements();
+        this._renderedViews[ index ].remove();
+
+        this._renderFunctions.splice( index, 1 );
+
+        this._renderedViews.splice( index, 1 );
+
+      }
 
     }
 
-    this._previousRenderedView = this._renderedView;
+    this._renderedViews = [ view ];
 
-    view.show();
+    this._renderFunctions = [ renderFunction ];
+
+    view.render( data );
+
+  }
+
+  renderPrevious() {
+
+    this._renderedViews[ this._renderedViews.length - 1 ].hideElements();
+
+    this._renderedViews[ this._renderedViews.length - 1 ].remove();
+
+    this._renderFunctions.splice( this._renderFunctions.length - 1, 1 );
+
+    this._renderedViews.splice( this._renderedViews.length - 1, 1 );
+
+    this._renderFunctions[ this._renderFunctions.length - 1 ]();
+
+  }
+
+  render( view = View, renderFunction, data, hideCurrent ) {
+
+    if ( view.getType() === MAIN ) {
+
+      this._renderedViews[ this._renderedViews.length - 1 ].hideElements();
+
+      if ( hideCurrent ) this._renderedViews[ this._renderedViews.length - 1 ].remove();
+
+      if ( view.getID() !== this._renderedViews[ this._renderedViews.length - 1 ].getID() ) {
+
+        this._renderedViews.push( view );
+        
+        this._renderFunctions.push( renderFunction );
+
+      }
+
+      console.log(this._renderedViews.map(e => e.id).join(','));
+
+    }
+
+    view.render( data );
 
     view.showElements();
-
-    this._renderedView = view;
-
-  }
-
-  showPrevious() {
-
-    this._renderedView.hide();
-
-    this._renderedView.hideElements();
-
-    this.show( this._previousRenderedView );
-
-  }
-
-  disableNavbarButtons() {
-
-    openOrdersBtn.removeEventListener( 'click', this._showOrders );
-
-    openOrdersBtn.style.opacity = '0.5';
-
-  }
-
-  enableNavbarButtons() {
-
-    openOrdersBtn.addEventListener( 'click', this._showOrders );
-
-    openOrdersBtn.style.opacity = '1';
-
-  }
-
-  initializeListeners() {
-
-    openCartBtn.addEventListener('click', () => { CartView.show(); });
-
-    openCategoriesBtn.addEventListener('click', () => { CategoriesFilterView.show(); });
-    
-    if ( openAuthenticationBtn && ( window.user === undefined || window.user.isLoggedIn === undefined ) ) { 
-      
-      return openAuthenticationBtn.addEventListener('click', () => { this.show( AuthenticationView, false ); });
-
-    }
-
-    openOrdersContainer.addEventListener('click', this._showOrders);
-
-    ordersBackBtn.addEventListener('click', this._showProducts);
-
-    orderInfoBackBtn.addEventListener('click', () => { 
-      
-      this.showPrevious(); 
-
-      menuRight.classList.remove('hidden');
-
-      this.enableNavbarButtons();
-    
-    });
-
-    searchProducts.value = "";
-
-    searchProducts.addEventListener('input', e => {
-
-      const { value } = searchProducts;
-
-      ProductsView.filter( value );
-
-    });
-
-  }
-
-  addResizeListener() {
-
-    window.addEventListener('resize', e => {
-
-
-
-    });
 
   }
 

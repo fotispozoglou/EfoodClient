@@ -12,6 +12,7 @@ import statusColors from "../../config/colors.js";
 import ViewManager, { openOrdersBtn, ordersErrorIcon } from "../../views/ViewManager.js";
 import { controlRenderMessage } from "../shop.js";
 import { MESSAGE } from "../../config/types.js";
+import { viewID } from "../../views/orders/OrderInfoView.js";
 
 let hasOrderNotification = false;
 let hasOrderStatusError = false;
@@ -162,11 +163,6 @@ export const controlRenderOrders = async () => {
   const { data, error } = await ordersModel.loadOrders();
 
   if ( error ) { 
-   
-    OrdersView.render({
-      orders: [],
-      onClick: controlRenderOrder
-    }); 
 
     return controlRenderMessage("error loading orders", MESSAGE.MESSAGE_ERROR);
 
@@ -180,10 +176,11 @@ export const controlRenderOrders = async () => {
 
   }
 
-  OrdersView.render({
+  ViewManager.render( OrdersView, controlRenderOrders, {
     orders,
-    onClick: controlRenderOrder
-  });  
+    onClick: controlRenderOrder,
+    renderPrevious: () => { ViewManager.renderPrevious(); }
+  }, true);
 
   if ( hasOrderNotification ) {
 

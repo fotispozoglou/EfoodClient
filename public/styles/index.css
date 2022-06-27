@@ -583,6 +583,18 @@ input:focus, textarea:focus, select:focus{
   background-color: white;
 }
 
+.radio_box {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  transition: .25s border;
+}
+
+.selected_radio_box {
+  border: 7px solid #c44b4b;
+}
+
 .fa-check-square {
   color: #c44b4b;
 }
@@ -882,11 +894,104 @@ textarea.input_field {
   cursor: not-allowed!important;
 }
 
+#user_btn {
+  position: relative;
+}
+
+#user_menu {
+  position: absolute;
+  background-color: #fff;
+  z-index: 10000;
+  right: 0;
+  box-shadow: 0 0 4px 1px #33333342;
+  margin-top: calc( 100% + 10px );
+}
+
+.user_menu_item {
+  display: flex;
+  flex-direction: row;
+  padding: 8px 10px 6px 5px;
+}
+
+.user_menu_item:hover {
+  cursor: pointer;
+  background-color: #3333330a;
+}
+
+.user_menu_item_text {
+  padding-left: 6px;
+}
+
 .copyright {
   width: 100%;
   text-align: center;
   padding: 10px;
   font-weight: bold;
+}
+
+#user_account {
+  display: flex;
+  flex-direction: column;
+}
+
+.switch_element {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  margin-left: 5%;
+  background-color: #4e4ef007;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.switch_circle_container {
+  width: calc( 2.4em );
+  height: 1em;
+  margin-left: 20px;
+  background-color: white;
+  border-radius: 12px;
+  display: flex;
+  font-size: 24px;
+}
+
+.switch_enable {
+  width: calc( 100% )!important;
+}
+
+.switch_element_title {
+  height: max-content;
+  margin: auto;
+  width: 100%;
+}
+
+.switch_circle {
+  width: 1em;
+  height: 1em;
+  margin: auto 0;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  background-color: blue;
+  transition: .25s width;
+}
+
+.switch_circle_color {
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 12px;
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 0.1em;
+  background-color: white;
+}
+
+.privacy_settings_title {
+  font-size: 1.2em;
+  font-weight: bolder;
+  margin: 0px 5%;
+  padding: 10px;
 }
 
 @media only screen and (min-width: 500px) {

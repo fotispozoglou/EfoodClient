@@ -7,6 +7,21 @@
     </div>
     <div id="user_btn" class="navbar_icon_container">
       <i class="fa-solid fa-fw fa-user navbar_icon"></i>
+      <div class="hidden" id="close_user_menu_container"></div>
+      <div class="hidden" id="user_menu">
+        <div id="user_menu_account" class="user_menu_item">
+          <div class="user_menu_icon fa-solid fa-fw fa-user"></div>
+          <p class="user_menu_item_text">account</p>
+        </div>
+        <div id="user_menu_privacy" class="user_menu_item">
+          <div class="user_menu_icon fa-solid fa-fw fa-shield-halved"></div>
+          <p class="user_menu_item_text">privacy</p>
+        </div>
+        <div id="user_menu_settings" class="user_menu_item">
+          <div class="user_menu_icon fa-solid fa-fw fa-gear"></div>
+          <p class="user_menu_item_text">settings</p>
+        </div>
+      </div>
     </div>
   <% } else { %>
     <div id="login_navigation_btn">

@@ -159,13 +159,11 @@ export const controlRenderOrderInfo = async () => {
 
   menuRight.classList.add('hidden');
 
-  OrderInfo.render({
+  ViewManager.render( OrderInfo, {
     cartProducts: data.products,
     itemMethods: {
       completeOrder: controlCompleteOrder
     }
-  });
-
-  ViewManager.show( OrderInfo, true );
+  }, true);
 
 };

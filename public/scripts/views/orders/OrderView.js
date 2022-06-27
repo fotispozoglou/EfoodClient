@@ -1,6 +1,6 @@
 import DOMElement from '../base/DOMElement.js';
 import ListElement from '../base/ListElement.js';
-import View from '../base/View.js';
+import View, { WINDOW } from '../base/View.js';
 
 import OrderProduct from './OrderProduct.js';
 
@@ -15,6 +15,7 @@ export default new class OrderVIew extends View {
   _statusContainer;
   _isRendered = false;
   _orderID = "";
+  _type = WINDOW;
   _statusErrorContainer;
 
   isRendered() { return this._isRendered; }

@@ -57,9 +57,9 @@ export default class CartProduct extends DOMElement {
 
     this._priceElement = new DOMElement("p").setText( `${ (this._quantity * this._price).toFixed(2) } €` ).setClass('cart_product_price');
 
-    this._quantityElement.onChange( quantityValue => { 
+    this._quantityElement.onChange( async quantityValue => { 
       
-      const updated = this._methods.quantityChange( this._uuid, quantityValue );
+      const updated = await this._methods.quantityChange( this._uuid, quantityValue );
 
       if ( updated ) return this._priceElement.setText( `${ (quantityValue * this._price).toFixed(2) }$` );
 

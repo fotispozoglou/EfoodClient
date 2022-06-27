@@ -19,6 +19,7 @@ export default new class CartView extends View {
   _canOrder;
   _hasRendered = false;
   _totalPriceText;
+  _type = WINDOW;
   _noItemsElement = new EmptyListItem({ _id: 1, name: 'Please fill the cart with products', icon: 'fa-solid fa-shopping-basket' }, {  }).build();
 
   removeCartProduct( uuid ) {
@@ -30,6 +31,8 @@ export default new class CartView extends View {
   }
 
   addCartProduct( product ) {
+
+    if ( !this._body ) return;
 
     this._body.add( 'pre', product );
 

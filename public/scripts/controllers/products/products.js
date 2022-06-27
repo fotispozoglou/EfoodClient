@@ -12,6 +12,7 @@ import { controlRenderMessage } from '../shop.js';
 import { LONG } from '../../views/general/Notification.js';
 
 import { PRODUCTS } from '../../config/statusCodes.js';
+import ViewManager from '../../views/ViewManager.js';
 
 const controlAddCartProduct = async ( product, productID ) => {
 
@@ -35,7 +36,7 @@ const controlAddCartProduct = async ( product, productID ) => {
 
 };
 
-const controlRenderAddCartProduct = async productID => {
+export const controlRenderAddCartProduct = async productID => {
 
   showProgressBar();
 
@@ -75,7 +76,7 @@ export const controlRenderProductCategoriesFilter = () => {
 
 export const controlRenderProducts = () => {
 
-  ProductsView.render({
+  ViewManager.render( ProductsView, controlRenderProducts, {
     items: shopModel.state.productsCategories,
     itemMethods: {
       onClick: controlRenderAddCartProduct
@@ -83,6 +84,6 @@ export const controlRenderProducts = () => {
     methods: {
 
     }
-  });
+  }, true);
 
 };

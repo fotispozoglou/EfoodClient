@@ -4,6 +4,7 @@ import CartView from '../../views/cart/CartView.js';
 import { LONG } from '../../views/general/Notification.js';
 
 import ProductPreferences from '../../views/products/ProductPreferences.js';
+import ViewManager from '../../views/ViewManager.js';
 
 import * as orderController from '../order/order.js';
 import { controlRenderMessage } from '../shop.js';
@@ -36,9 +37,11 @@ const controlQuantityChange = async ( uuid, quantity ) => {
 
   }
 
-  const totalPrice = await shopModel.getCartProductsTotalPrice();
+  const { data: totalPriceData, error: totalPriceError } = await shopModel.getCartProductsTotalPrice();
 
-  CartView.updateTotalPrice( totalPrice.toFixed( 2 ) );
+  if ( totalPriceError ) controlRenderMessage("order total may not be accurate", MESSAGE.MESSAGE_ERROR, LONG);
+
+  if ( !totalPriceError ) CartView.updateTotalPrice( totalPriceData.total.toFixed( 2 ) );
 
   return true;
 
@@ -105,35 +108,24 @@ export const controlRenderCart = async () => {
   if ( error ) {
 
     shopModel.clearCart();  
-
-    CartView.render({
-      items: [],
-      orderTotal: 0,
-      itemMethods: {
-        onClick: uuid => { controlRenderEditCartProduct( uuid ); },
-        remove: uuid => { controlRemoveCartProduct( uuid ); },
-        quantityChange: ( uuid, quantity ) => { controlQuantityChange( uuid, quantity ) }
-      },
-      methods: {
-        onOrder: () => { orderController.controlRenderOrderInfo(); }
-      }
-    });
     
     return controlRenderMessage("error loading cart", MESSAGE.MESSAGE_ERROR, LONG);
 
   }
 
-  CartView.render({
+  ViewManager.render( CartView, controlRenderCart, {
     items: shopModel.state.cartProducts,
     orderTotal: data.total,
     itemMethods: {
       onClick: uuid => { controlRenderEditCartProduct( uuid ); },
       remove: uuid => { controlRemoveCartProduct( uuid ); },
-      quantityChange: ( uuid, quantity ) => { controlQuantityChange( uuid, quantity ) }
+      quantityChange: ( uuid, quantity ) => { return controlQuantityChange( uuid, quantity ) }
     },
     methods: {
       onOrder: () => { orderController.controlRenderOrderInfo(); }
     }
-  });
+  }, false);
+
+  CartView.show();
 
 };

@@ -1,5 +1,6 @@
 import DOMElement from '../base/DOMElement.js';
 import EditItemView from '../base/EditItemView.js';
+import { WINDOW } from '../base/View.js';
 import NumberPicker from '../general/NumberPicker.js';
 
 import SelectionsElement from '../general/SelectionsElement.js';
@@ -17,6 +18,7 @@ const getSuccessfulElement = message => {
 export default new class ProductPreferences extends EditItemView {
   _parent = document.querySelector("#main");
   _priceElement;
+  _type = WINDOW;
 
   onSuccess( message ) {
 
@@ -72,7 +74,7 @@ export default new class ProductPreferences extends EditItemView {
 
     const title = new DOMElement("p").setClass('product_preferences_title').setText( name ).getElement();
 
-    this._priceElement = new DOMElement("p").setClass('product_preferences_price').setText(`${ price }€`).getElement();
+    this._priceElement = new DOMElement("p").setClass('product_preferences_price').setText(`${ price.toFixed(2) }€`).getElement();
 
     const productInfoContainer = new DOMElement("div").setClass('product_info_container').append( title, this._priceElement ).getElement();
 

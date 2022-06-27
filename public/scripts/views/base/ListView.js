@@ -89,15 +89,12 @@ export default class ListView extends View {
 
   }
 
-  remove( ...itemsIDS ) {
+  removeItems( ...itemsIDS ) {
 
     let foundAll = false;
     let totalFound = 0;
 
     let itemsIndex = 0;
-
-
-    console.log(itemsIDS);
 
     while ( !foundAll && itemsIndex < this._itemsElements.length ) {
 
