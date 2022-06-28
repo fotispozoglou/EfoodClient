@@ -1,3 +1,4 @@
+import { COMMENTS } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
 import EditItemView from '../base/EditItemView.js';
 import { WINDOW } from '../base/View.js';
@@ -99,7 +100,7 @@ export default new class ProductPreferences extends EditItemView {
 
     }
 
-    const commentsLabel = new DOMElement("label").setClass('comments_label').setText('comments').getElement();
+    const commentsLabel = new DOMElement("label").setClass('comments_label').setText( COMMENTS ).getElement();
 
     const commentsElements = new DOMElement("textarea")
       .attributes(['placeholder', 'special instructions'])

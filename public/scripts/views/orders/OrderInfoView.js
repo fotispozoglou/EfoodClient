@@ -3,6 +3,7 @@ import ListElement from "../base/ListElement.js";
 import DOMElement from "../base/DOMElement.js";
 import OrderProduct from "./OrderProduct.js";
 import OrderClientInfo from "./OrderClientInfo.js";
+import { COMPLETE_ORDER, ORDER_LABEL, PRODUCTS } from "../../config/strings.js";
 
 export const viewID = Math.floor( Math.random() * 100000 );
 
@@ -49,11 +50,11 @@ export default new class OrderInfoView extends View {
 
     const { cartProducts, itemMethods } = this._data;
 
-    const productsTitle = new DOMElement("p").setText('products').setID("order_cart_title").getElement();
+    const productsTitle = new DOMElement("p").setText( PRODUCTS ).setID("order_cart_title").getElement();
 
     const productsList = new ListElement( cartProducts, OrderProduct, "", "", itemMethods ).addClass('order_cart_products').build();
 
-    const clientTitle = new DOMElement("p").setText('order').setID("order_client_title").getElement();
+    const clientTitle = new DOMElement("p").setText( ORDER_LABEL ).setID("order_client_title").getElement();
 
     this._clientInfo = new OrderClientInfo({  }, {});
 
@@ -65,7 +66,7 @@ export default new class OrderInfoView extends View {
 
     this._completeOrderBtn = new DOMElement("button")
       .setID('complete_order_btn')
-      .setText('complete order')
+      .setText( COMPLETE_ORDER )
       .on('click', () => {
 
         if ( this._canOrder  ) {

@@ -33,6 +33,111 @@ export const SAVE = ['save', 'αποθήκευση'][ lang ];
 export const CHANGE_PASSWORD = ['change password', 'αλλαγή κωδικού'][ lang ];
 export const DELETE_ACCOUNT = ['delete account', 'διαγραφή λογαριασμού'][ lang ];
 
+export const COST = ['cost', 'κόστος'][ lang ];
+export const ORDER_ACTION = ['order', 'παράγγειλε'][ lang ];
+
+export const ADDRESS = ['address', 'διεύθηνση'][ lang ];
+export const FLOOR = ['floor', 'όροφος'][ lang ];
+export const COMMENTS = ['comments', 'σχόλια'][ lang ];
+export const COMMENTS_LABEL = [
+  'instructions for the delivery or anything...', 
+  'οδηγίες για το delivery ή οτιδήποτε άλλο'
+][ lang ];
+
+export const ORDER_LABEL = ['order', 'παραγγελία'][ lang ];
+export const COMPLETE_ORDER = ['complete order', 'ολοκλήρωση'][ lang ];
+export const ORDER_STATUS_NOT_ACCURATE = [
+  'order status may not be accurate',
+  'η κατάσταση της παραγγελείας μπορεί να μην είναι ακριβής'
+][ lang ];
+export const ORDER_NUMBER = ['order number', 'αριθμός παραγγελίας'][ lang ];
+
+export const PRODUCTS = ['products', 'προϊόντα'][ lang ];
+
+export const TOTAL_PRICE = ['total price', 'συνολική αξία'][ lang ];
+
+export const CATEGORIES = ['categories', 'κατηγωρίες'][ lang ];
+
+export const NO_PRODUCTS_FOUND = ['no products found', 'δεν βρέθηκαν προϊόντα'][ lang ];
+
+export const YOU_HAVE_NO_ORDERS = [
+  'you have no orders', 
+  'δεν έχετε παραγγελίες'
+][ lang ];
+
+export const FILL_CART_WITH_PRODUCTS = [
+  'Please fill the cart with products',
+  'Προσθέστε προϊόντα στο καλάθι'
+][ lang ];
+
+export const ADD = ['add', 'προσθήκη'][ lang ];
+export const UPDATE = ['update', 'ενημέρωση'][ lang ];
+
+export const ERROR_REMOVING_PRODUCT = [
+  'error removing product',
+  'πρόβλημα διαγραφής προϊόντος'
+][lang];
+
+export const ERROR_UPDATING_PRODUCT = [
+  'error updating product',
+  'πρόβλημα ενημέρωσης προϊόντος'
+][ lang ];
+
+export const ERROR_CALCULATING_TOTAL = [
+  'error calculating new total',
+  'πρόβλημα υπολογισμού συνολικού ποσού'
+][lang];
+
+export const ERROR_UPDATING_QUANTITY = [
+  'error updating quantity',
+  'πρόβλημα ενημέρωσης ποσότητας'
+][lang];
+
+export const ERROR_LOADING_CART = [
+  'error loading cart',
+  'πρόβλημα φόρτωσης καλαθιού'
+][lang];
+
+export const ERROR_ADDING_RPODUCT = [
+  'error adding product',
+  'πρόβλημα προσθήκης προϊόντος'
+][lang];
+
+export const ORDER_TOTAL_NOT_ACCURATE = [
+  'order total may not be accurate',
+  'το συνολικό ποσό μπορεί να μην είναι ακριβές'
+][lang];
+
+export const ERROR_LOADING_PRODUCT = [
+  'error loading product',
+  'πρόβλημα φόρτωσης προϊόντος'
+][lang];
+
+export const ERROR_MAKING_ORDER = [
+  'error making order',
+  'πρόβλημα δημηουργίας παραγγελίας'
+][lang];
+
+export const ALREADY_ACTIVE_ORDER = [
+  'you already have an active order',
+  'έχεις ήδη μια παραγγελία'
+][lang];
+
+export const ERROR_LOADING_ORDER = [
+  'error loading order',
+  'πρόβλημα φόρτωσης παραγγελίας'
+][lang];
+
+export const ERROR_LOADING_ORDERS = [
+  'error loading orders',
+  'πρόβλημα φόρτωσης παραγγελιών'
+][lang];
+
+export const ERROR_SAVING_NEW_INFO = [
+  'error saving new information',
+  'πρόβλημα αποθήκευσης καινούργιων ρυθμήσεων'
+][lang];
+
 const statusTexts = new Map();
 
 statusTexts.set( ORDER.STATUS_PENDING, { text: STATUS_PENDING } );

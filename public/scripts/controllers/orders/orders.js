@@ -13,6 +13,7 @@ import ViewManager, { openOrdersBtn, ordersErrorIcon } from "../../views/ViewMan
 import { controlRenderMessage } from "../shop.js";
 import { MESSAGE } from "../../config/types.js";
 import { viewID } from "../../views/orders/OrderInfoView.js";
+import { ERROR_LOADING_ORDERS } from "../../config/strings.js";
 
 let hasOrderNotification = false;
 let hasOrderStatusError = false;
@@ -122,7 +123,7 @@ const controlRenderOrder = async orderID => {
 
   const { data, error } = await ordersModel.loadOrder( orderID );
 
-  if ( error ) return controlRenderMessage("error loading order", MESSAGE.MESSAGE_ERROR);
+  if ( error ) return controlRenderMessage( ERROR_LOADING_ORDER , MESSAGE.MESSAGE_ERROR);
 
   const { order } = data;
 
@@ -164,7 +165,7 @@ export const controlRenderOrders = async () => {
 
   if ( error ) { 
 
-    return controlRenderMessage("error loading orders", MESSAGE.MESSAGE_ERROR);
+    return controlRenderMessage( ERROR_LOADING_ORDERS , MESSAGE.MESSAGE_ERROR);
 
   }
 

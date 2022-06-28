@@ -1,3 +1,4 @@
+import { NO_PRODUCTS_FOUND } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
 import ListView from '../base/ListView.js';
 import { openCategoriesBtn } from '../ViewManager.js';
@@ -9,7 +10,7 @@ const cartBtn = document.querySelector("#cart_btn_container");
 export default new class ProductsView extends ListView {
   _parent = document.querySelector("#main_center");
   _rerender = false;
-  _noSearchText = "no products found";
+  _noSearchText = NO_PRODUCTS_FOUND;
   id = "products";
 
   filter( value ) {

@@ -1,3 +1,4 @@
+import { ERROR_CALCULATING_TOTAL, ERROR_LOADING_CART, ERROR_REMOVING_PRODUCT, ERROR_UPDATING_PRODUCT, ERROR_UPDATING_QUANTITY, ORDER_TOTAL_NOT_ACCURATE, UPDATE } from '../../config/strings.js';
 import { MESSAGE } from '../../config/types.js';
 import * as shopModel from '../../models/shop.js';
 import CartView from '../../views/cart/CartView.js';
@@ -13,11 +14,11 @@ const controlRemoveCartProduct = async uuid => {
 
   const { data: removeData, error: removeError } = await shopModel.removeCartProduct( uuid );
 
-  if ( removeError ) return controlRenderMessage("error removing product", MESSAGE.MESSAGE_ERROR, LONG);
+  if ( removeError ) return controlRenderMessage( ERROR_REMOVING_PRODUCT , MESSAGE.MESSAGE_ERROR, LONG);
 
   const { data: { total }, error } = await shopModel.getCartProductsTotalPrice();
 
-  if ( error ) return controlRenderMessage("error calculating new total", MESSAGE.MESSAGE_ERROR, LONG);
+  if ( error ) return controlRenderMessage( ERROR_CALCULATING_TOTAL , MESSAGE.MESSAGE_ERROR, LONG);
 
   CartView.removeCartProduct( uuid );
 
@@ -31,7 +32,7 @@ const controlQuantityChange = async ( uuid, quantity ) => {
 
   if ( error ) { 
     
-    controlRenderMessage("error updating quantity", MESSAGE.MESSAGE_ERROR, LONG);
+    controlRenderMessage( ERROR_UPDATING_QUANTITY , MESSAGE.MESSAGE_ERROR, LONG);
 
     return false;
 
@@ -39,7 +40,7 @@ const controlQuantityChange = async ( uuid, quantity ) => {
 
   const { data: totalPriceData, error: totalPriceError } = await shopModel.getCartProductsTotalPrice();
 
-  if ( totalPriceError ) controlRenderMessage("order total may not be accurate", MESSAGE.MESSAGE_ERROR, LONG);
+  if ( totalPriceError ) controlRenderMessage( ORDER_TOTAL_NOT_ACCURATE , MESSAGE.MESSAGE_ERROR, LONG);
 
   if ( !totalPriceError ) CartView.updateTotalPrice( totalPriceData.total.toFixed( 2 ) );
 
@@ -53,7 +54,7 @@ const controlUpdateCartProduct = async uuid => {
 
   const { data, error } = await shopModel.updateCartProduct( uuid, productData.tiers, productData );
 
-  if ( error ) return controlRenderMessage("error updating product", MESSAGE.MESSAGE_ERROR, LONG);
+  if ( error ) return controlRenderMessage( ERROR_UPDATING_PRODUCT , MESSAGE.MESSAGE_ERROR, LONG);
 
   const { tiers, quantity, description } = productData;
 
@@ -95,7 +96,7 @@ const controlRenderEditCartProduct = async uuid => {
 
   ProductPreferences.render({
     item:  product,
-    actions: [ { name: 'update', exec: () => { controlUpdateCartProduct( uuid ); } } ],
+    actions: [ { name: UPDATE, exec: () => { controlUpdateCartProduct( uuid ); } } ],
     methods: {}
   })
 
@@ -109,7 +110,7 @@ export const controlRenderCart = async () => {
 
     shopModel.clearCart();  
     
-    return controlRenderMessage("error loading cart", MESSAGE.MESSAGE_ERROR, LONG);
+    return controlRenderMessage( ERROR_LOADING_CART , MESSAGE.MESSAGE_ERROR, LONG);
 
   }
 

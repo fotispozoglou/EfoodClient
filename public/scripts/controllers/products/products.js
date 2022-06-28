@@ -13,6 +13,7 @@ import { LONG } from '../../views/general/Notification.js';
 
 import { PRODUCTS } from '../../config/statusCodes.js';
 import ViewManager from '../../views/ViewManager.js';
+import { ADD, ERROR_LOADING_PRODUCT, ORDER_TOTAL_NOT_ACCURATE } from '../../config/strings.js';
 
 const controlAddCartProduct = async ( product, productID ) => {
 
@@ -28,7 +29,7 @@ const controlAddCartProduct = async ( product, productID ) => {
 
   const { data: totalData, error: totalError } = await shopModel.getCartProductsTotalPrice();
 
-  if ( totalError ) controlRenderMessage("order total may not be accurate", MESSAGE.MESSAGE_ERROR, LONG);
+  if ( totalError ) controlRenderMessage( ORDER_TOTAL_NOT_ACCURATE , MESSAGE.MESSAGE_ERROR, LONG);
 
   if ( !totalError ) CartView.updateTotalPrice( totalData.total.toFixed( 2 ) );
 
@@ -48,7 +49,7 @@ export const controlRenderAddCartProduct = async productID => {
 
     hideProgressBar();
 
-    return controlRenderMessage( "error loading product", MESSAGE.MESSAGE_ERROR, LONG );
+    return controlRenderMessage( ERROR_LOADING_PRODUCT, MESSAGE.MESSAGE_ERROR, LONG );
 
   }
 
@@ -59,7 +60,7 @@ export const controlRenderAddCartProduct = async productID => {
   ProductPreferences.render({
     item: product,
     methods: {},
-    actions: [ { name: 'add', exec: () => { controlAddCartProduct( product, productID ); } } ]
+    actions: [ { name: ADD, exec: () => { controlAddCartProduct( product, productID ); } } ]
   });
 
   hideProgressBar();

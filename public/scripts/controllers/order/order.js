@@ -17,6 +17,7 @@ import { MESSAGE } from '../../config/types.js';
 import statusColors from "../../config/colors.js";
 import { clearCart } from "../../models/shop.js";
 import { GENERAL } from "../../config/statusCodes.js";
+import { ALREADY_ACTIVE_ORDER, ERROR_LOADING_CART, ERROR_MAKING_ORDER } from "../../config/strings.js";
 
 let hasOrderStatusError = false;
 
@@ -110,17 +111,17 @@ const controlCompleteOrder = async () => {
     
     clearCart();
     
-    return controlRenderMessage("error loading cart");
+    return controlRenderMessage( ERROR_LOADING_CART, MESSAGE.MESSAGE_ERROR );
 
   }
 
   const { orderStatus, status, orderID, order, error } = await orderModel.completeOrder( clientInfo );
 
-  if ( error ) return controlRenderMessage("error making order", MESSAGE.MESSAGE_ERROR);
+  if ( error ) return controlRenderMessage( ERROR_MAKING_ORDER , MESSAGE.MESSAGE_ERROR);
 
   if ( orderStatus === ORDER.HAS_PENDING_ORDER || order.status.number === ORDER.STATUS_CANCELED ) {
 
-    return controlRenderMessage("You already have an active order", MESSAGE.MESSAGE_ERROR);
+    return controlRenderMessage( ALREADY_ACTIVE_ORDER , MESSAGE.MESSAGE_ERROR);
 
   }
 
@@ -151,7 +152,7 @@ export const controlRenderOrderInfo = async () => {
 
     clearCart();
 
-    return controlRenderMessage("error loading cart", MESSAGE.MESSAGE_ERROR);
+    return controlRenderMessage( ERROR_LOADING_CART , MESSAGE.MESSAGE_ERROR);
 
   }
 

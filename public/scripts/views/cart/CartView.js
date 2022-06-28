@@ -4,6 +4,7 @@ import ListElement from '../base/ListElement.js';
 import DOMElement from '../base/DOMElement.js';
 import EmptyListItem from '../base/EmptyListItem.js';
 import ViewManager from '../ViewManager.js';
+import { COST, FILL_CART_WITH_PRODUCTS, ORDER_ACTION } from '../../config/strings.js';
 
 export const cartBackBtn = new DOMElement("i")
   .setID("cart_back_btn")
@@ -20,7 +21,7 @@ export default new class CartView extends View {
   _hasRendered = false;
   _totalPriceText;
   _type = WINDOW;
-  _noItemsElement = new EmptyListItem({ _id: 1, name: 'Please fill the cart with products', icon: 'fa-solid fa-shopping-basket' }, {  }).build();
+  _noItemsElement = new EmptyListItem({ _id: 1, name: FILL_CART_WITH_PRODUCTS, icon: 'fa-solid fa-shopping-basket' }, {  }).build();
 
   removeCartProduct( uuid ) {
 
@@ -88,6 +89,8 @@ export default new class CartView extends View {
 
   updateTotalPrice( total ) {
 
+    if ( !this._totalPriceText ) return;
+
     this._totalPriceText.textContent = `${ total } €`;
 
   }
@@ -108,13 +111,13 @@ export default new class CartView extends View {
 
     this._body.setNoItemsItem( this._noItemsElement );
 
-    const totalPriceLabel = new DOMElement("p").setText('Cost').setClass('total_order_price_label').getElement();
+    const totalPriceLabel = new DOMElement("p").setText( COST ).setClass('total_order_price_label').getElement();
 
     this._totalPriceText = new DOMElement("p").setText( `${ orderTotal.toFixed( 2 ) } €` ).setClass('total_order_price_text').getElement();
 
     const totalPriceContainer = new DOMElement("div").setClass('total_order_price_container').append( totalPriceLabel, this._totalPriceText ).getElement();
 
-    this._orderBtn = new DOMElement("button").setClass('order_btn').setText('order').on('click', () => { this._data.methods.onOrder() }).getElement();
+    this._orderBtn = new DOMElement("button").setClass('order_btn').setText( ORDER_ACTION ).on('click', () => { this._data.methods.onOrder() }).getElement();
 
     if ( items.length <= 0 ) this.setCanOrder( false ); 
 

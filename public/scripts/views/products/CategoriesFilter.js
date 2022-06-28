@@ -2,6 +2,8 @@ import DOMElement from "../base/DOMElement.js";
 import ListElement from "../base/ListElement.js";
 import FilterElement from "./FilterElement.js";
 
+import { CATEGORIES } from '../../config/strings.js';
+ 
 export default class CategoriesFilter extends DOMElement {
   _categories;
   _categoriesList;
@@ -16,7 +18,7 @@ export default class CategoriesFilter extends DOMElement {
 
   build() {
 
-    const title = new DOMElement("p").setClass('categories_filter_list_title').setText('Categories').getElement();
+    const title = new DOMElement("p").setClass('categories_filter_list_title').setText( CATEGORIES ).getElement();
 
     const categories = new ListElement( this._categories, FilterElement, "Categories", "", {} ).addClass('categories_filter_list').build();
 

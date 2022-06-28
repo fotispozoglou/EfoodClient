@@ -1,5 +1,5 @@
 import DOMElement from "../base/DOMElement.js";
-import statusTexts from '../../config/strings.js';
+import statusTexts, { ORDER_STATUS_NOT_ACCURATE } from '../../config/strings.js';
 import statusColors from '../../config/colors.js';
 
 export default class OrderPreview extends DOMElement {
@@ -100,7 +100,7 @@ export default class OrderPreview extends DOMElement {
 
     const statusErrorText = new DOMElement("p")
       .setClass('order_header_status_error_text')
-      .setText('order status may not be accurate')
+      .setText( ORDER_STATUS_NOT_ACCURATE )
       .getElement();
 
     this._statusErrorContainer = new DOMElement("div")

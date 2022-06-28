@@ -4,6 +4,7 @@ import ListElement from '../base/ListElement.js';
 import OrderPreview from './OrderPreview.js';
 
 import EmptyListItem from '../base/EmptyListItem.js';
+import { YOU_HAVE_NO_ORDERS } from '../../config/strings.js';
 
 export let ordersBackBtn;
 const showOrdersBtn = document.querySelector("#open_orders_btn");
@@ -16,7 +17,7 @@ export default new class OrdersView extends View {
   _onHide;
   _type = MAIN;
   _ordersBackBtn;
-  _noItemsItem = new EmptyListItem({ _id: 1, name: 'You have no orders', icon: 'fa-solid fa-boxes' }, {  }).build();
+  _noItemsItem = new EmptyListItem({ _id: 1, name: YOU_HAVE_NO_ORDERS, icon: 'fa-solid fa-boxes' }, {  }).build();
 
   addOrder( order ) {
 

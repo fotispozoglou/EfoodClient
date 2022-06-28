@@ -80,7 +80,7 @@ export const completeOrder = async client => {
 
   }
 
-  return data.status === GENERAL.ERROR ? { error: new Error("ERROR") } : { error };
+  return data && data.status === GENERAL.ERROR ? { error: new Error("ERROR") } : { error };
 
 };
 

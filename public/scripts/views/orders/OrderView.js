@@ -5,7 +5,7 @@ import View, { WINDOW } from '../base/View.js';
 import OrderProduct from './OrderProduct.js';
 
 import statusColors from '../../config/colors.js';
-import statusTexts from '../../config/strings.js';
+import statusTexts, { ORDER_NUMBER, TOTAL_PRICE } from '../../config/strings.js';
 
 import { ORDER } from '../../config/statusCodes.js';
 
@@ -58,13 +58,13 @@ export default new class OrderVIew extends View {
 
     const backBtn = new DOMElement("i").setClass('fas fa-arrow-left order_back_btn').on('click', () => { stopCheckingStatus(); this.remove() }).getElement();
 
-    const titleLabel = new DOMElement("p").setClass('order_number').setText('order number').getElement();
+    const titleLabel = new DOMElement("p").setClass('order_number').setText( ORDER_NUMBER ).getElement();
 
     const title = new DOMElement("p").setClass('order_title').setText( orderID ).getElement();
 
     const titleContainer = new DOMElement("div").setClass('order_title_container').append( titleLabel, title ).getElement();
 
-    const totalPriceLabel = new DOMElement("p").setClass('total_price_label').setText('total price').getElement();
+    const totalPriceLabel = new DOMElement("p").setClass('total_price_label').setText( TOTAL_PRICE ).getElement();
 
     const totalPriceText = new DOMElement("p").setClass('order_total_price').setText(`${ totalPrice }€`).getElement();
 

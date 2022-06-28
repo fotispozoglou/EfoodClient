@@ -7,6 +7,7 @@ import { addNotification } from "../../models/notifications.js";
 import { controlRenderMessage } from "../shop.js";
 import { MESSAGE } from "../../config/types.js";
 import { LONG } from "../../views/general/Notification.js";
+import { ERROR_SAVING_NEW_INFO } from "../../config/strings.js";
 
 const controlRenderUserSettings = () => {
 
@@ -37,7 +38,7 @@ const controlSaveUserInfo = async info => {
 
   const { data, error } = await userModel.saveUserInfo( info );
 
-  if ( error ) return controlRenderMessage("error saving new information", MESSAGE.MESSAGE_ERROR, LONG);
+  if ( error ) return controlRenderMessage( ERROR_SAVING_NEW_INFO , MESSAGE.MESSAGE_ERROR, LONG);
 
   controlRenderMessage("new information saved", MESSAGE.MESSAGE_SUCCESS, LONG);
 
