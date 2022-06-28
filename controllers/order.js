@@ -16,7 +16,9 @@ module.exports.completeOrder = async ( req, res ) => {
 
   const user = req.user;
 
-  console.log(req.user);
+  if ( user.preferences.privateName ) user.name = 'private';
+
+  if ( user.preferences.privatePhone ) user.phone = 'private';
 
   if ( user === undefined || user === null ) {
 

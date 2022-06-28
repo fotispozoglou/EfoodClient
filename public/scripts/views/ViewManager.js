@@ -57,6 +57,8 @@ export default new class ViewManager {
 
     view.render( data );
 
+    view.showElements();
+
   }
 
   renderPrevious() {

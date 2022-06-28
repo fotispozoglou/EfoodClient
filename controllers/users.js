@@ -1,6 +1,8 @@
 const User = require('../models/user');
 var jwt = require('jsonwebtoken');
 
+const { GENERAL } = require('../config/statusCodes.js');
+
 const COOKIE_EXPIRE_SECONDS = 22 * ( 24 * 3600 );
 const COOKIE_EXPIRE_MILLI = 22 * ( 24 * 3600 * 1000 );
 
@@ -17,7 +19,15 @@ const generateAPIToken = async user => {
 module.exports.register = async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const user = new User({ username });
+    const user = new User({ 
+      username, 
+      name: '',
+      phone: '',
+      preferences: { 
+        privateName: true, 
+        privatePhone: true 
+      } 
+    });
     const registeredUser = await User.register(user, password);
     req.login(registeredUser, async err => {
     
@@ -70,7 +80,7 @@ module.exports.getUserInformation = async ( req, res ) => {
 
 };
 
-module.exports.logout = (req, res) => {
+module.exports.logout = ( req, res ) => {
 
   req.logout(function(err) {
     
@@ -83,3 +93,51 @@ module.exports.logout = (req, res) => {
   });
 
 }
+
+module.exports.getUserInfo = async ( req, res ) => {
+
+  const { username, name, phone } = req.user;
+
+  res.send(JSON.stringify({ status: GENERAL.SUCCESS, username, name, phone }));
+
+};
+
+module.exports.saveUserInfo = async ( req, res ) => {
+
+  const { info } = req.body;
+
+  const userID = req.user._id;
+
+  await User.updateOne({ _id: userID }, { $set: { name: info.name, phone: info.phone, username: info.username } })
+
+  res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+
+};
+
+module.exports.getPrivacySettings = async ( req, res ) => {
+
+  const user = await User.findById( req.user._id );
+
+  res.send(JSON.stringify({ status: GENERAL.SUCCESS, preferences: user.preferences }));
+
+};
+
+module.exports.updatePrivacySettings = async ( req, res ) => {
+
+  const { preference } = req.body;
+
+  const userID = req.user._id; 
+
+  if ( preference.name === "visible_name" ) {
+
+    await User.updateOne({ _id: userID }, { 'preferences.privateName': preference.value })
+
+  } else if ( preference.name === "visible_phone" ) {
+
+    await User.updateOne({ _id: userID }, { 'preferences.privatePhone': preference.value });
+
+  }
+
+  res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+
+};

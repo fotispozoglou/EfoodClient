@@ -1,14 +1,18 @@
 import DOMElement from "../../base/DOMElement.js";
 
 export default class SwitchInput extends DOMElement {
+  _name;
   _title;
   _value;
+  _onSwitch;
 
-  constructor( title, value ) {
+  constructor( name, title, value, onSwitch ) {
     super("div");
 
+    this._name = name;
     this._title = title;
     this._value = value;
+    this._onSwitch = onSwitch;
 
   }
 
@@ -32,6 +36,8 @@ export default class SwitchInput extends DOMElement {
 
     this.append( title, switchCircleContainer );
 
+    if ( this._value ) switchCircle.classList.add('switch_enable');
+
     this.on('click', () => {
 
       if ( this._value ) {
@@ -45,6 +51,8 @@ export default class SwitchInput extends DOMElement {
       }
 
       this._value = !this._value;
+
+      this._onSwitch( this._name, this._value );
 
     });
 

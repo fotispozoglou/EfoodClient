@@ -45,10 +45,6 @@ export default new class OrderInfoView extends View {
 
   hide() { this.remove(); delete this; }
 
-  showElements() { orderInfoBackBtn.classList.remove('hidden'); }
-
-  hideElements() { orderInfoBackBtn.classList.add('hidden'); }
-
   _generateElement() {
 
     const { cartProducts, itemMethods } = this._data;

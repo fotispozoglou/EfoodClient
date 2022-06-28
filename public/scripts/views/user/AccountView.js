@@ -1,3 +1,4 @@
+import { ACCOUNT, CHANGE_PASSWORD, DELETE_ACCOUNT, NAME, PHONE, SAVE, SURNAME, USERNAME } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
 import View, { MAIN, WINDOW } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
@@ -11,7 +12,9 @@ export default new class AccountView extends View {
 
   _generateElement() {
 
-    const { goBack } = this._data.methods;
+    const { username, name, phone } = this._data.info;
+
+    const { goBack, saveUserInfo } = this._data.methods;
 
     const backBtn = new DOMElement("div")
       .setClass('fa-solid fa-arrow-left back_btn')
@@ -19,34 +22,40 @@ export default new class AccountView extends View {
       .getElement();
 
     const title = new DOMElement("p")
-      .setText('account')
+      .setText( ACCOUNT )
       .setClass('privacy_settings_title')
       .getElement();
 
-    const username = new InputElement( "username", "fotis", () => {}, false );
+    const usernameElement = new InputElement( USERNAME, username, () => {}, true );
 
-    const name = new InputElement( "name", "Φώτης", () => {}, false );
+    const nameElement = new InputElement( NAME, name, () => {}, true );
 
-    const surname = new InputElement( "surname", "Πόζογλου", () => {}, false );
-
-    const phone = new InputElement( "phone number", "6936475438", () => {}, false );
+    const phoneElement = new InputElement( PHONE, phone, () => {}, true );
 
     const saveBtn = new DOMElement("button")
-      .setText('save')
+      .setText( SAVE )
       .on('click', () => { 
-        console.log( username.getValue() ); 
+        
+        const info = {
+          username: usernameElement.getValue(),
+          name: nameElement.getValue(),
+          phone: phoneElement.getValue()
+        };
+
+        saveUserInfo( info );
+
       })
       .getElement();
 
     const changePasswordBtn = new DOMElement("button")
-      .setText('change password')
+      .setText( CHANGE_PASSWORD )
       .on('click', () => { 
         console.log( username.getValue() ); 
       })
       .getElement();
 
     const deleteAccountBtn = new DOMElement("button")
-      .setText('delete account')
+      .setText( DELETE_ACCOUNT )
       .on('click', () => { 
         console.log( username.getValue() ); 
       })
@@ -55,11 +64,10 @@ export default new class AccountView extends View {
     return new DOMElement("div").append( 
       backBtn, 
       title, 
-      username.getElement(), 
-      name.getElement(),
-      surname.getElement(),
-      phone.getElement(),
-      saveBtn ,
+      usernameElement.getElement(), 
+      nameElement.getElement(),
+      phoneElement.getElement(),
+      saveBtn,
       changePasswordBtn,
       deleteAccountBtn
     ).getElement();

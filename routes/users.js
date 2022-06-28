@@ -12,6 +12,14 @@ router.route('/register')
 router.route('/login')
   .post(passport.authenticate('local', { failureFlash: false, failureRedirect: '/shop' }), users.login);
 
+router.route('/info')
+  .get( catchAsync( users.getUserInfo ) )
+  .put( catchAsync( users.saveUserInfo ) );
+
+router.route('/preferences')
+  .get( catchAsync( users.getPrivacySettings ) )
+  .put( catchAsync( users.updatePrivacySettings ) );
+
 router.post('/admin/information', users.getUserInformation);
 
 router.get('/logout', users.logout)
