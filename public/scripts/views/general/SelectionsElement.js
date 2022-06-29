@@ -23,13 +23,13 @@ export default class SelectionsElement extends DOMElement {
     this._id = id;
 
     this._selections = selections;
-    this._selected = selected;
+    this._selected = this._type === "radio" ? selected[ 0 ] : selected;
     this._maximumSelections = maximumSelections;
     this._onSelect = onSelect;
 
   }
 
-  getSelected() { return this._selected; }
+  getSelected() { return this._type === "radio" ? [ this._selected ] : this._selected; }
 
   updateSelections( ...newSelections ) {
 

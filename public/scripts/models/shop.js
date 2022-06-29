@@ -54,17 +54,23 @@ export const addCartProduct = async ( product, productID, data ) => {
 
   const ingredientsNames = [];
 
-  for ( const tier of product.tiers ) {
+  for ( const tier of data.tiers ) {
 
     for ( const ingredient of tier.ingredients ) {
 
-      if ( tier.selectedIngredients.includes( ingredient._id ) ) ingredientsNames.push( ingredient.name );
+      if ( tier.selected.includes( ingredient._id ) ) { 
+        
+        ingredientsNames.push( ingredient.name );
+
+      }
 
     }
 
   }
 
   mergedProduct.description = ingredientsNames.join(', ');
+
+  state.cartProducts.push( mergedProduct );
 
   return await productsDB.addCartProduct( mergedProduct );
 

@@ -114,18 +114,22 @@ export const controlRenderCart = async () => {
 
   }
 
-  ViewManager.render( CartView, controlRenderCart, {
-    items: shopModel.state.cartProducts,
-    orderTotal: data.total,
-    itemMethods: {
-      onClick: uuid => { controlRenderEditCartProduct( uuid ); },
-      remove: uuid => { controlRemoveCartProduct( uuid ); },
-      quantityChange: ( uuid, quantity ) => { return controlQuantityChange( uuid, quantity ) }
-    },
-    methods: {
-      onOrder: () => { orderController.controlRenderOrderInfo(); }
-    }
-  }, false);
+  if ( !CartView._rerender ) {
+
+    ViewManager.render( CartView, controlRenderCart, {
+      items: shopModel.state.cartProducts,
+      orderTotal: data.total,
+      itemMethods: {
+        onClick: uuid => { controlRenderEditCartProduct( uuid ); },
+        remove: uuid => { controlRemoveCartProduct( uuid ); },
+        quantityChange: ( uuid, quantity ) => { return controlQuantityChange( uuid, quantity ) }
+      },
+      methods: {
+        onOrder: () => { orderController.controlRenderOrderInfo(); }
+      }
+    }, false);
+
+  }
 
   CartView.show();
 

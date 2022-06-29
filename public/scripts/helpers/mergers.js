@@ -4,7 +4,15 @@ export const mergeProductData = ( product, data ) => {
     
   product.ingredients = [];
 
-  for ( const tier of tiers ) { for ( const selection of tier.selected ) { product.ingredients.push(`${ tier._id }.${ selection }`) } };
+  for ( const tier of tiers ) { 
+    
+    for ( const selection of tier.selected ) { 
+      
+      product.ingredients.push(`${ tier._id }.${ selection }`) 
+    
+    } 
+  
+  };
 
   product.quantity = data.quantity;
   product.comments = data.comments;

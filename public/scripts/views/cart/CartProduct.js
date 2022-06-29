@@ -35,7 +35,7 @@ export default class CartProduct extends DOMElement {
 
     this._quantityElement.setValue( quantity );
 
-    this._priceElement.setText(`${ (this._quantity * this._price).toFixed(2) }$`);
+    this._priceElement.setText(`${ (this._quantity * this._price).toFixed(2) } €`);
 
     this._descriptionElement.textContent = description;
 
@@ -61,7 +61,7 @@ export default class CartProduct extends DOMElement {
       
       const updated = await this._methods.quantityChange( this._uuid, quantityValue );
 
-      if ( updated ) return this._priceElement.setText( `${ (quantityValue * this._price).toFixed(2) }$` );
+      if ( updated ) return this._priceElement.setText( `${ (quantityValue * this._price).toFixed(2) } €` );
 
       this._quantityElement.reverse();
 

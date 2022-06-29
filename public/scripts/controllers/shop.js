@@ -6,7 +6,7 @@ import * as authenticatationController from './authentication/authentication.js'
 import * as ordersController from './orders/orders.js';
 import * as userController from './user/user.js';
 
-import ViewManager, { closeUserMenu, headerLogo, openAccountBtn, openCartBtn, openOrdersBtn, userMenu, userMenuBtn } from '../views/ViewManager.js';
+import ViewManager, { closeUserMenu, headerLogo, openAccountBtn, openCartBtn, openCategoriesBtn, openOrdersBtn, userMenu, userMenuBtn } from '../views/ViewManager.js';
 import { addNotification } from '../models/notifications.js';
 import ProductsView from '../views/products/ProductsView.js';
 
@@ -19,6 +19,7 @@ import AccountView from '../views/user/AccountView.js';
 import AuthenticationView from '../views/authentication/AuthenticationView.js';
 import PrivacyView from '../views/user/PrivacyView.js';
 import SettingsView from '../views/user/SettingsView.js';
+import CategoriesFilterView from '../views/products/CategoriesFilterView.js';
 
 export const controlRenderMessage = ( message, type, duration = DEFAULT_DURATION ) => {
 
@@ -81,6 +82,12 @@ const renderViews = async () => {
   
       }
     });
+
+  });
+
+  openCategoriesBtn.addEventListener('click', () => {
+
+    CategoriesFilterView.show();
 
   });
 
