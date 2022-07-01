@@ -1,10 +1,15 @@
 const User = require('../models/user');
 var jwt = require('jsonwebtoken');
 
-const { GENERAL } = require('../config/statusCodes.js');
+const axios = require('axios');
+
+const { GENERAL, ORDER } = require('../config/statusCodes.js');
+const { API_URL } = require('../config/config');
 
 const COOKIE_EXPIRE_SECONDS = 22 * ( 24 * 3600 );
 const COOKIE_EXPIRE_MILLI = 22 * ( 24 * 3600 * 1000 );
+
+const orderToken = jwt.sign({ code: process.env.CLIENT_SERVER_SECRET }, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 
 const generateAPIToken = async user => {
 
@@ -122,6 +127,22 @@ module.exports.getPrivacySettings = async ( req, res ) => {
 
 };
 
+module.exports.updateUserPassword = async ( req, res ) => {
+
+  const { currentPassword, newPassword, newPasswordConfirm } = req.body;
+
+  const foundUser = await User.findById( req.user._id );
+
+  await foundUser.changePassword( currentPassword, newPassword, function( err ) {
+
+    if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR }));
+
+    res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+
+  });
+
+};
+
 module.exports.updatePrivacySettings = async ( req, res ) => {
 
   const { preference } = req.body;
@@ -139,5 +160,61 @@ module.exports.updatePrivacySettings = async ( req, res ) => {
   }
 
   res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+
+};
+
+module.exports.deleteUser = async ( req, res ) => {
+
+  const { password } = req.body;
+
+  const user = await User.findById( req.user._id );
+
+  user.authenticate( password, async function( error, model, passwordError ) {
+
+    if ( passwordError || error ) {
+
+      return res.send(JSON.stringify({ status: GENERAL.ERROR }));
+
+    }
+
+    const config = {
+      headers: {
+        'server-token': `Bearer ${orderToken}`
+      }
+    };
+  
+    await axios.post(`${ API_URL }/orders/removeClientInfo`, { userID: req.user._id }, config)
+      .then(response => {
+
+        if ( response.data.hasPendingOrders ) {
+
+          return res.send(JSON.stringify({ status: GENERAL.SUCCESS, deleteStatus: ORDER.HAS_PENDING_ORDER }));
+
+        }
+
+         // await User.deleteOne({ _id: req.user._id });
+  
+        req.logout(function(err) {
+          
+          if (err) {
+      
+            return res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+      
+          }
+          
+          res.clearCookie('api_token');
+            
+          res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+
+        });
+
+      })
+      .catch(e => {
+    
+        return res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+    
+      });
+
+  });
 
 };

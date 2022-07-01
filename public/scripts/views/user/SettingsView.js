@@ -8,6 +8,13 @@ export default new class SettingsView extends View {
 
   _generateElement() {
 
+    const { goBack, saveUserInfo } = this._data.methods;
+
+    const backBtn = new DOMElement("div")
+      .setClass('fa-solid fa-arrow-left back_btn')
+      .on('click', () => { goBack(); })
+      .getElement();
+
     const selectedLanguage = Number( localStorage.getItem('lang') );
 
     const language = new SelectionsElement(
@@ -15,7 +22,7 @@ export default new class SettingsView extends View {
       LANGUAGE, 
       "radio", 
       [{ _id: 0, name: 'English' },{ _id: 1, name: 'Ελληνικά' }], 
-      selectedLanguage, 
+      [selectedLanguage], 
       1, 
       selection => {  
 
@@ -26,7 +33,7 @@ export default new class SettingsView extends View {
       }
     );
 
-    return new DOMElement("div").append( language.build() ).getElement();
+    return new DOMElement("div").append( backBtn, language.build() ).getElement();
 
   }
 

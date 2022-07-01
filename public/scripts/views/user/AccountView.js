@@ -14,7 +14,7 @@ export default new class AccountView extends View {
 
     const { username, name, phone } = this._data.info;
 
-    const { goBack, saveUserInfo } = this._data.methods;
+    const { goBack, saveUserInfo, onChangePassword, onDeleteAccount } = this._data.methods;
 
     const backBtn = new DOMElement("div")
       .setClass('fa-solid fa-arrow-left back_btn')
@@ -50,14 +50,18 @@ export default new class AccountView extends View {
     const changePasswordBtn = new DOMElement("button")
       .setText( CHANGE_PASSWORD )
       .on('click', () => { 
-        console.log( username.getValue() ); 
+        
+        onChangePassword();
+
       })
       .getElement();
 
     const deleteAccountBtn = new DOMElement("button")
       .setText( DELETE_ACCOUNT )
       .on('click', () => { 
-        console.log( username.getValue() ); 
+        
+        onDeleteAccount();
+
       })
       .getElement();
 

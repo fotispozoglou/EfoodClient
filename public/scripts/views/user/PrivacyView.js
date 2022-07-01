@@ -10,7 +10,12 @@ export default new class PrivacyView extends View {
 
     const { preferences } = this._data;
 
-    const { onSwitchSetting } = this._data.methods;
+    const { goBack, onSwitchSetting } = this._data.methods;
+
+    const backBtn = new DOMElement("div")
+      .setClass('fa-solid fa-arrow-left back_btn')
+      .on('click', () => { goBack(); })
+      .getElement();
 
     const title = new DOMElement("p")
       .setText( PRIVACY_SETTINGS )
@@ -21,7 +26,7 @@ export default new class PrivacyView extends View {
 
     const phonePrivacy = new SwitchInput( "visible_phone", VISIBLE_PHONE, preferences.privatePhone, onSwitchSetting ).build();
 
-    return new DOMElement("div").append( title, namePrivacy, phonePrivacy ).getElement();
+    return new DOMElement("div").append( backBtn, title, namePrivacy, phonePrivacy ).getElement();
 
   }
 

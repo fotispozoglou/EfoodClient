@@ -55,13 +55,17 @@ const renderViews = async () => {
     }
   });
 
-  // document.querySelector("#login_navigation_btn").addEventListener('click', () => {
+  if ( document.querySelector("#login_navigation_btn") ) {
 
-  //   ViewManager.render( AuthenticationView, () => {}, {}, false );
+    document.querySelector("#login_navigation_btn").addEventListener('click', () => {
 
-  //   AuthenticationView.show();
+      ViewManager.render( AuthenticationView, () => {}, {}, false );
+  
+      AuthenticationView.show();
+  
+    });
 
-  // });
+  }
 
   productsController.controlRenderProductCategoriesFilter();
 

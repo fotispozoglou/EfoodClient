@@ -994,6 +994,65 @@ textarea.input_field {
   padding: 10px;
 }
 
+#change_password {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 5001;
+  display: flex;
+  flex-direction: column;
+  background-color: var( --fixed-background );
+}
+
+#serious_confirm_action_background {
+  background-color: var(--fixed-background);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5001;
+}
+
+.bold_text {
+  font-weight: bolder;
+}
+
+#serious_confirm_action_label {
+  display: flex;
+  flex-direction: row;
+}
+
+#serious_confirm_action_input {
+  width: 98%;
+}
+
+#serious_confirm_action_title {
+  padding: 8px;
+  color: #c44b4b;
+}
+
+#serious_confirm_action_label {
+  padding: 0 8px;
+}
+
+#serious_confirm_action {
+  max-width: 35em;
+  width: 90%;
+  background-color: white;
+  box-shadow: 0 0 2px 2px #8080800f;
+  margin: 10px auto;
+}
+
+#serious_confirm_action_confirm {
+  transition: .25s opacity;
+}
+
+.faded {
+  opacity: 0.5;
+}
+
 @media only screen and (min-width: 500px) {
 
   #products {

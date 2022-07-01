@@ -10,9 +10,11 @@ export default class DOMElement {
   setID( id ) { this._element.id = id; return this; }
   setClass( c ) { this._element.className = c; return this; }
   addClass( ...cs ) { this._element.classList.add( cs ); return this; }
+  removeClass( ...cs ) { this._element.classList.remove( cs ); return this; }
 
   prepend( ...elements ) { for ( const element of elements ) { this._element.insertAdjacentElement( 'afterbegin', element ); } return this; }
   append( ...elements ) { for ( const element of elements ) { this._element.insertAdjacentElement( 'beforeend', element ); } return this; }
+  appendHTML( html ) { this._element.insertAdjacentHTML( 'beforeend', html ); return this; }
 
   setText( text ) { this._element.textContent = text; return this; }
 

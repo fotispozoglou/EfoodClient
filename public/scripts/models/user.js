@@ -1,5 +1,5 @@
 import { SERVER_URL } from "../config/config.js";
-import { GET, PUT } from "../general/request.js";
+import { GET, POST, PUT } from "../general/request.js";
 
 export const state = {
 
@@ -42,5 +42,25 @@ export const getUserPreferences = async () => {
 export const switchPrivacySetting = async ( name, value ) => {
 
   const { data, error } = await PUT(`${ SERVER_URL }/preferences`, { preference: { name, value } });
+
+};
+
+export const savePassword = async ( currentPassword, newPassword, newPasswordConfirm ) => {
+
+  const { data, error } = await PUT(`${ SERVER_URL }/password`, { currentPassword, newPassword, newPasswordConfirm });
+
+  if ( !error ) return { data };
+
+  return { error };
+
+};
+
+export const deleteUser = async password => {
+
+  const { data, error } = await POST(`${ SERVER_URL }/deleteUser`, { password });
+
+  if ( !error ) return { data };
+
+  return { error };
 
 };

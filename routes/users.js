@@ -20,6 +20,12 @@ router.route('/preferences')
   .get( catchAsync( users.getPrivacySettings ) )
   .put( catchAsync( users.updatePrivacySettings ) );
 
+router.route('/password')
+  .put( catchAsync( users.updateUserPassword ) );
+
+router.route('/deleteUser')
+  .post( catchAsync( users.deleteUser ) );
+
 router.post('/admin/information', users.getUserInformation);
 
 router.get('/logout', users.logout)

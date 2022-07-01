@@ -138,6 +138,31 @@ export const ERROR_SAVING_NEW_INFO = [
   'πρόβλημα αποθήκευσης καινούργιων ρυθμήσεων'
 ][lang];
 
+export const ERROR_UPDATING_PASSWORD = [
+  'error updating password', 
+  'πρόβλημα αποθήκευσης κωδικού'
+][ lang ];
+
+export const PASSWORD_CHANGED_SUCCESSFULLY = [
+  'password changed successfully',
+  'ο κωδικός αποθηκεύτηκε'
+][ lang ];
+
+export const ERROR_DELETING_USER = [
+  'error deleting user',
+  'πρόβλημα διαγραφής χρήστη'
+][ lang ];
+
+export const ACCOUNT_DELETED = [
+  'account deleted',
+  'ο λογιαριασμός διαγράφτηκε'
+][ lang ];
+
+export const ALREADY_ACTIVE_ORDER_DELETE = [
+  `can't delete account. Υou have an active order`,
+  'δεν μπορείτε να διαγράψεται λογαριασμό. Έχετε μη ολοκληρωμένη παραγγελία'
+][ lang ];
+
 const statusTexts = new Map();
 
 statusTexts.set( ORDER.STATUS_PENDING, { text: STATUS_PENDING } );
