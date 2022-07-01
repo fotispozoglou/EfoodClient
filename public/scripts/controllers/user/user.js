@@ -107,9 +107,12 @@ const controlRenderDeleteUser = async () => {
 
   ViewManager.render( SeriousConfirmActionView, () => {}, {
     title: 'delete account',
-    confirmText: 'your password',
+    informationText: 'your password',
+    confirmText: 'delete',
+    inputType: 'password',
     onConfirm: controlDeleteUser,
-    matchConfirm: false
+    matchConfirm: false,
+    goBack: () => { ViewManager.renderPrevious(); }
   }, false);
 
 };

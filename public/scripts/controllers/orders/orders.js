@@ -15,7 +15,6 @@ import { MESSAGE } from "../../config/types.js";
 import { viewID } from "../../views/orders/OrderInfoView.js";
 import { ERROR_LOADING_ORDERS } from "../../config/strings.js";
 
-let hasOrderNotification = false;
 let hasOrderStatusError = false;
 
 const controlShowStatusError = async orderID => {
@@ -182,16 +181,6 @@ export const controlRenderOrders = async () => {
     onClick: controlRenderOrder,
     renderPrevious: () => { ViewManager.renderPrevious(); }
   }, true);
-
-  if ( hasOrderNotification ) {
-
-    const {backgroundColor} = statusColors.get( ORDER.NOTHING );
-
-    openOrdersBtn.style.color = backgroundColor;
-
-    hasOrderNotification = false;
-
-  }
 
 };
 

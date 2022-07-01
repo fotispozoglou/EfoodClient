@@ -16,7 +16,7 @@ export const NAME = ['name', 'όνομα'][ lang ];
 export const SURNAME = ['surname', 'επίθετο'][ lang ];
 export const PHONE = ['phone', 'κινητό'][ lang ];
 
-export const PRIVACY_SETTINGS = ['account', 'ρυθμίσεις ιδιωτικότητας'][ lang ];
+export const PRIVACY_SETTINGS = ['privacy settings', 'ρυθμίσεις ιδιωτικότητας'][ lang ];
 
 export const VISIBLE_NAME = ['visible name', 'εμφάνιση ονόματος'][ lang ];
 export const VISIBLE_PHONE = ['visible phone number', 'εμφάνιση κινητού'][ lang ];
@@ -161,6 +161,11 @@ export const ACCOUNT_DELETED = [
 export const ALREADY_ACTIVE_ORDER_DELETE = [
   `can't delete account. Υou have an active order`,
   'δεν μπορείτε να διαγράψεται λογαριασμό. Έχετε μη ολοκληρωμένη παραγγελία'
+][ lang ];
+
+export const NEED_TO_SIGNIN = [
+  'you need to log in',
+  'πρέπει να συνδεθείτε'
 ][ lang ];
 
 const statusTexts = new Map();

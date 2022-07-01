@@ -55,8 +55,8 @@ export const completeOrder = async client => {
   const { data, error } = await POST(`${ SERVER_URL }/order`, { order });
 
   if ( !error && data.status === GENERAL.SUCCESS ) {
-
-    if ( data.orderStatus === ORDER.HAS_PENDING_ORDER || data.orderStatus === ORDER.STATUS_CANCELED ) {
+    
+    if ( data.orderStatus === ORDER.HAS_PENDING_ORDER || data.orderStatus === ORDER.STATUS_CANCELED || data.orderStatus === GENERAL.NOT_AUTHENTICATED ) {
 
       return { orderStatus: data.orderStatus, status: data.status };
 

@@ -16,15 +16,15 @@ module.exports.completeOrder = async ( req, res ) => {
 
   const user = req.user;
 
+  if ( user === undefined || user === null ) {
+
+    return res.send(JSON.stringify({ status: GENERAL.SUCCESS, orderStatus: GENERAL.NOT_AUTHENTICATED }));
+
+  }
+
   if ( user.preferences.privateName ) user.name = 'private';
 
   if ( user.preferences.privatePhone ) user.phone = 'private';
-
-  if ( user === undefined || user === null ) {
-
-    return res.send(JSON.stringify({ status: GENERAL.NOT_AUTHENTICATED }));
-
-  }
 
   const authHeader = req.headers['authorization'];
 

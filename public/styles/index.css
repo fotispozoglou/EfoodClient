@@ -920,6 +920,8 @@ textarea.input_field {
 
 .user_menu_item_text {
   padding-left: 6px;
+  text-decoration: none;
+  color: #333;
 }
 
 .copyright {
@@ -1051,6 +1053,12 @@ textarea.input_field {
 
 .faded {
   opacity: 0.5;
+}
+
+#serious_confirm_action_actions {
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
 }
 
 @media only screen and (min-width: 500px) {

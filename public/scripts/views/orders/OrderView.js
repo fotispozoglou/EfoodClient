@@ -5,7 +5,7 @@ import View, { WINDOW } from '../base/View.js';
 import OrderProduct from './OrderProduct.js';
 
 import statusColors from '../../config/colors.js';
-import statusTexts, { ORDER_NUMBER, TOTAL_PRICE } from '../../config/strings.js';
+import statusTexts, { ORDER_NUMBER, ORDER_STATUS_NOT_ACCURATE, TOTAL_PRICE } from '../../config/strings.js';
 
 import { ORDER } from '../../config/statusCodes.js';
 
@@ -87,7 +87,7 @@ export default new class OrderVIew extends View {
 
     const statusErrorText = new DOMElement("p")
       .setClass('order_header_status_error_text')
-      .setText('order status may not be accurate')
+      .setText( ORDER_STATUS_NOT_ACCURATE )
       .getElement();
 
     this._statusErrorContainer = new DOMElement("div")

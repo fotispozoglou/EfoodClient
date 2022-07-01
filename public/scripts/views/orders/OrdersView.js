@@ -84,7 +84,7 @@ export default new class OrdersView extends View {
 
   }
 
-  showElements() { showOrdersBtn.style.color= "#464646"; this._ordersBackBtn.classList.remove('hidden'); }
+  showElements() { this._ordersBackBtn.classList.remove('hidden'); }
   hideElements() { this._ordersBackBtn.classList.add('hidden'); }
 
 }

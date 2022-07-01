@@ -6,7 +6,7 @@ import OrderView from "../../views/orders/OrderView.js";
 import { ORDER } from "../../config/statusCodes.js";
 import ViewManager, { menuRight, openOrdersBtn, ordersErrorIcon } from "../../views/ViewManager.js";
 
-import { renderOrder } from '../orders/orders.js';
+import { controlRenderOrders, renderOrder } from '../orders/orders.js';
 import ProductsView from "../../views/products/ProductsView.js";
 import CartView from "../../views/cart/CartView.js";
 import OrdersView from "../../views/orders/OrdersView.js";
@@ -17,7 +17,8 @@ import { MESSAGE } from '../../config/types.js';
 import statusColors from "../../config/colors.js";
 import { clearCart } from "../../models/shop.js";
 import { GENERAL } from "../../config/statusCodes.js";
-import { ALREADY_ACTIVE_ORDER, ERROR_LOADING_CART, ERROR_MAKING_ORDER } from "../../config/strings.js";
+import { ALREADY_ACTIVE_ORDER, ERROR_LOADING_CART, ERROR_MAKING_ORDER, NEED_TO_SIGNIN } from "../../config/strings.js";
+import { controlRenderLogin } from "../authentication/authentication.js";
 
 let hasOrderStatusError = false;
 
@@ -119,6 +120,14 @@ const controlCompleteOrder = async () => {
 
   if ( error ) return controlRenderMessage( ERROR_MAKING_ORDER , MESSAGE.MESSAGE_ERROR);
 
+  if ( orderStatus === GENERAL.NOT_AUTHENTICATED ) {
+
+    controlRenderLogin();
+
+    return controlRenderMessage( NEED_TO_SIGNIN, MESSAGE.MESSAGE_ERROR );
+
+  }
+
   if ( orderStatus === ORDER.HAS_PENDING_ORDER || order.status.number === ORDER.STATUS_CANCELED ) {
 
     return controlRenderMessage( ALREADY_ACTIVE_ORDER , MESSAGE.MESSAGE_ERROR);
@@ -127,14 +136,12 @@ const controlCompleteOrder = async () => {
 
   if ( !error ) {
 
-    ViewManager.show( OrdersView, true );
+    await controlRenderOrders();
 
-    OrderView.render({
+    ViewManager.render( OrderView, () => {  }, {  
       order,
       stopCheckingStatus: () => { if ( order.status.number !== ORDER.STATUS_PENDING ) orderModel.stopCheckOrderInterval(); }
-    });
-
-    renderOrder( order );
+    }, false );
 
     controlOrderStatusChange( { status: order.status }, orderID );
   

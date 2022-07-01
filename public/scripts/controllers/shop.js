@@ -6,7 +6,7 @@ import * as authenticatationController from './authentication/authentication.js'
 import * as ordersController from './orders/orders.js';
 import * as userController from './user/user.js';
 
-import ViewManager, { closeUserMenu, headerLogo, openAccountBtn, openCartBtn, openCategoriesBtn, openOrdersBtn, userMenu, userMenuBtn } from '../views/ViewManager.js';
+import ViewManager, { closeUserMenu, headerLogo, openAccountBtn, openAuthenticationBtn, openCartBtn, openCategoriesBtn, openOrdersBtn, userMenu, userMenuBtn } from '../views/ViewManager.js';
 import { addNotification } from '../models/notifications.js';
 import ProductsView from '../views/products/ProductsView.js';
 
@@ -55,13 +55,11 @@ const renderViews = async () => {
     }
   });
 
-  if ( document.querySelector("#login_navigation_btn") ) {
+  if ( openAuthenticationBtn ) {
 
-    document.querySelector("#login_navigation_btn").addEventListener('click', () => {
+    openAuthenticationBtn.addEventListener('click', () => {
 
-      ViewManager.render( AuthenticationView, () => {}, {}, false );
-  
-      AuthenticationView.show();
+      authenticatationController.controlRenderLogin();
   
     });
 
@@ -94,10 +92,6 @@ const renderViews = async () => {
     CategoriesFilterView.show();
 
   });
-
-  // AuthenticationView.render({});
-
-  // AuthenticationView.show();
 
   document.querySelector("#footer").classList.remove('hidden');
 

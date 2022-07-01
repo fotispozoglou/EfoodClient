@@ -1,6 +1,7 @@
 export const GENERAL = {
   SUCCESS: 200,
-  ERROR: -200
+  ERROR: -200,
+  NOT_AUTHENTICATED: 400
 };
 
 export const PRODUCTS = {

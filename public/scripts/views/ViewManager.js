@@ -19,8 +19,6 @@ export const openAccountBtn = document.querySelector("#user_menu_account");
 export const openPrivacyBtn = document.querySelector("#user_menu_privacy");
 export const openSettingsBtn = document.querySelector("#user_menu_settings");
 
-window.rViews = [];
-
 export default new class ViewManager {
   _renderedViews = [  ];
   _renderFunctions = [  ];
@@ -90,8 +88,6 @@ export default new class ViewManager {
         this._renderFunctions.push( renderFunction );
 
       }
-
-      console.log(this._renderedViews.map(e => e.id).join(','));
 
     }
 

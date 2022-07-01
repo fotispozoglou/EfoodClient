@@ -8,7 +8,13 @@ export default new class SeriousConfirmActionView extends View {
 
   _generateElement() {
 
-    const { title, onConfirm, confirmText, matchConfirm } = this._data;
+    const { title, inputType = 'text', onConfirm, informationText, confirmText, matchConfirm, goBack } = this._data;
+
+    const cancelBtn = new DOMElement("button")
+      .setID("serious_confirm_action_cancel")
+      .on('click', () => { goBack(); })
+      .setText("cancel")
+      .getElement();
 
     const titleElement = new DOMElement("p").setID("serious_confirm_action_title").setText( title ).getElement();
     
@@ -18,31 +24,31 @@ export default new class SeriousConfirmActionView extends View {
       
     if ( matchConfirm ) {
       
-      labelElement.appendHTML(`<p>type '<span class="bold_text">${ confirmText }</span>' to confirm</p>`);
+      labelElement.appendHTML(`<p>type '<span class="bold_text">${ informationText }</span>' to confirm</p>`);
 
     } else {
 
-      labelElement.appendHTML(`<p>type ${ confirmText } to confirm</p>`);
+      labelElement.appendHTML(`<p>type ${ informationText } to confirm</p>`);
 
     }
 
-    const deleteBtn = new DOMElement("button")
+    const confirmBtn = new DOMElement("button")
       .setID("serious_confirm_action_confirm")
-      .setText("delete");
+      .setText( confirmText );
 
-    if ( matchConfirm ) deleteBtn.setClass('faded');
+    if ( matchConfirm ) confirmBtn.setClass('faded');
 
     const confirmInput = new InputElement("", "", value => {
 
       if ( !matchConfirm ) return;
 
-      if ( value === confirmText ) return deleteBtn.removeClass('faded');
+      if ( value === confirmText ) return confirmBtn.removeClass('faded');
 
-      deleteBtn.addClass('faded');
+      confirmBtn.addClass('faded');
 
     }, true);
 
-    deleteBtn.on('click', () => { 
+    confirmBtn.on('click', () => { 
 
       const value = confirmInput.getValue();
 
@@ -56,10 +62,17 @@ export default new class SeriousConfirmActionView extends View {
     
     });
 
+    const actionContainer = new DOMElement("div")
+      .setID("serious_confirm_action_actions")
+      .append( cancelBtn, confirmBtn.getElement() )
+      .getElement();
+
     const element = new DOMElement("div")
       .setID("serious_confirm_action")
-      .append( titleElement, labelElement.getElement(), confirmInput.build(), deleteBtn.getElement() )
+      .append( titleElement, labelElement.getElement(), confirmInput.build(), actionContainer )
       .getElement();
+
+    confirmInput.setType( inputType );
 
     confirmInput.setID("serious_confirm_action_input");
 

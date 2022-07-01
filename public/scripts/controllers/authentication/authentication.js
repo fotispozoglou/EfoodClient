@@ -1,9 +1,10 @@
 import AuthenticationView from "../../views/authentication/AuthenticationView.js";
+import ViewManager from "../../views/ViewManager.js";
 
 export const controlRenderLogin = () => {
 
-  AuthenticationView.render({
-
-  });
+  ViewManager.render( AuthenticationView, () => {}, {}, false );
+  
+  AuthenticationView.show();
 
 };
