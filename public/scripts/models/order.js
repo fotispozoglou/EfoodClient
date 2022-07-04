@@ -22,7 +22,7 @@ const checkOrderStatus = async ( orderID, responseCallback ) => {
 
   }
 
-  // stopCheckOrderInterval();
+  stopCheckOrderInterval();
 
   return responseCallback({ error });
 

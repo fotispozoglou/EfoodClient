@@ -69,7 +69,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   OrdersView.updateOrder( orderID, status );
 
-  if ( status != ORDER.STATUS_COMPLETED && status != ORDER.STATUS_CANCELED ) { 
+  if ( status.number != ORDER.STATUS_COMPLETED && status.number != ORDER.STATUS_CANCELED ) { 
 
     const { backgroundColor } = statusColors.get( status.number );
 
@@ -94,7 +94,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   }
 
-  if ( status === ORDER.STATUS_COMPLETED || status === ORDER.STATUS_CANCELED ) {
+  if ( status.number === ORDER.STATUS_COMPLETED || status.number === ORDER.STATUS_CANCELED ) {
 
     orderModel.stopCheckOrderInterval();
 

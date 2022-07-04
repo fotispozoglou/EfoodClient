@@ -184,7 +184,7 @@ module.exports.deleteUser = async ( req, res ) => {
     };
   
     await axios.post(`${ API_URL }/orders/removeClientInfo`, { userID: req.user._id }, config)
-      .then(response => {
+      .then(async response => {
 
         if ( response.data.hasPendingOrders ) {
 
@@ -192,7 +192,7 @@ module.exports.deleteUser = async ( req, res ) => {
 
         }
 
-         // await User.deleteOne({ _id: req.user._id });
+        await user.remove();
   
         req.logout(function(err) {
           

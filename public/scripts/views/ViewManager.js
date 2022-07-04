@@ -22,6 +22,7 @@ export const openSettingsBtn = document.querySelector("#user_menu_settings");
 export default new class ViewManager {
   _renderedViews = [  ];
   _renderFunctions = [  ];
+  _renderingPrevious = false;
   
   init( view = View, renderFunction, data ) {
 
@@ -59,7 +60,7 @@ export default new class ViewManager {
 
   }
 
-  renderPrevious() {
+  hideCurrentView() {
 
     this._renderedViews[ this._renderedViews.length - 1 ].hideElements();
 
@@ -69,11 +70,25 @@ export default new class ViewManager {
 
     this._renderedViews.splice( this._renderedViews.length - 1, 1 );
 
-    this._renderFunctions[ this._renderFunctions.length - 1 ]();
+  }
+
+  renderPrevious() {
+
+    this._renderingPrevious = true;
+
+    this._renderFunctions[ this._renderFunctions.length - 2 ]();
 
   }
 
   render( view = View, renderFunction, data, hideCurrent ) {
+
+    if ( this._renderingPrevious ) {
+
+      this.hideCurrentView();
+
+      this._renderingPrevious = false;
+
+    }
 
     if ( view.getType() === MAIN ) {
 
