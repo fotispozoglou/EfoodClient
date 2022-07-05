@@ -100,7 +100,6 @@ button {
   border-radius: 4px;
   color: #c44b4b;
   background-color: #ff00001f;
-  border: 2px solid #c44b4b;
   font-size: 1em;
   font-weight: bolder;
   margin: auto;
@@ -109,8 +108,30 @@ button {
 
 button:hover {
   cursor: pointer;
-  color: white;
-  background-color: #c44b4b;
+  background-color: #ff000036;
+}
+
+.cancel_btn {
+  color: #333;
+  background-color: #cac9c91f;
+}
+
+.cancel_btn:hover {
+  color: #333;
+  background-color: #cac9c933;
+}
+
+#change_password_btn {
+  margin-top: 10px;
+}
+
+.password_input_body {
+  background-color: #efefef;
+  border-radius: 4px;
+}
+
+.show_password_btn {
+  padding: 0 8px;
 }
 
 input {
@@ -708,6 +729,12 @@ textarea.input_field {
 .input_body {
   display: flex;
   flex-direction: row;
+  border: 0.5px solid #8080802e;
+  border-radius: 4px;
+}
+
+.focused_input {
+  box-shadow: 0 0 5px 0.1px rgba(0,0,0,0.1);
 }
 
 .number_input_btn {
@@ -1059,6 +1086,10 @@ textarea.input_field {
   padding: 8px;
   display: flex;
   flex-direction: row;
+}
+
+#user_account button {
+  margin: 10px auto;
 }
 
 @media only screen and (min-width: 500px) {

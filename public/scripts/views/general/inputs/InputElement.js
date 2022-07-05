@@ -87,6 +87,18 @@ export default class InputElement extends DOMElement {
 
     this._valueElement.placeholder = this._placeholder;
 
+    this._valueElement.addEventListener('focus', () => {
+
+      body.classList.add('focused_input');
+
+    });
+
+    this._valueElement.addEventListener('blur', () => {
+
+      body.classList.remove('focused_input');
+
+    });
+
     if ( this._defaultListener ) {
 
       this._valueElement.addEventListener('input', () => {

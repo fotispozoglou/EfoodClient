@@ -1,6 +1,7 @@
 import DOMElement from '../base/DOMElement.js';
 import View, { WINDOW } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
+import PasswordInput from '../general/inputs/PasswordInput.js';
 
 const authenticationBackBtn = document.querySelector("#authentication_back_btn");
 
@@ -18,13 +19,13 @@ export default new class AuthenticationView extends View {
 
     const username = new InputElement("username", "fotis", () => {  }, false).setName('username').getElement();
 
-    const password = new InputElement("password", "password", () => {  }, false).setName('password').setType('password').getElement();
+    const password = new PasswordInput("password", "password", () => {  }, false).setName('password').setType('password').getElement();
 
     const loginBtn = new DOMElement("button").setText('login').setClass('authentication_btn').setID("login_btn").getElement();
 
     const renderRegisterBtn = new DOMElement("button")
       .setText('I dont have an account')
-      .setClass('authentication_info_btn')
+      .setClass('authentication_info_btn cancel_btn')
       .on('click', () => { this.renderRegister(); })
       .getElement();
 
@@ -42,13 +43,13 @@ export default new class AuthenticationView extends View {
 
     const username = new InputElement("username", "fotis", () => {  }, false).setName('username').getElement();
 
-    const password = new InputElement("password", "password", () => {  }, false).setName('password').setType('password').getElement();
+    const password = new PasswordInput("password", "password", () => {  }, false).setName('password').setType('password').getElement();
 
     const registerBtn = new DOMElement("button").setText('register').setClass('authentication_btn').setID("register_btn").getElement();
 
     const renderLoginBtn = new DOMElement("button")
       .setText('I have an account')
-      .setClass('authentication_info_btn')
+      .setClass('authentication_info_btn cancel_btn')
       .on('click', () => { this.renderLogin(); })
       .getElement();
 

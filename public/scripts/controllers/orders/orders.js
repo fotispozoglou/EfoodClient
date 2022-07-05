@@ -49,6 +49,12 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   const { status, error } = response;
 
+  if ( status.number === ORDER.NOT_FOUND ) {
+
+    return orderModel.stopCheckOrderInterval();
+
+  }
+
   if ( error ) {
    
     hasOrderStatusError = true;

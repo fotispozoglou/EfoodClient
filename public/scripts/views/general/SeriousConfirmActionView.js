@@ -1,6 +1,7 @@
 import DOMElement from '../base/DOMElement.js';
 import View from '../base/View.js';
 import InputElement from './inputs/InputElement.js';
+import PasswordInput from './inputs/PasswordInput.js';
 
 export default new class SeriousConfirmActionView extends View {
   _parent = document.querySelector("#main_center");
@@ -13,6 +14,7 @@ export default new class SeriousConfirmActionView extends View {
     const cancelBtn = new DOMElement("button")
       .setID("serious_confirm_action_cancel")
       .on('click', () => { goBack(); })
+      .setClass('cancel_btn')
       .setText("cancel")
       .getElement();
 
@@ -38,7 +40,9 @@ export default new class SeriousConfirmActionView extends View {
 
     if ( matchConfirm ) confirmBtn.setClass('faded');
 
-    const confirmInput = new InputElement("", "", value => {
+    const InputTypeComponent = inputType === "password" ? PasswordInput : InputElement;
+
+    const confirmInput = new InputTypeComponent("", "", value => {
 
       if ( !matchConfirm ) return;
 

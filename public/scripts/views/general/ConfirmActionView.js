@@ -14,7 +14,7 @@ export default new class ConfirmActionView extends View {
 
     const header = new DOMElement("div").setID("confirm_action_header").append( titleElement ).getElement();
 
-    const cancelBtn = new DOMElement("button").setID("confirm_action_calcel").setClass('confirm_action_footer_action').setText( 'cancel' ).on('click', () => { this.remove(); }).getElement();
+    const cancelBtn = new DOMElement("button").setID("confirm_action_calcel").setClass('confirm_action_footer_action cancel_btn').setText( 'cancel' ).on('click', () => { this.remove(); }).getElement();
 
     const confirmBtn = new DOMElement("button").setID("confirm_action_confirm").setClass('confirm_action_footer_action').setText( confirmText ).on('click', () => { confirmExec(  ); }).getElement();
 
