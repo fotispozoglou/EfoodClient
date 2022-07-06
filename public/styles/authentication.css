@@ -16,6 +16,12 @@
   flex-direction: column;
 }
 
+#authentication_header_error {
+  width: 90%;
+  margin: 5px auto;
+  color: #c44d4d;
+}
+
 #authentication_back_btn:hover {
   cursor: pointer;
 }

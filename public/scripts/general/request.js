@@ -192,3 +192,25 @@ export const DELETE = async ( url, body ) => {
     .catch(error => { return { error }; });
 
 };
+
+export const POST_FORM = async ( url, formData ) => {
+
+  return await fetch(url, {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+
+    if ( response.status === 200 ) return response.json();
+
+    throw new Error( response.status );
+
+  })
+  .then(data => {
+
+    return { data };
+
+  })
+  .catch(error => { return { error }; });
+
+}

@@ -5,6 +5,7 @@ const axios = require('axios');
 
 const { GENERAL, ORDER } = require('../config/statusCodes.js');
 const { API_URL } = require('../config/config');
+const passport = require('passport');
 
 const COOKIE_EXPIRE_SECONDS = 22 * ( 24 * 3600 );
 const COOKIE_EXPIRE_MILLI = 22 * ( 24 * 3600 * 1000 );
@@ -51,14 +52,27 @@ module.exports.register = async (req, res, next) => {
 }
 
 module.exports.login = async (req, res) => {
-    const redirectUrl = req.session.returnTo || '/shop';
-    delete req.session.returnTo;
 
-    const token = await generateAPIToken({ username: req.user.username, _id: req.user._id });
+  passport.authenticate('local', function(err, user, info) {
     
-    res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI  ) });
+    if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: 'false1' }));
 
-    res.redirect(redirectUrl);
+    if ( !user ) return res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: 'false2' }));
+
+    req.login(user, async function( err ) {
+
+      if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: 'false3' }));
+
+      const token = await generateAPIToken({ username: req.user.username, _id: req.user._id });
+  
+      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI  ) });
+
+      res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: true }));
+
+    });
+
+  })(req, res);
+
 }
 
 module.exports.getAPIToken = async ( req, res ) => {

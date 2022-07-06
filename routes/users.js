@@ -3,17 +3,25 @@ const router = express.Router();
 const passport = require('passport');
 const catchAsync = require('../utils/catchAsync.js');
 const users = require('../controllers/users.js');
+const { authenticateUser } = require('../middleware/users.js');
+const { loginLimiter, registerLimiter } = require('../middleware/limiters.js');
 
 router.post('/generate/token', users.getAPIToken);
 
 router.route('/register')
-  .post(catchAsync(users.register));
+  .post(
+    registerLimiter,
+    catchAsync(users.register)
+  );
 
 router.route('/login')
-  .post(passport.authenticate('local', { failureFlash: false, failureRedirect: '/shop' }), users.login);
+  .post( 
+    // loginLimiter,
+    catchAsync( users.login )
+  );
 
 router.route('/info')
-  .get( catchAsync( users.getUserInfo ) )
+  .get( authenticateUser, catchAsync( users.getUserInfo ) )
   .put( catchAsync( users.saveUserInfo ) );
 
 router.route('/preferences')

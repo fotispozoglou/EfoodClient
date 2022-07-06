@@ -1,3 +1,4 @@
+import { POST, POST_FORM } from '../../general/request.js';
 import DOMElement from '../base/DOMElement.js';
 import View, { WINDOW } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
@@ -11,17 +12,41 @@ export default new class AuthenticationView extends View {
   _loginElement;
   _registerElement;
   _type = WINDOW;
+  _errorText;
   id = "authentication_background";
 
   showElements() {  }
 
+  onError( error ) {
+
+    this._errorText.textContent = error;
+
+  }
+
   generateLogin() {
 
-    const username = new InputElement("username", "fotis", () => {  }, false).setName('username').getElement();
+    const { onLogin } = this._data.methods;
 
-    const password = new PasswordInput("password", "password", () => {  }, false).setName('password').setType('password').getElement();
+    const loginForm = new DOMElement("form")
+      .attributes(['action', '/login'], ['method', 'POST'])
+      .setID("login_form")
+      .on('submit', async e => {
 
-    const loginBtn = new DOMElement("button").setText('login').setClass('authentication_btn').setID("login_btn").getElement();
+        e.preventDefault();
+
+        onLogin( loginForm.getElement() );
+
+      })
+
+    const username = new InputElement("username", "fotis", () => {  }, false).setName('username');
+
+    const password = new PasswordInput("password", "password", () => {  }, false).setName('password').setType('password');
+
+    const loginBtn = new DOMElement("button")
+      .setText('login')
+      .setClass('authentication_btn')
+      .setID("login_btn")
+      .getElement();
 
     const renderRegisterBtn = new DOMElement("button")
       .setText('I dont have an account')
@@ -29,13 +54,9 @@ export default new class AuthenticationView extends View {
       .on('click', () => { this.renderRegister(); })
       .getElement();
 
-    const loginForm = new DOMElement("form")
-      .attributes(['action', '/login'], ['method', 'POST'])
-      .append( username, password, loginBtn )
-      .setID("login_form")
-      .getElement();
+    loginForm.append( username.getElement(), password.getElement(), loginBtn );
 
-    this._loginElement = new DOMElement("div").setID("authentication_login").append( loginForm, renderRegisterBtn ).getElement();
+    this._loginElement = new DOMElement("div").setID("authentication_login").append( loginForm.getElement(), renderRegisterBtn ).getElement();
 
   }
 
@@ -82,7 +103,9 @@ export default new class AuthenticationView extends View {
 
     const headerBackContainer = new DOMElement("div").setID("authentication_navigation_header").append( backBtn ).getElement();
 
-    this._header = new DOMElement("div").setID("authentication_header").append( headerBackContainer ).getElement();
+    this._errorText = new DOMElement("p").setText("").setID("authentication_header_error").getElement();
+
+    this._header = new DOMElement("div").setID("authentication_header").append( headerBackContainer, this._errorText ).getElement();
 
     this._body = new DOMElement("div").setID("authentication_body").append( this._loginElement );
 
