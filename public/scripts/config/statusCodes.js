@@ -18,3 +18,10 @@ export const ORDER = {
   STATUS_CANCELED: -100,
   NOT_FOUND: -101
 };
+
+export const AUTHENTICATION = {
+  MISSING_USERNAME: "missing_username",
+  MISSING_PASSWORD: "missing_password",
+  USER_EXISTS: "user_already_exists",
+  INVALID_USERNAME_PASSWORD: "password_or_username_incorrect"
+};

@@ -22,9 +22,12 @@ const generateAPIToken = async user => {
 
 };
 
-module.exports.register = async (req, res, next) => {
+module.exports.register = async ( req, res ) => {
+
   try {
+
     const { username, password } = req.body;
+
     const user = new User({ 
       username, 
       name: '',
@@ -34,21 +37,27 @@ module.exports.register = async (req, res, next) => {
         privatePhone: true 
       } 
     });
+
     const registeredUser = await User.register(user, password);
+
     req.login(registeredUser, async err => {
     
-        if (err) return next(err);
-    
-        const token = await generateAPIToken({ username: registeredUser.username, _id: registeredUser._id });
-    
-        res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ) });
+      if (err) return res.send(JSON.stringify({ status: GENERAL.ERROR, registered: false }));
+  
+      const token = await generateAPIToken({ username: registeredUser.username, _id: registeredUser._id });
+  
+      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ) });
 
-        res.redirect('/shop');
+      res.send(JSON.stringify({ status: GENERAL.SUCCESS, registered: true }));
     
-    })
-  } catch (e) {
-    res.redirect('shop');
+    });
+
+  } catch ( error ) {
+
+    res.send(JSON.stringify({ status: GENERAL.ERROR, registered: false, message: error.message }));
+
   }
+
 }
 
 module.exports.login = async (req, res) => {

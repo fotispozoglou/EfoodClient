@@ -1,4 +1,4 @@
-import { ORDER } from "./statusCodes.js";
+import { AUTHENTICATION, ORDER } from "./statusCodes.js";
 
 export const EN = 0;
 export const GR = 1;
@@ -168,6 +168,21 @@ export const NEED_TO_SIGNIN = [
   'πρέπει να συνδεθείτε'
 ][ lang ];
 
+export const USER_EXISTS = [
+  'username already exists',
+  'αυτό το όνομα χρήστη χρησημοποιήται'
+][ lang ];
+
+export const MISSING_USERNAME = [
+  'fill the username',
+  'συμπληρώστε το όνομα χρήστη'
+][ lang ];
+
+export const MISSING_PASSWORD = [
+  'fill the password',
+  'συμπληρώστε τον κωδικό πρόσβασης'
+][ lang ];
+
 const statusTexts = new Map();
 
 statusTexts.set( ORDER.STATUS_PENDING, { text: STATUS_PENDING } );
@@ -175,5 +190,11 @@ statusTexts.set( ORDER.STATUS_ACCEPTED, { text: STATUS_ACCEPTED } );
 statusTexts.set( ORDER.STATUS_DELIVERING, { text: STATUS_DELIVERING } );
 statusTexts.set( ORDER.STATUS_COMPLETED, { text: STATUS_COMPLETED } );
 statusTexts.set( ORDER.STATUS_CANCELED, { text: STATUS_CANCELED } );
+
+export const authenticationErrors = new Map();
+
+authenticationErrors.set( AUTHENTICATION.USER_EXISTS, USER_EXISTS );
+authenticationErrors.set( AUTHENTICATION.MISSING_USERNAME, MISSING_USERNAME );
+authenticationErrors.set( AUTHENTICATION.MISSING_PASSWORD, MISSING_PASSWORD );
 
 export default statusTexts;

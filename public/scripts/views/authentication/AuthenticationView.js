@@ -1,3 +1,4 @@
+import { authenticationErrors } from '../../config/strings.js';
 import { POST, POST_FORM } from '../../general/request.js';
 import DOMElement from '../base/DOMElement.js';
 import View, { WINDOW } from '../base/View.js';
@@ -18,6 +19,14 @@ export default new class AuthenticationView extends View {
   showElements() {  }
 
   onError( error ) {
+
+    console.log(error);
+
+    if ( authenticationErrors.has( error ) ) {
+
+      return this._errorText.textContent = authenticationErrors.get( error );
+
+    }
 
     this._errorText.textContent = error;
 
@@ -62,11 +71,26 @@ export default new class AuthenticationView extends View {
 
   generateRegister() {
 
+    const { onRegister } = this._data.methods;
+
+    const registerForm = new DOMElement("form")
+      .attributes(['action', '/register'], ['method', 'POST'])
+      .setID("register_form")
+      .on('submit', async e => {
+
+        e.preventDefault();
+
+        onRegister( registerForm.getElement() );
+
+      })
+
     const username = new InputElement("username", "fotis", () => {  }, false).setName('username').getElement();
 
     const password = new PasswordInput("password", "password", () => {  }, false).setName('password').setType('password').getElement();
 
     const registerBtn = new DOMElement("button").setText('register').setClass('authentication_btn').setID("register_btn").getElement();
+
+    registerForm.append( username, password, registerBtn );
 
     const renderLoginBtn = new DOMElement("button")
       .setText('I have an account')
@@ -74,13 +98,7 @@ export default new class AuthenticationView extends View {
       .on('click', () => { this.renderLogin(); })
       .getElement();
 
-    const registerForm = new DOMElement("form")
-      .attributes(['action', '/register'], ['method', 'POST'])
-      .append( username, password, registerBtn )
-      .setID("register_form")
-      .getElement();
-
-    this._registerElement = new DOMElement("div").setID("authentication_register").append( registerForm, renderLoginBtn ).getElement();
+    this._registerElement = new DOMElement("div").setID("authentication_register").append( registerForm.getElement(), renderLoginBtn ).getElement();
 
   }
 

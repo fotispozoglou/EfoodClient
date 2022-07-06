@@ -10,8 +10,8 @@ router.post('/generate/token', users.getAPIToken);
 
 router.route('/register')
   .post(
-    registerLimiter,
-    catchAsync(users.register)
+    // registerLimiter,
+    catchAsync( users.register )
   );
 
 router.route('/login')

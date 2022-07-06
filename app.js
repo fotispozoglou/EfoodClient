@@ -40,6 +40,7 @@ const indexRoutes = require('./routes/index.js');
 const shopRoutes = require('./routes/shop.js');
 const orderRoutes = require('./routes/order.js');
 const usersRoutes = require('./routes/users.js');
+const { GENERAL } = require('./config/statusCodes.js');
 
 // EJS STUFF
 app.engine('ejs', ejsMate)
@@ -95,6 +96,18 @@ app.use('/', indexRoutes);
 app.use('/shop', shopRoutes);
 app.use('/order', orderRoutes);
 app.use('/', usersRoutes);
+
+app.use((err, req, res, next) => {
+  
+  const { statusCode = 500 } = err;
+
+  if (!err.message) err.message = 'Server Error';
+
+  // logger.error( err.stack );
+  
+  res.status( statusCode ).send(JSON.stringify({ status: GENERAL.ERROR }));
+
+});
 
 // LISTEN
 
