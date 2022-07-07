@@ -1,3 +1,5 @@
+"use strict";
+
 const User = require('../models/user');
 var jwt = require('jsonwebtoken');
 
@@ -64,13 +66,13 @@ module.exports.login = async (req, res) => {
 
   passport.authenticate('local', function(err, user, info) {
     
-    if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: 'false1' }));
+    if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: false }));
 
-    if ( !user ) return res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: 'false2' }));
+    if ( !user ) return res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: false }));
 
     req.login(user, async function( err ) {
 
-      if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: 'false3' }));
+      if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: false }));
 
       const token = await generateAPIToken({ username: req.user.username, _id: req.user._id });
   

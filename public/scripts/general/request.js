@@ -1,4 +1,3 @@
-import { controlRenderProducts } from "../controllers/products/products.js";
 import ErrorView from "../views/ErrorView.js";
 
 const ensureAPIToken = async () => {

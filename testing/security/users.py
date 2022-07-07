@@ -2,7 +2,7 @@ import time
 import requests
 
 SERVER_PROTOCOL = "http"
-SERVER_IP = "192.168.1.25"
+SERVER_IP = "192.168.1.15"
 SERVER_PORT = "8000"
 SERVER_URL = f"{ SERVER_PROTOCOL }://{ SERVER_IP }:{ SERVER_PORT }"
 
@@ -17,7 +17,7 @@ passwords = [
   "password3",
   "password4",
   "password5",
-  "password6",
+  "password",
   "password7",
   "password8",
   "password9",
@@ -47,6 +47,6 @@ def bruteForceRegister():
 
         print( register )
 
-# bruteForceLogin()
+bruteForceLogin()
 
 bruteForceRegister()

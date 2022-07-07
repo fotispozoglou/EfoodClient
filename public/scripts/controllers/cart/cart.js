@@ -8,7 +8,7 @@ import ProductPreferences from '../../views/products/ProductPreferences.js';
 import ViewManager from '../../views/ViewManager.js';
 
 import * as orderController from '../order/order.js';
-import { controlRenderMessage } from '../shop.js';
+import { controlRenderMessage } from '../../general/messages.js';
 
 const controlRemoveCartProduct = async uuid => {
 

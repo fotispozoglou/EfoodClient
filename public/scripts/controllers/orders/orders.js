@@ -10,9 +10,8 @@ import { controlRenderLogin } from '../authentication/authentication.js';
 import statusColors from "../../config/colors.js";
 
 import ViewManager, { openOrdersBtn, ordersErrorIcon } from "../../views/ViewManager.js";
-import { controlRenderMessage } from "../shop.js";
+import { controlRenderMessage } from "../../general/messages.js";
 import { MESSAGE } from "../../config/types.js";
-import { viewID } from "../../views/orders/OrderInfoView.js";
 import { ERROR_LOADING_ORDERS } from "../../config/strings.js";
 
 let hasOrderStatusError = false;

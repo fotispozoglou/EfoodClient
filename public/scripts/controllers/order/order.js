@@ -6,12 +6,10 @@ import OrderView from "../../views/orders/OrderView.js";
 import { ORDER } from "../../config/statusCodes.js";
 import ViewManager, { menuRight, openOrdersBtn, ordersErrorIcon } from "../../views/ViewManager.js";
 
-import { controlRenderOrders, renderOrder } from '../orders/orders.js';
-import ProductsView from "../../views/products/ProductsView.js";
+import { controlRenderOrders } from '../orders/orders.js';
 import CartView from "../../views/cart/CartView.js";
 import OrdersView from "../../views/orders/OrdersView.js";
-import { controlRenderMessage } from "../shop.js";
-import { LONG } from "../../views/general/Notification.js";
+import { controlRenderMessage } from "../../general/messages.js";
 
 import { MESSAGE } from '../../config/types.js';
 import statusColors from "../../config/colors.js";

@@ -1,3 +1,5 @@
+"use strict";
+
 const axios = require('axios');
 const { GENERAL, ORDER } = require('../config/statusCodes.js');
 const { API_URL } = require('../config/config.js');

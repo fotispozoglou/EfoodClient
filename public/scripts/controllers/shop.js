@@ -6,26 +6,12 @@ import * as authenticatationController from './authentication/authentication.js'
 import * as ordersController from './orders/orders.js';
 import * as userController from './user/user.js';
 
-import ViewManager, { closeUserMenu, headerLogo, openAccountBtn, openAuthenticationBtn, openCartBtn, openCategoriesBtn, openOrdersBtn, userMenu, userMenuBtn } from '../views/ViewManager.js';
-import { addNotification } from '../models/notifications.js';
+import ViewManager, { headerLogo, openAuthenticationBtn, openCartBtn, openCategoriesBtn, openOrdersBtn } from '../views/ViewManager.js';
 import ProductsView from '../views/products/ProductsView.js';
 
-import { MESSAGE } from '../config/types.js';
-
-import { DEFAULT_DURATION, LONG } from '../views/general/Notification.js'
 import ErrorView from '../views/ErrorView.js';
 import { GENERAL } from '../config/statusCodes.js';
-import AccountView from '../views/user/AccountView.js';
-import AuthenticationView from '../views/authentication/AuthenticationView.js';
-import PrivacyView from '../views/user/PrivacyView.js';
-import SettingsView from '../views/user/SettingsView.js';
 import CategoriesFilterView from '../views/products/CategoriesFilterView.js';
-
-export const controlRenderMessage = ( message, type, duration = DEFAULT_DURATION ) => {
-
-  addNotification({ text: message, type, duration });
-
-};
 
 export const hideLoader = () => {
 
@@ -124,6 +110,8 @@ const initializeItems = async () => {
 };
 
 const init = async () => {
+
+  console.log("INITING");
 
   const { status, error } = await initializeItems();
 

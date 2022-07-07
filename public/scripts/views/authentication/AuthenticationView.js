@@ -1,5 +1,4 @@
 import { authenticationErrors } from '../../config/strings.js';
-import { POST, POST_FORM } from '../../general/request.js';
 import DOMElement from '../base/DOMElement.js';
 import View, { WINDOW } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
@@ -19,8 +18,6 @@ export default new class AuthenticationView extends View {
   showElements() {  }
 
   onError( error ) {
-
-    console.log(error);
 
     if ( authenticationErrors.has( error ) ) {
 

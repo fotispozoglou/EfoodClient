@@ -1,11 +1,11 @@
 import { GENERAL } from "../../config/statusCodes.js";
 import { MESSAGE } from "../../config/types.js";
+import { controlRenderMessage } from "../../general/messages.js";
 import { loginUser, registerUser } from "../../models/authentication.js";
 import AuthenticationView from "../../views/authentication/AuthenticationView.js";
 import ViewManager from "../../views/ViewManager.js";
-import { controlRenderMessage } from "../shop.js";
 
-const controlLoginUser = async formElement => {
+export const controlLoginUser = async formElement => {
 
   const formData = new URLSearchParams();
 
@@ -29,7 +29,7 @@ const controlLoginUser = async formElement => {
 
 };
 
-const controlRegisterUser = async formElement => {
+export const controlRegisterUser = async formElement => {
 
   const formData = new URLSearchParams();
 

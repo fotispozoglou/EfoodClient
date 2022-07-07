@@ -8,7 +8,7 @@ import { hideProgressBar, setProgress, showProgressBar } from '../../views/Progr
 
 import { MESSAGE } from '../../config/types.js';
 
-import { controlRenderMessage } from '../shop.js';
+import { controlRenderMessage } from '../../general/messages.js';
 import { LONG } from '../../views/general/Notification.js';
 
 import { PRODUCTS } from '../../config/statusCodes.js';

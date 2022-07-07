@@ -1,8 +1,9 @@
 const express = require('express');
+const { csrfProtection } = require('../app.js');
 const router = express.Router();
 const shop = require('../controllers/shop.js');
 
 router.route('/')
-  .get(shop.renderShop);
+  .get( csrfProtection, shop.renderShop);
 
 module.exports = router;
