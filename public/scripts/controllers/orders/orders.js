@@ -3,7 +3,6 @@ import OrderView from "../../views/orders/OrderView.js";
 
 import * as ordersModel from '../../models/orders.js';
 import * as orderModel from '../../models/order.js';  
-import { stopCheckOrderInterval } from '../../models/order.js';
 import { GENERAL, ORDER } from "../../config/statusCodes.js";
 
 import { controlRenderLogin } from '../authentication/authentication.js';
@@ -50,7 +49,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   if ( status.number === ORDER.NOT_FOUND ) {
 
-    return orderModel.stopCheckOrderInterval();
+    return orderModel.stopCheckOrderTimeout();
 
   }
 
@@ -84,13 +83,9 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
     let { backgroundColor } = statusColors.get( status.number );
 
-    hasOrderNotification = true;
-
     if ( ViewManager.selectedViewID === OrdersView.getViewID() ) {
 
       backgroundColor = statusColors.get( ORDER.NOTHING ).backgroundColor;
-
-      hasOrderNotification = false;
 
     }
 
@@ -101,7 +96,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   if ( status.number === ORDER.STATUS_COMPLETED || status.number === ORDER.STATUS_CANCELED ) {
 
-    orderModel.stopCheckOrderInterval();
+    orderModel.stopCheckOrderTimeout();
 
   }
 
@@ -109,7 +104,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
 const controlStartCheckingOrderStatus = async orderID => {
 
-  orderModel.startCheckOrderInterval( orderID, status => { controlOrderStatusChange( status, orderID ); } );
+  orderModel.startCheckOrder( orderID, status => { controlOrderStatusChange( status, orderID ); } );
 
 };
 
@@ -135,7 +130,7 @@ const controlRenderOrder = async orderID => {
 
   OrderView.render({
     order,
-    stopCheckingStatus: stopCheckOrderInterval,
+    stopCheckingStatus: orderModel.stopCheckOrderTimeout,
     removeOrder: controlRemoveOrder
   }); 
 

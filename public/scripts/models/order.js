@@ -3,14 +3,66 @@ import { SERVER_URL, API_SERVER_URL } from '../config/config.js';
 
 import { GET, POST } from '../general/request.js';
 import { ORDER, GENERAL } from '../config/statusCodes.js';
+import { ordersInterval } from '../config/values.js';
 
 export const state = {
   cartProducts: [],
   trackingOrder: false,
-  trackingOrderID: ""
+  trackingOrderID: "",
+  trackingOrderStatus: null,
+  responseCallback: () => {}
 };
 
-let checkOrderInterval;
+let checkOrderTimeout;
+let checkOrderTime = 10000;
+
+export const stopCheckOrderTimeout = async () => {
+
+  state.trackingOrder = false;
+
+  clearTimeout( checkOrderTimeout );
+
+};
+
+const startCheckOrderTimeout = () => {
+
+  const t1 = Date.now();
+
+  checkOrderTimeout = setTimeout( async () => { 
+    
+    await checkOrderStatus( state.trackingOrderID, state.responseCallback );
+
+    console.log(`SECONDS PASSED ${ (Date.now() - t1) / 1000 }`);
+    
+    startCheckOrderTimeout();
+  
+  }, checkOrderTime );
+
+};
+
+const setTimeoutTime = time => {
+
+  if ( !time ) time = 10000;
+
+  console.log("UPDATING TO " + time * 1000);
+
+  checkOrderTime = time * 1000;
+
+};
+
+export const startCheckOrder = async ( orderID, responseCallback ) => {
+
+  if ( state.trackingOrder ) return;
+
+  state.trackingOrder = true;
+
+  state.trackingOrderID = orderID;
+
+  state.responseCallback = responseCallback;
+
+  startCheckOrderTimeout();
+
+};
 
 const checkOrderStatus = async ( orderID, responseCallback ) => {
 
@@ -18,33 +70,23 @@ const checkOrderStatus = async ( orderID, responseCallback ) => {
 
   if ( !error ) {
 
+    const nonCompletedState = ORDER.NON_COMPLETED.includes( data.orderStatus.number );
+
+    if ( ( data.orderStatus.number !== state.trackingOrderStatus ) && nonCompletedState ) {
+
+      setTimeoutTime( ordersInterval.get( data.orderStatus.number ) );
+
+      state.trackingOrderStatus = data.orderStatus;
+
+    }
+
     return responseCallback({ status: data.orderStatus });
 
   }
 
-  stopCheckOrderInterval();
+  stopCheckOrderTimeout();
 
   return responseCallback({ error });
-
-};
-
-export const stopCheckOrderInterval = async () => {
-
-  state.trackingOrder = false;
-
-  state.trackingOrderID = "";
-
-  clearInterval( checkOrderInterval );
-
-};
-
-export const startCheckOrderInterval = async ( orderID, responseCallback ) => {
-
-  state.trackingOrder = true;
-
-  state.trackingOrderID = orderID;
-
-  checkOrderInterval = setInterval( async () => { checkOrderStatus( orderID, responseCallback ) }, 10000 );
 
 };
 

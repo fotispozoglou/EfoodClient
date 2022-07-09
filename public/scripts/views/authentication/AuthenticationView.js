@@ -1,4 +1,4 @@
-import { authenticationErrors } from '../../config/strings.js';
+import { ALREAD_HAVE_ACCOUNT, authenticationErrors, DONT_HAVE_ACCOUNT, LOGIN, REGISTER } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
 import View, { WINDOW } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
@@ -49,13 +49,13 @@ export default new class AuthenticationView extends View {
     const password = new PasswordInput("password", "password", () => {  }, false).setName('password').setType('password');
 
     const loginBtn = new DOMElement("button")
-      .setText('login')
+      .setText( LOGIN )
       .setClass('authentication_btn')
       .setID("login_btn")
       .getElement();
 
     const renderRegisterBtn = new DOMElement("button")
-      .setText('I dont have an account')
+      .setText( DONT_HAVE_ACCOUNT )
       .setClass('authentication_info_btn cancel_btn')
       .on('click', () => { this.renderRegister(); })
       .getElement();
@@ -85,12 +85,12 @@ export default new class AuthenticationView extends View {
 
     const password = new PasswordInput("password", "password", () => {  }, false).setName('password').setType('password').getElement();
 
-    const registerBtn = new DOMElement("button").setText('register').setClass('authentication_btn').setID("register_btn").getElement();
+    const registerBtn = new DOMElement("button").setText( REGISTER ).setClass('authentication_btn').setID("register_btn").getElement();
 
     registerForm.append( username, password, registerBtn );
 
     const renderLoginBtn = new DOMElement("button")
-      .setText('I have an account')
+      .setText( ALREAD_HAVE_ACCOUNT )
       .setClass('authentication_info_btn cancel_btn')
       .on('click', () => { this.renderLogin(); })
       .getElement();

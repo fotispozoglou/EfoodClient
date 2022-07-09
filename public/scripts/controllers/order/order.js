@@ -15,8 +15,10 @@ import { MESSAGE } from '../../config/types.js';
 import statusColors from "../../config/colors.js";
 import { clearCart } from "../../models/shop.js";
 import { GENERAL } from "../../config/statusCodes.js";
-import { ALREADY_ACTIVE_ORDER, ERROR_LOADING_CART, ERROR_MAKING_ORDER, NEED_TO_SIGNIN } from "../../config/strings.js";
+import { ALREADY_ACTIVE_ORDER, ERROR_LOADING_CART, ERROR_MAKING_ORDER, NEED_TO_LOGIN, NEED_TO_SIGNIN } from "../../config/strings.js";
 import { controlRenderLogin } from "../authentication/authentication.js";
+import { isAuthenticated } from "../../general/request.js";
+import AuthenticationView from "../../views/authentication/AuthenticationView.js";
 
 let hasOrderStatusError = false;
 
@@ -54,7 +56,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   if ( status.number === ORDER.NOT_FOUND ) {
 
-    return orderModel.stopCheckOrderInterval();
+    return orderModel.stopCheckOrderTimeout();
 
   }
 
@@ -94,7 +96,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   if ( status.number === ORDER.STATUS_COMPLETED || status.number === ORDER.STATUS_CANCELED ) {
 
-    orderModel.stopCheckOrderInterval();
+    orderModel.stopCheckOrderTimeout();
 
   }
 
@@ -102,7 +104,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
 const controlStartCheckingOrderStatus = async orderID => {
 
-  orderModel.startCheckOrderInterval( orderID, response => { controlOrderStatusChange( response, orderID ); } );
+  orderModel.startCheckOrder( orderID, response => { controlOrderStatusChange( response, orderID ); } );
 
 };
 
@@ -144,7 +146,7 @@ const controlCompleteOrder = async () => {
 
     ViewManager.render( OrderView, () => {  }, {  
       order,
-      stopCheckingStatus: () => { if ( order.status.number !== ORDER.STATUS_PENDING ) orderModel.stopCheckOrderInterval(); }
+      stopCheckingStatus: () => { if ( order.status.number !== ORDER.STATUS_PENDING ) orderModel.stopCheckOrderTimeout(); }
     }, false );
 
     controlOrderStatusChange( { status: order.status }, orderID );
@@ -158,6 +160,16 @@ const controlCompleteOrder = async () => {
 export const controlRenderOrderInfo = async () => {
 
   const { data = [], error } = await getCartProducts();
+
+  const { data: authData, error: authError } = await isAuthenticated();
+
+  if ( !authError && !authData.authenticated ) { 
+    
+    controlRenderLogin();
+
+    return AuthenticationView.onError( NEED_TO_LOGIN );
+
+  }
 
   if ( error ) {
 
@@ -173,6 +185,9 @@ export const controlRenderOrderInfo = async () => {
 
   ViewManager.render( OrderInfo, controlRenderOrderInfo, {
     cartProducts: data.products,
+    methods: {
+      goBack: () => { ViewManager.renderPrevious(); }
+    },
     itemMethods: {
       completeOrder: controlCompleteOrder
     }

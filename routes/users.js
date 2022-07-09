@@ -37,6 +37,12 @@ router.route('/deleteUser')
 
 router.post('/admin/information', csrfProtection, users.getUserInformation);
 
+router.post('/authenticated', ( req, res ) => {
+
+  res.send(JSON.stringify({ authenticated: req.isAuthenticated() }));
+
+});
+
 router.get('/logout', users.logout);
 
 module.exports = router;

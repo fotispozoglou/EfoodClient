@@ -2,6 +2,12 @@ import ErrorView from "../views/ErrorView.js";
 let API_TOKEN = null;
 let isLoggedIn = false;
 
+export const isAuthenticated = async () => {
+
+  return await POST('/authenticated');
+
+};
+
 export const setAPIToken = ( key, loggedIn ) => {
 
   API_TOKEN = key;

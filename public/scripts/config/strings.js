@@ -123,6 +123,31 @@ export const ALREADY_ACTIVE_ORDER = [
   'έχεις ήδη μια παραγγελία'
 ][lang];
 
+export const NEED_TO_LOGIN = [
+  'you need to login first',
+  'πρέπει να συνδεθείτε πρώτα'
+][ lang ];
+
+export const LOGIN = [
+  'login',
+  'σύνδεση'
+][ lang ];
+
+export const REGISTER = [
+  'register',
+  'εγγραφή'
+][ lang ];
+
+export const ALREAD_HAVE_ACCOUNT = [
+  'i have an account',
+  'έχω λογαριασμό'
+][ lang ];
+
+export const DONT_HAVE_ACCOUNT = [
+  "i don't have an account",
+  'δεν έχω λογαριασμό'
+][ lang ];
+
 export const ERROR_LOADING_ORDER = [
   'error loading order',
   'πρόβλημα φόρτωσης παραγγελίας'

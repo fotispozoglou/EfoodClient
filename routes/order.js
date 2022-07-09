@@ -6,6 +6,6 @@ const { isLoggedIn } = require('../middleware/users.js');
 
 router.route('/')
   .get( order.renderOrder )
-  .post( csrfProtection, isLoggedIn, order.completeOrder);
+  .post( isLoggedIn, csrfProtection, order.completeOrder);
 
 module.exports = router;

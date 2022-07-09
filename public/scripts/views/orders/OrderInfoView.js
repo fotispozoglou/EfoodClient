@@ -50,6 +50,13 @@ export default new class OrderInfoView extends View {
 
     const { cartProducts, itemMethods } = this._data;
 
+    const { goBack = () => {} } = this._data.methods;
+
+    const backBtn = new DOMElement("div")
+      .setClass('fa-solid fa-arrow-left back_btn')
+      .on('click', () => { goBack(); })
+      .getElement();
+
     const productsTitle = new DOMElement("p").setText( PRODUCTS ).setID("order_cart_title").getElement();
 
     const productsList = new ListElement( cartProducts, OrderProduct, "", "", itemMethods ).addClass('order_cart_products').build();
@@ -84,7 +91,7 @@ export default new class OrderInfoView extends View {
 
     const footer = new DOMElement("div").setClass('order_info_footer').append( this._completeOrderBtn ).getElement();
 
-    return new DOMElement("div").setClass('order_info').append( body, footer ).getElement();
+    return new DOMElement("div").setClass('order_info').append( backBtn, body, footer ).getElement();
 
   }
 

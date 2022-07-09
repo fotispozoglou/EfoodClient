@@ -44,7 +44,7 @@ export default new class AccountView extends View {
 
         saveUserInfo( info );
 
-      })
+      })  
       .getElement();
 
     const changePasswordBtn = new DOMElement("button")
