@@ -9,8 +9,8 @@ const { GENERAL, ORDER } = require('../config/statusCodes.js');
 const { API_URL } = require('../config/config');
 const passport = require('passport');
 
-const COOKIE_EXPIRE_SECONDS = 22 * ( 24 * 3600 );
-const COOKIE_EXPIRE_MILLI = 22 * ( 24 * 3600 * 1000 );
+const COOKIE_EXPIRE_SECONDS = 7 * ( 24 * 3600 );
+const COOKIE_EXPIRE_MILLI = 7 * ( 24 * 3600 * 1000 );
 
 const orderToken = jwt.sign({ code: process.env.CLIENT_SERVER_SECRET }, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 

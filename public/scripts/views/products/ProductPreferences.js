@@ -111,7 +111,15 @@ export default new class ProductPreferences extends EditItemView {
     const commentsContainer = new DOMElement("div").setClass("comments_container").append( commentsLabel, commentsElements ).getElement();
 
     this.addDataElements(
-      ['tiers', () => { return tiersElements.map( te => { return { _id: te._id, selected: te.getSelected(), ingredients: te._selections } })} ],
+      ['tiers', () => { 
+        
+        return tiersElements.map( 
+          te => { 
+            return { _id: te._id, selected: te.getSelected(), ingredients: te._selections } 
+          })
+        } 
+      
+      ],
       ['comments', () => { return comments.value }]
     );
 

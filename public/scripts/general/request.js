@@ -1,39 +1,11 @@
 import ErrorView from "../views/ErrorView.js";
+let API_TOKEN = null;
+let isLoggedIn = false;
 
-const ensureAPIToken = async () => {
+export const setAPIToken = ( key, loggedIn ) => {
 
-  const localCookie = getCookie('api_token');
-
-  if ( localCookie === undefined || localCookie === null ) {
-
-    const { token, error } = await generateAPIToken();
-
-    if ( error ) return { error: new Error("Cannot Generate Token") };
-
-  }
-
-  return { error: undefined };
-
-};
-
-const generateAPIToken = async () => {
-
-  const options = {
-    method: "POST",
-    headers: {
-      'Content-type': 'application/json'
-    }
-  }
-
-  const { data, error } = await fetch('/generate/token', options);
-
-  if ( !error ) {
-
-    return { data };
-
-  }
-
-  return { error };
+  API_TOKEN = key;
+  isLoggedIn = loggedIn;
 
 };
 
@@ -74,17 +46,14 @@ const getRequestOptions = async ( method, body = {}) => {
 
   hasInternetError = false;
 
-  const { error = undefined } = await ensureAPIToken();
-
-  if ( error ) return { error };
-
   const token = getCookie('api_token');
 
   const options = {
     method,
     headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-type': 'application/json'
+      'Authorization': `Bearer ${ token }`,
+      'Content-type': 'application/json',
+      'CSRF-Token': API_TOKEN
     }
   }
 
@@ -97,8 +66,6 @@ const getRequestOptions = async ( method, body = {}) => {
 export const GET = async url => {
 
   const { options, error } = await getRequestOptions('GET');
-
-  console.log( options );
 
   if ( error ) return { error: Error("Cannot Get Options") };
 

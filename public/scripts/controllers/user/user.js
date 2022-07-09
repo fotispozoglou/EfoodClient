@@ -32,7 +32,7 @@ const controlRenderUserPrivacy = async () => {
   const { data, error } = await userModel.getUserPreferences();
 
   ViewManager.render( PrivacyView, controlRenderUserPrivacy, {
-    preferences: data.preferences,
+    preferences: userModel.state.preferences,
     methods: {
       goBack: () => { ViewManager.renderPrevious(); },
       onSwitchSetting: controlSwitchPrivacySetting
@@ -119,7 +119,7 @@ const controlRenderUserAccount = async () => {
   const { data, error } = await userModel.getUserInfo();
 
   ViewManager.render( AccountView, controlRenderUserAccount, {
-    info: data,
+    info: userModel.state.info,
     methods: {
       goBack: () => { ViewManager.renderPrevious(); },
       saveUserInfo: controlSaveUserInfo,

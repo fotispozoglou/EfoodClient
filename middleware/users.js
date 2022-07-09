@@ -1,11 +1,11 @@
-const authenticateUser = async ( req, res, next ) => {
+const isLoggedIn = async ( req, res, next ) => {
 
-  if ( !req.user ) return res.status( 403 ).send();
+  if ( !req.isAuthenticated() ) return res.status( 403 ).send();
 
   next();
 
 };
 
 module.exports = {
-  authenticateUser
+  isLoggedIn
 };

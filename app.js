@@ -25,15 +25,11 @@ const csrf = require('csurf');
 const hpp = require('hpp');
 const expectCt = require('expect-ct');
 
-module.exports.csrfProtection = csrf();
-
 const mongoSanitize = require('express-mongo-sanitize');
 
 const MongoDBStore = require("connect-mongo");
 
 const logger = require('./logger/logger.js');
-
-const cookieParser = require('cookie-parser');
 
 const { SERVER_IP } = require('./config/config.js');
 
@@ -51,6 +47,10 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
+const csrfProtection = csrf();
+
+module.exports.csrfProtection = csrfProtection;
+
 // DEFINE APP ROUTES
 const indexRoutes = require('./routes/index.js');
 const shopRoutes = require('./routes/shop.js');
@@ -59,9 +59,9 @@ const usersRoutes = require('./routes/users.js');
 const { GENERAL } = require('./config/statusCodes.js');
 
 // EJS STUFF
-app.engine('ejs', ejsMate)
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'))
+app.set('views', path.join(__dirname, 'views'));
 
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: true }));
@@ -117,7 +117,6 @@ app.use(function(req, res, next) {
   }
 
 });
-
 
 app.use(session(sessionConfig));
 
@@ -223,7 +222,15 @@ app.use((err, req, res, next) => {
 
   if (!err.message) err.message = 'Server Error';
 
-  logger.error( err.stack );
+  // console.log(statusCode);
+
+  // if (err.code !== 'EBADCSRFTOKEN') {
+
+
+
+  // }
+
+  logger.info( err.stack );
   
   res.status( statusCode ).send(JSON.stringify({ status: GENERAL.ERROR }));
 

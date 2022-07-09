@@ -2,7 +2,15 @@ import { SERVER_URL } from "../config/config.js";
 import { GET, POST, PUT } from "../general/request.js";
 
 export const state = {
-
+  preferences: {
+    privateName: true,
+    privatePhone:	true
+  },
+  info: {
+    name: '',
+    phone: '',
+    username: ''
+  }
 };
 
 export const saveUserInfo = async info => {
@@ -23,7 +31,13 @@ export const getUserInfo = async () => {
 
   const { data, error } = await GET(`${ SERVER_URL }/info`);
 
-  if ( !error ) return { data };
+  if ( !error ) { 
+   
+    state.info.username = data.username;
+    state.info.phone = data.phone;
+    state.info.name = data.name;
+
+  }
 
   return { error };
 
@@ -33,7 +47,13 @@ export const getUserPreferences = async () => {
 
   const { data, error } = await GET(`${ SERVER_URL }/preferences`);
 
-  if ( !error ) return { data };
+  if ( !error ) {
+
+    state.preferences = data.preferences;
+
+    return { data };
+
+  }
 
   return { error };
 

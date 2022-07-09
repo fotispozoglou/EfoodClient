@@ -29,7 +29,11 @@ export default class SelectionsElement extends DOMElement {
 
   }
 
-  getSelected() { return this._type === "radio" ? [ this._selected ] : this._selected; }
+  getSelected() { 
+    
+    return this._type === "radio" ? this._selected ? [ this._selected ] : [] : this._selected; 
+  
+  }
 
   updateSelections( ...newSelections ) {
 

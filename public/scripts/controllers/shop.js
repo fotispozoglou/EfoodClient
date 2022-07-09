@@ -12,6 +12,7 @@ import ProductsView from '../views/products/ProductsView.js';
 import ErrorView from '../views/ErrorView.js';
 import { GENERAL } from '../config/statusCodes.js';
 import CategoriesFilterView from '../views/products/CategoriesFilterView.js';
+import { setAPIToken } from '../general/request.js';
 
 export const hideLoader = () => {
 
@@ -111,7 +112,9 @@ const initializeItems = async () => {
 
 const init = async () => {
 
-  console.log("INITING");
+  setAPIToken( window.api_token, window.user.isLoggedIn );
+
+  delete window.api_token;
 
   const { status, error } = await initializeItems();
 

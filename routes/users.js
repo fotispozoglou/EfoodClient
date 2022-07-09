@@ -3,8 +3,9 @@ const router = express.Router();
 const passport = require('passport');
 const catchAsync = require('../utils/catchAsync.js');
 const users = require('../controllers/users.js');
-const { authenticateUser } = require('../middleware/users.js');
+const { isLoggedIn } = require('../middleware/users.js');
 const { loginLimiter, registerLimiter } = require('../middleware/limiters.js');
+const { csrfProtection } = require('../app.js');
 
 router.post('/generate/token', users.getAPIToken);
 
@@ -21,21 +22,21 @@ router.route('/login')
   );
 
 router.route('/info')
-  .get( authenticateUser, catchAsync( users.getUserInfo ) )
-  .put( catchAsync( users.saveUserInfo ) );
+  .get( csrfProtection, isLoggedIn, catchAsync( users.getUserInfo ) )
+  .put( csrfProtection, isLoggedIn, catchAsync( users.saveUserInfo ) );
 
 router.route('/preferences')
-  .get( catchAsync( users.getPrivacySettings ) )
-  .put( catchAsync( users.updatePrivacySettings ) );
+  .get( isLoggedIn, catchAsync( users.getPrivacySettings ) )
+  .put( csrfProtection, isLoggedIn, catchAsync( users.updatePrivacySettings ) );
 
 router.route('/password')
-  .put( catchAsync( users.updateUserPassword ) );
+  .put( csrfProtection, isLoggedIn, catchAsync( users.updateUserPassword ) );
 
 router.route('/deleteUser')
-  .post( catchAsync( users.deleteUser ) );
+  .post( csrfProtection, isLoggedIn, catchAsync( users.deleteUser ) );
 
-router.post('/admin/information', users.getUserInformation);
+router.post('/admin/information', csrfProtection, users.getUserInformation);
 
-router.get('/logout', users.logout)
+router.get('/logout', users.logout);
 
 module.exports = router;
