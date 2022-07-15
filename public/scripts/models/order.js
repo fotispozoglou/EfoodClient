@@ -31,8 +31,6 @@ const startCheckOrderTimeout = () => {
   checkOrderTimeout = setTimeout( async () => { 
     
     await checkOrderStatus( state.trackingOrderID, state.responseCallback );
-
-    console.log(`SECONDS PASSED ${ (Date.now() - t1) / 1000 }`);
     
     startCheckOrderTimeout();
   
@@ -43,8 +41,6 @@ const startCheckOrderTimeout = () => {
 const setTimeoutTime = time => {
 
   if ( !time ) time = 10000;
-
-  console.log("UPDATING TO " + time * 1000);
 
   checkOrderTime = time * 1000;
 

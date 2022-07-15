@@ -1,4 +1,4 @@
-import { LANGUAGE } from '../../config/strings.js';
+import { LANGUAGE, languages } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
 import View from '../base/View.js';
 import SelectionsElement from '../general/SelectionsElement.js';
@@ -8,32 +8,30 @@ export default new class SettingsView extends View {
 
   _generateElement() {
 
-    const { goBack, saveUserInfo } = this._data.methods;
+    const { goBack, onChangeLanguage } = this._data.methods;
 
     const backBtn = new DOMElement("div")
       .setClass('fa-solid fa-arrow-left back_btn')
       .on('click', () => { goBack(); })
       .getElement();
 
-    const selectedLanguage = Number( localStorage.getItem('lang') );
+    const selectedLanguage = localStorage.getItem('lang');
 
     const language = new SelectionsElement(
       LANGUAGE, 
       LANGUAGE, 
       "radio", 
-      [{ _id: 0, name: 'English' },{ _id: 1, name: 'Ελληνικά' }], 
+      [{ _id: 'EN', name: 'English' },{ _id: 'GR', name: 'Ελληνικά' }], 
       [selectedLanguage], 
       1, 
       selection => {  
 
-        localStorage.setItem('lang', selection);
-
-        document.location.reload( true );
+        onChangeLanguage( selection );
 
       }
     );
 
-    return new DOMElement("div").append( backBtn, language.build() ).getElement();
+    return new DOMElement("div").append( language.build() ).getElement();
 
   }
 

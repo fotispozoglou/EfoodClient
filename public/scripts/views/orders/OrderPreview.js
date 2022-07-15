@@ -1,6 +1,7 @@
 import DOMElement from "../base/DOMElement.js";
 import statusTexts, { ORDER_STATUS_NOT_ACCURATE } from '../../config/strings.js';
 import statusColors from '../../config/colors.js';
+import { shopRouter } from "../../controllers/shop.js";
 
 export default class OrderPreview extends DOMElement {
   _id;
@@ -108,11 +109,16 @@ export default class OrderPreview extends DOMElement {
       .append( statusErrorIcon, statusErrorText )
       .getElement();
 
-    this._element = new DOMElement("div")
+    this._element = new DOMElement("a")
       .setClass('order_preview')
-      .on('click', () => { this._methods.onClick( this._id ) })
+      .attributes(
+        ['role', `link`],
+        ['href', `/orders/${ this._id }`]
+      )
       .append( totalPrice, time, date, this._statusElement.getElement(), this._statusErrorContainer )
       .getElement();
+
+    shopRouter.addLinkClick( this._element );
 
     return this._element;
 

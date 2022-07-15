@@ -55,7 +55,7 @@ export const controlRegisterUser = async formElement => {
 
 export const controlRenderLogin = () => {
 
-  ViewManager.render( AuthenticationView, () => {}, {
+  ViewManager.render( AuthenticationView, {
     methods: {
       onLogin: controlLoginUser,
       onRegister: controlRegisterUser

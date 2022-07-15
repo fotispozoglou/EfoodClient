@@ -19,8 +19,15 @@ const UserSchema = new Schema({
   name: String,
   phone: String,
   preferences: {
-    privateName: Boolean,
-    privatePhone: Boolean
+    privacy: {
+      privateName: Boolean,
+      privatePhone: Boolean
+    },
+    language: {
+      type: String,
+      default: 'EN',
+      enum: ['EN', 'GR']
+    }
   }
 });
 

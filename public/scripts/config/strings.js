@@ -1,9 +1,14 @@
 import { AUTHENTICATION, ORDER } from "./statusCodes.js";
 
+export const languages = new Map();
+
+languages.set('EN', 0);
+languages.set('GR', 1);
+
 export const EN = 0;
 export const GR = 1;
 
-let lang = Number(localStorage.getItem('lang'));
+let lang = languages.get(localStorage.getItem('lang'));
 
 if ( lang !== 0 && lang !== 1 ) lang = 0;
 
@@ -206,6 +211,11 @@ export const MISSING_USERNAME = [
 export const MISSING_PASSWORD = [
   'fill the password',
   'συμπληρώστε τον κωδικό πρόσβασης'
+][ lang ];
+
+export const ERROR_CHANGING_LANGUAGE = [
+  'error changing language',
+  'πρόβλημα αλλαγής γλώσσας'
 ][ lang ];
 
 const statusTexts = new Map();

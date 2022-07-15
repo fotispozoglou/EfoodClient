@@ -29,7 +29,7 @@ export default new class CategoriesFilterView extends View {
 
     filter.addEventListener('click', e => { e.stopPropagation(); });
 
-    return new DOMElement("div").setID('categories').on('click', () => { this.hide(); }).append( header, filter ).getElement();
+    return new DOMElement("div").addClass('hidden').setID('categories').on('click', () => { this.hide(); }).append( header, filter ).getElement();
 
   }
 

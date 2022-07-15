@@ -1,16 +1,18 @@
 "use strict";
 
-const escapeHTML = require('escape-html');
+const { strings, languages } = require('../config/strings.js');
 
 module.exports.renderShop = async ( req, res ) => {
 
-  const products = [
-    { name: 'Πίτdα γύρο<script>alert(1);</script>' },
-    { name: 'Πίτα κοτόπουλο' },
-    { name: 'Σαλάτα με λαχανικά' },
-    { name: 'Sprite με ανθρακικό' }
-  ];
+  const allStrings = strings;
 
-  res.render('shop/index', { user: req.user, products: products, csrfToken: req.csrfToken() });
+  const languageNumber = req.user ? languages.get( req.user.preferences.language ) : 0;
+
+  res.render('shop/index', { 
+    user: req.user, 
+    csrfToken: req.csrfToken(),
+    language: languageNumber,
+    strings: allStrings
+  });
 
 };

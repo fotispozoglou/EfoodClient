@@ -8,6 +8,7 @@ import statusColors from '../../config/colors.js';
 import statusTexts, { ORDER_NUMBER, ORDER_STATUS_NOT_ACCURATE, TOTAL_PRICE } from '../../config/strings.js';
 
 import { ORDER } from '../../config/statusCodes.js';
+import { shopRouter } from '../../controllers/shop.js';
 
 export default new class OrderVIew extends View {
   _parent = document.querySelector("#main");
@@ -56,7 +57,18 @@ export default new class OrderVIew extends View {
 
     const { stopCheckingStatus, removeOrder } = this._data;
 
-    const backBtn = new DOMElement("i").setClass('fas fa-arrow-left order_back_btn').on('click', () => { stopCheckingStatus(); this.remove() }).getElement();
+    const backBtn = new DOMElement("i")
+      .setClass('fas fa-arrow-left order_back_btn')
+      .on('click', () => {
+
+        stopCheckingStatus(); 
+        
+        this.remove(); 
+      
+        shopRouter.go('/orders');
+
+      })
+      .getElement();
 
     const titleLabel = new DOMElement("p").setClass('order_number').setText( ORDER_NUMBER ).getElement();
 
@@ -117,7 +129,18 @@ export default new class OrderVIew extends View {
 
     this._isRendered = true;
 
-    return new DOMElement("div").setClass('order_background').on('click', () => { stopCheckingStatus(); this.remove(); }).append( order ).getElement();
+    return new DOMElement("div")
+      .setClass('order_background')
+      .on('click', () => { 
+        
+        stopCheckingStatus(); 
+        
+        this.remove(); 
+      
+        shopRouter.go('/orders');
+
+      })  
+      .append( order ).getElement();
 
   }
 

@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const { strings, languages } = require('../config/strings.js');
+
 router.get('/', ( req, res ) => {
+
+  const allStrings = strings;
+
+  const languageNumber = req.user ? languages.get( req.user.preferences.language ) : 0;
 
   const products = [
     { name: 'Πίτα γύρο' },
@@ -17,7 +23,12 @@ router.get('/', ( req, res ) => {
     { name: 'Sus' }
   ];
 
-  res.render('index', { products, categories });
+  res.render('index', { 
+    products, 
+    categories,
+    language: languageNumber,
+    strings: allStrings
+  });
 
 });
 

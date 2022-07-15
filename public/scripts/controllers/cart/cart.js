@@ -116,7 +116,7 @@ export const controlRenderCart = async () => {
 
   if ( !CartView._rerender ) {
 
-    ViewManager.render( CartView, controlRenderCart, {
+    CartView.render({
       items: shopModel.state.cartProducts,
       orderTotal: data.total,
       itemMethods: {
@@ -127,10 +127,8 @@ export const controlRenderCart = async () => {
       methods: {
         onOrder: () => { orderController.controlRenderOrderInfo(); }
       }
-    }, false);
+    });
 
   }
-
-  CartView.show();
 
 };

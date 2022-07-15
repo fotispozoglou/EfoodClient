@@ -20,93 +20,37 @@ export const openPrivacyBtn = document.querySelector("#user_menu_privacy");
 export const openSettingsBtn = document.querySelector("#user_menu_settings");
 
 export default new class ViewManager {
-  _renderedViews = [  ];
-  _renderFunctions = [  ];
-  _renderingPrevious = false;
-  
-  init( view = View, renderFunction, data ) {
+  _renderedView = null;
 
-    this._renderedViews = [ view ];
+  isRenderedView( view ) {
 
-    this._renderFunctions = [ renderFunction ];
+    if ( !this._renderedView ) return false;
 
-    view.render( data );
-
-  }
-
-  reset( view = View, renderFunction, data ) {
-
-    if ( this._renderedViews.length > 1 ) {
-
-      for ( let index = this._renderedViews.length - 1; index >= 1; index -= 1 ) {
-
-        this._renderedViews[ index ].remove();
-
-        this._renderFunctions.splice( index, 1 );
-
-        this._renderedViews.splice( index, 1 );
-
-      }
-
-    }
-
-    this._renderedViews = [ view ];
-
-    this._renderFunctions = [ renderFunction ];
-
-    view.render( data );
-
-    view.showElements();
+    return this._renderedView.getID() === view.getID() && view.rendered;
 
   }
 
   hideCurrentView() {
 
-    this._renderedViews[ this._renderedViews.length - 1 ].hideElements();
+    this._renderedView.hideElements();
 
-    this._renderedViews[ this._renderedViews.length - 1 ].remove();
-
-    this._renderFunctions.splice( this._renderFunctions.length - 1, 1 );
-
-    this._renderedViews.splice( this._renderedViews.length - 1, 1 );
+    this._renderedView.remove();
 
   }
 
-  renderPrevious() {
+  render( view = View, data, hideCurrent ) {
 
-    this._renderingPrevious = true;
+    if ( this._renderedView ) {
 
-    this._renderFunctions[ this._renderFunctions.length - 2 ]();
+      this._renderedView.hideElements();
 
-  }
-
-  render( view = View, renderFunction, data, hideCurrent ) {
-
-    if ( this._renderingPrevious ) {
-
-      this.hideCurrentView();
-
-      this._renderingPrevious = false;
-
-    }
-
-    if ( view.getType() === MAIN ) {
-
-      this._renderedViews[ this._renderedViews.length - 1 ].hideElements();
-
-      if ( hideCurrent ) this._renderedViews[ this._renderedViews.length - 1 ].remove();
-
-      if ( view.getID() !== this._renderedViews[ this._renderedViews.length - 1 ].getID() ) {
-
-        this._renderedViews.push( view );
-        
-        this._renderFunctions.push( renderFunction );
-
-      }
+      if ( hideCurrent ) this._renderedView.remove();
 
     }
 
     view.render( data );
+
+    if ( view.getType() === MAIN ) this._renderedView = view;
 
     view.showElements();
 

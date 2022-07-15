@@ -29,6 +29,8 @@ router.route('/preferences')
   .get( isLoggedIn, catchAsync( users.getPrivacySettings ) )
   .put( csrfProtection, isLoggedIn, catchAsync( users.updatePrivacySettings ) );
 
+router.post('/language', csrfProtection, isLoggedIn, catchAsync( users.changeUserLanguage ));
+
 router.route('/password')
   .put( csrfProtection, isLoggedIn, catchAsync( users.updateUserPassword ) );
 

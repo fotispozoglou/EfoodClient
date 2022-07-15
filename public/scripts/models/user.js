@@ -13,6 +13,16 @@ export const state = {
   }
 };
 
+export const updateUserLanguage = async language => {
+
+  const { data, error } = await POST(`${ SERVER_URL }/language`, { language });
+
+  if ( !error ) return { data };
+
+  return { error };
+
+};
+
 export const saveUserInfo = async info => {
 
   const { data, error } = await PUT(`${ SERVER_URL }/info`, { info });

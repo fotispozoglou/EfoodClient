@@ -89,6 +89,12 @@ export default class ListView extends View {
 
   }
 
+  updateList( ...items ) {
+
+    console.log(this);
+
+  }
+
   removeItems( ...itemsIDS ) {
 
     let foundAll = false;

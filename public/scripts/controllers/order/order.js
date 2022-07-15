@@ -144,7 +144,7 @@ const controlCompleteOrder = async () => {
 
     await controlRenderOrders();
 
-    ViewManager.render( OrderView, () => {  }, {  
+    ViewManager.render( OrderView, {  
       order,
       stopCheckingStatus: () => { if ( order.status.number !== ORDER.STATUS_PENDING ) orderModel.stopCheckOrderTimeout(); }
     }, false );
@@ -183,7 +183,7 @@ export const controlRenderOrderInfo = async () => {
 
   menuRight.classList.add('hidden');
 
-  ViewManager.render( OrderInfo, controlRenderOrderInfo, {
+  ViewManager.render( OrderInfo, {
     cartProducts: data.products,
     methods: {
       goBack: () => { ViewManager.renderPrevious(); }

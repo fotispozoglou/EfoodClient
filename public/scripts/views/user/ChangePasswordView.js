@@ -1,11 +1,13 @@
+import { shopRouter } from "../../controllers/shop.js";
 import DOMElement from "../base/DOMElement.js";
-import View from "../base/View.js";
+import View, { WINDOW } from "../base/View.js";
 import InputElement from "../general/inputs/InputElement.js";
 import PasswordInput from "../general/inputs/PasswordInput.js";
 
 export default new class ChangePasswordView extends View {
   _parent = document.querySelector("#main_center");
   id = "change_password";
+  _type = WINDOW;
 
   _generateElement() {
 
@@ -13,7 +15,7 @@ export default new class ChangePasswordView extends View {
 
     const backBtn = new DOMElement("div")
       .setClass('fa-solid fa-arrow-left back_btn')
-      .on('click', () => { goBack(); })
+      .on('click', () => { this.remove(); shopRouter.go('/account'); })
       .getElement();
 
     const currentPassword = new PasswordInput("current password", "", () => {  }, true);

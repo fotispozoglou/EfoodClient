@@ -8,7 +8,7 @@ export const LONG = 6 * 1000;
 
 const typesMap = new Map();
 typesMap.set( MESSAGE.MESSAGE_SUCCESS, { icon: 'fa-solid fa-check', className: 'success' });
-typesMap.set( MESSAGE.MESSAGE_ERROR, { icon: 'fa-solid fa-exclamation', className: 'error' });
+typesMap.set( MESSAGE.MESSAGE_ERROR, { icon: 'fa-solid fa-times', className: 'error' });
 typesMap.set( MESSAGE.MESSAGE_INFO, { icon: 'fa-solid fa-info', className: 'info' });
 typesMap.set( MESSAGE.MESSAGE_NOTIFY, { icon: 'fa-solid fa-bell', className: 'notify' });
 
@@ -83,7 +83,7 @@ export default class Notification extends DOMElement {
 
     const { icon: typeIcon, className } = typesMap.get( this._type );
 
-    const icon = new DOMElement("i").setClass( `${typeIcon} notification_icon` ).getElement();
+    const icon = new DOMElement("i").addClass( `${ typeIcon } ${ className } notification_icon` ).getElement();
     const iconContainer = new DOMElement("div").setClass('notification_icon_container').append( icon ).getElement();
 
     const messageText = new DOMElement("p").setClass('notification_text').setText( this._text ).getElement();

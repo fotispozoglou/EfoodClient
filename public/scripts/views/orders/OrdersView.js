@@ -37,6 +37,14 @@ export default new class OrdersView extends View {
 
   }
 
+  updateList( ...items ) {
+
+    console.log(items);
+
+    this._ordersList.refresh( ...items );
+
+  }
+
   showOrderStatusError( orderID ) {
 
     this._ordersList.customModify(function( element ) {
@@ -67,24 +75,17 @@ export default new class OrdersView extends View {
 
   _generateElement() {
 
-    const { orders, onClick, renderPrevious } = this._data;
-
-    this._ordersBackBtn = new DOMElement("div")
-      .setClass('fa-solid fa-arrow-left back_btn')
-      .on('click', () => { renderPrevious(); })
-      .getElement();
-
-    ordersBackBtn = this._ordersBackBtn;
+    const { orders, onClick } = this._data;
 
     this._ordersList = new ListElement( orders, OrderPreview, "", "orders_list", { onClick } );
 
     this._ordersList.setNoItemsItem( this._noItemsItem );
 
-    return new DOMElement("div").append( this._ordersBackBtn, this._ordersList.build() ).getElement();
+    return new DOMElement("div").append( this._ordersList.build() ).getElement();
 
   }
 
-  showElements() { this._ordersBackBtn.classList.remove('hidden'); }
-  hideElements() { this._ordersBackBtn.classList.add('hidden'); }
+  showElements() {  }
+  hideElements() {  }
 
 }

@@ -14,6 +14,11 @@ import { GENERAL } from '../config/statusCodes.js';
 import CategoriesFilterView from '../views/products/CategoriesFilterView.js';
 import { setAPIToken } from '../general/request.js';
 
+import Router from './Router.js';
+import CartView from '../views/cart/CartView.js';
+
+export const shopRouter = new Router(['/shop', productsController.controlRenderProducts]);
+
 export const hideLoader = () => {
 
   document.querySelector(".is_loading").addEventListener('animationiteration', () => {
@@ -31,46 +36,24 @@ export const hideLoader = () => {
 const renderViews = async () => {
 
   hideLoader();
+  
+  productsController.controlRenderProductCategoriesFilter();
 
-  ViewManager.init( ProductsView, productsController.controlRenderProducts, {
-    items: shopModel.state.productsCategories,
-    itemMethods: {
-      onClick: productsController.controlRenderAddCartProduct
-    },
-    methods: {
-
-    }
-  });
+  cartController.controlRenderCart();
 
   if ( openAuthenticationBtn ) {
 
     openAuthenticationBtn.addEventListener('click', () => {
 
       authenticatationController.controlRenderLogin();
-  
+
     });
 
   }
 
-  productsController.controlRenderProductCategoriesFilter();
-
   openCartBtn.addEventListener('click', () => {
 
-    cartController.controlRenderCart();
-
-  });
-
-  headerLogo.addEventListener('click', () => {
-
-    ViewManager.reset(ProductsView, productsController.controlRenderProducts, {
-      items: shopModel.state.productsCategories,
-      itemMethods: {
-        onClick: productsController.controlRenderAddCartProduct
-      },
-      methods: {
-  
-      }
-    });
+    CartView.show();
 
   });
 
@@ -120,21 +103,31 @@ const init = async () => {
 
   if ( error && navigator.onLine ) {  hideLoader(); return ErrorView.render({ text: 'please try again in a moment' }); }
 
-  await renderViews();
+  await renderViews();  
 
   initializeListeners();
+
+  shopRouter.route(
+    { path: '/shop', render: productsController.controlRenderProducts },
+    { path: '/account', render: userController.controlRenderUserAccount },
+    { path: '/account/change_password', render: userController.controlRenderChangePassword },
+    { path: '/account/delete', render: userController.controlRenderDeleteUser },
+    { path: '/privacy', render: userController.controlRenderUserPrivacy },
+    { path: '/settings', render: userController.controlRenderUserSettings },
+    { path: '/orders', render: ordersController.controlRenderOrders },
+    { path: '/orders/:orderID', render: ordersController.controlRenderOrder, originPath: '/orders' },
+    { path: '/authenticate', render: authenticatationController.controlRenderLogin }
+  );
+
+  shopRouter.init( window.location.pathname );
+
+  window.rtr = shopRouter;
 
   if ( window.user && window.user.isLoggedIn ) {
 
     ordersController.checkUserHasActiveOrder();
 
     await userController.initUser();
-
-    openOrdersBtn.addEventListener('click', () => {
-
-      ordersController.controlRenderOrders();
-  
-    });
 
   }
 

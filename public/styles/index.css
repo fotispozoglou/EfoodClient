@@ -11,6 +11,7 @@ html  {
   margin: 0;
   padding: 0;
   font-size: 1em;
+  text-decoration: none;
   box-sizing: border-box;
 }
 
@@ -60,6 +61,11 @@ form {
   width: 0px;
 }
 
+a {
+  text-decoration: none;
+  color: #333;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -90,9 +96,9 @@ img {
   display: flex!important;
 }
 
-button {
+button, .link_button {
   width: 190px;
-  margin: 0 10px;
+  max-width: 190px;
   border: none;
   background: none;
   outline: none;
@@ -102,11 +108,17 @@ button {
   background-color: #ff00001f;
   font-size: 1em;
   font-weight: bolder;
+  height: max-content;
   margin: auto;
+  text-align: center;
   transition: .25s background-color, .25s color;
 }
 
-button:hover {
+.link_button {
+  margin-bottom: 10px;
+}
+
+button:hover, .link_button:hover {
   cursor: pointer;
   background-color: #ff000036;
 }
@@ -780,7 +792,7 @@ textarea.input_field {
   left: 5%;
   top: 20px;
   background-color: white;
-  opacity: 0.9;
+  background-color: #f2f2f2;
   color: white;
   border-radius: 6px;
   z-index: 100000;
@@ -806,6 +818,7 @@ textarea.input_field {
   font-size: 1em;
   padding: 6px;
   text-align: center;
+  color: #333;
 }
 
 .notification_text_container {
@@ -821,20 +834,25 @@ textarea.input_field {
   margin: auto;
 }
 
-.success_notification {
-  background-color: #27ca19;
+.notification_icon {
+  font-size: 1.25em;
+  padding: 2px 2px 0px 5px;
 }
 
-.error_notification {
-  background-color: #bd1818;
+.success.notification_icon {
+  color: #27ca19;
 }
 
-.info_notification {
-  background-color: #caa61a;
+.error.notification_icon {
+  color: #bd1818;
 }
 
-.notify_notification {
-  background-color: #381aca;
+.info.notification_icon {
+  color: #caa61a;
+}
+
+.notify.notification_icon {
+  color: #381aca;
 }
 
 .progress_bar {
@@ -844,6 +862,7 @@ textarea.input_field {
 
 .success_notification_progress {
   background-color: #1bac0e;
+  transition: .25s width;
 }
 
 .error_notification_progress {
@@ -853,10 +872,12 @@ textarea.input_field {
 
 .info_notification_progress {
   background-color: #b99509;
+  transition: .25s width;
 }
 
 .notify_notification_progress {
   background-color: #2509af;
+  transition: .25s width;
 }
 
 .progress_bar_container {
@@ -938,6 +959,7 @@ textarea.input_field {
   display: flex;
   flex-direction: row;
   padding: 8px 10px 6px 5px;
+  text-decoration: none;
 }
 
 .user_menu_item:hover {
@@ -1019,8 +1041,13 @@ textarea.input_field {
 .privacy_settings_title {
   font-size: 1.2em;
   font-weight: bolder;
-  margin: 0px 5%;
   padding: 10px;
+  background-color: #fbfbfb;
+  border-radius: 0 0 20px 20px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 }
 
 #change_password {

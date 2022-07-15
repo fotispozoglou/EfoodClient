@@ -2,6 +2,7 @@ import { ACCOUNT, CHANGE_PASSWORD, DELETE_ACCOUNT, NAME, PHONE, SAVE, SURNAME, U
 import DOMElement from '../base/DOMElement.js';
 import View, { MAIN, WINDOW } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
+import LinkButton from '../general/LinkButton.js';
 
 import { ordersBackBtn } from '../orders/OrdersView.js';
 
@@ -14,12 +15,7 @@ export default new class AccountView extends View {
 
     const { username, name, phone } = this._data.info;
 
-    const { goBack, saveUserInfo, onChangePassword, onDeleteAccount } = this._data.methods;
-
-    const backBtn = new DOMElement("div")
-      .setClass('fa-solid fa-arrow-left back_btn')
-      .on('click', () => { goBack(); })
-      .getElement();
+    const { saveUserInfo } = this._data.methods;
 
     const title = new DOMElement("p")
       .setText( ACCOUNT )
@@ -47,33 +43,18 @@ export default new class AccountView extends View {
       })  
       .getElement();
 
-    const changePasswordBtn = new DOMElement("button")
-      .setText( CHANGE_PASSWORD )
-      .on('click', () => { 
-        
-        onChangePassword();
+    const changePasswordBtn = new LinkButton( CHANGE_PASSWORD, "/account/change_password" );
 
-      })
-      .getElement();
-
-    const deleteAccountBtn = new DOMElement("button")
-      .setText( DELETE_ACCOUNT )
-      .on('click', () => { 
-        
-        onDeleteAccount();
-
-      })
-      .getElement();
+    const deleteAccountBtn = new LinkButton( DELETE_ACCOUNT, "/account/delete" );
 
     return new DOMElement("div").append( 
-      backBtn, 
       title, 
       usernameElement.getElement(), 
       nameElement.getElement(),
       phoneElement.getElement(),
       saveBtn,
-      changePasswordBtn,
-      deleteAccountBtn
+      changePasswordBtn.build(),
+      deleteAccountBtn.build()
     ).getElement();
 
   }

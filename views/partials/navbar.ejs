@@ -1,30 +1,30 @@
 <div id="navbar">
-  <img id="header_logo" src="/logo.svg" alt="" width="129" height="56">
+  <a href="/shop" role="link"><img id="header_logo" src="/logo.svg" alt="" width="129" height="56"></a>
   <% if ( currentUser ) { %>
-    <div id="orders_btn" class="navbar_icon_container">
+    <a href="/orders" role="link" id="orders_btn" class="navbar_icon_container">
       <i id="orders_error_icon" class="fa-solid fa-triangle-exclamation hidden"></i>
       <i id="open_orders_btn" class="fa-solid fa-bag-shopping navbar_icon"></i>
-    </div>
+    </a>
     <div id="user_btn" class="navbar_icon_container">
       <i class="fa-solid fa-fw fa-user navbar_icon"></i>
       <div class="hidden" id="close_user_menu_container"></div>
       <div class="hidden" id="user_menu">
-        <div id="user_menu_account" class="user_menu_item">
+        <a href="/account" role="link" id="user_menu_account" class="user_menu_item">
           <div class="user_menu_icon fa-solid fa-fw fa-user"></div>
-          <p class="user_menu_item_text">account</p>
-        </div>
-        <div id="user_menu_privacy" class="user_menu_item">
+          <p class="user_menu_item_text"><%= strings.get('ACCOUNT')[ language ] %></p>
+        </a>
+        <a href="/privacy" role="link" id="user_menu_privacy" class="user_menu_item">
           <div class="user_menu_icon fa-solid fa-fw fa-shield-halved"></div>
-          <p class="user_menu_item_text">privacy</p>
-        </div>
-        <div id="user_menu_settings" class="user_menu_item">
+          <p class="user_menu_item_text"><%= strings.get('PRIVACY')[ language ] %></p>
+        </a>
+        <a href="/settings" role="link" id="user_menu_settings" class="user_menu_item">
           <div class="user_menu_icon fa-solid fa-fw fa-gear"></div>
-          <p class="user_menu_item_text">settings</p>
-        </div>
-        <div id="user_menu_logout" class="user_menu_item">
+          <p class="user_menu_item_text"><%= strings.get('SETTINGS')[ language ] %></p>
+        </a>
+        <a href="/logout" id="user_menu_logout" class="user_menu_item">
           <div class="user_menu_icon fa-solid fa-fw fa-right-from-bracket"></div>
-          <a class="user_menu_item_text" href="/logout">logout</a>
-        </div>
+          <p class="user_menu_item_text"><%= strings.get('LOGOUT')[ language ] %></p>
+        </a>
       </div>
     </div>
   <% } else { %>

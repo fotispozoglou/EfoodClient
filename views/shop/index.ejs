@@ -12,15 +12,15 @@
 
   </div>
   <div id="main_center">
-    <input type="text" value="" placeholder="Search products" id="search_products_input">
+    <input type="text" class="hidden" value="" placeholder="Search products" id="search_products_input">
   </div>
   <div id="main_right">
     
   </div>
-  <div id="cart_btn_container">
+  <div id="cart_btn_container"  class="hidden">
     <i id="cart_btn" class="fa-solid fa-shopping-basket"></i>
   </div>
-  <div id="categories_btn_container">
+  <div id="categories_btn_container" class="hidden">
     <i id="categories_btn" class="fa-solid fa-fw fa-bars-progress"></i>
     <p id="categories_btn_label">categories</p>
   </div>
@@ -56,4 +56,5 @@
 <% } %>
 
 <script type="module" src="/scripts/controllers/shop.js"></script>
+
 <%- include('../partials/footer.ejs'); %>

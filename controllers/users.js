@@ -35,8 +35,11 @@ module.exports.register = async ( req, res ) => {
       name: '',
       phone: '',
       preferences: { 
-        privateName: true, 
-        privatePhone: true 
+        privacy: {
+          privateName: true, 
+          privatePhone: true 
+        },
+        language: 'EN'
       } 
     });
 
@@ -176,11 +179,11 @@ module.exports.updatePrivacySettings = async ( req, res ) => {
 
   if ( preference.name === "visible_name" ) {
 
-    await User.updateOne({ _id: userID }, { 'preferences.privateName': preference.value })
+    await User.updateOne({ _id: userID }, { 'preferences.privacy.privateName': preference.value })
 
   } else if ( preference.name === "visible_phone" ) {
 
-    await User.updateOne({ _id: userID }, { 'preferences.privatePhone': preference.value });
+    await User.updateOne({ _id: userID }, { 'preferences.privacy.privatePhone': preference.value });
 
   }
 
@@ -241,5 +244,17 @@ module.exports.deleteUser = async ( req, res ) => {
       });
 
   });
+
+};
+
+module.exports.changeUserLanguage = async ( req, res ) => {
+
+  const { language } = req.body;
+
+  req.user.preferences.language = language;
+
+  await User.updateOne({ _id: req.user._id }, { $set: { 'preferences.language': language } });
+
+  res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
 
 };

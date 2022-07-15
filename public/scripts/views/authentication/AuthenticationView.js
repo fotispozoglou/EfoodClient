@@ -105,6 +105,8 @@ export default new class AuthenticationView extends View {
 
   _generateElement() {
 
+    const { goBack } = this._data.methods;
+
     this.generateLogin();
     this.generateRegister();
 

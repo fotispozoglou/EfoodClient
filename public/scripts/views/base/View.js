@@ -8,6 +8,7 @@ export default class View {
   _data;
   _element;
   _rerender = false;
+  _rendered = false;
   _dataElements = [];
   _parent = document.querySelector("#main");
   id = "";
@@ -20,6 +21,8 @@ export default class View {
 
     this._element = this._generateElement();
 
+    this._rendered = true;
+
     // if ( this._rerender ) this._parent.innerHTML = '';
 
     this._element.id = this.id;
@@ -27,6 +30,8 @@ export default class View {
     this._parent.insertAdjacentElement('beforeend', this._element);
 
   }
+
+  get rendered() { return this._rendered; }
 
   setType( type ) { this._type = type; }
 
@@ -80,7 +85,7 @@ export default class View {
 
   }
 
-  remove() { this._element.remove(); delete this; }
+  remove() { this._element.remove(); console.log("REMOVING " + this.id); delete this; }
 
   _generateElement() { return new DOMElement("div"); }
 

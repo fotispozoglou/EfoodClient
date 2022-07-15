@@ -118,7 +118,9 @@ const controlRemoveOrder = async orderID => {
 
 };
 
-const controlRenderOrder = async orderID => {
+export const controlRenderOrder = async ({ orderID }) => {
+
+  if ( !OrdersView.rendered ) await controlRenderOrders();
 
   const { data, error } = await ordersModel.loadOrder( orderID );
 
@@ -176,7 +178,7 @@ export const controlRenderOrders = async () => {
 
   }
 
-  ViewManager.render( OrdersView, controlRenderOrders, {
+  ViewManager.render( OrdersView, {
     orders,
     onClick: controlRenderOrder,
     renderPrevious: () => { ViewManager.renderPrevious(); }

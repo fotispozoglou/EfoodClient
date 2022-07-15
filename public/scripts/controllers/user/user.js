@@ -6,16 +6,32 @@ import * as userModel from '../../models/user.js';
 import { controlRenderMessage } from "../../general/messages.js";
 import { MESSAGE } from "../../config/types.js";
 import { LONG, SHORT } from "../../views/general/Notification.js";
-import { ACCOUNT_DELETED, ALREADY_ACTIVE_ORDER_DELETE, ERROR_DELETING_USER, ERROR_SAVING_NEW_INFO, ERROR_UPDATING_PASSWORD, PASSWORD_CHANGED_SUCCESSFULLY } from "../../config/strings.js";
+import { ACCOUNT_DELETED, ALREADY_ACTIVE_ORDER_DELETE, ERROR_CHANGING_LANGUAGE, ERROR_DELETING_USER, ERROR_SAVING_NEW_INFO, ERROR_UPDATING_PASSWORD, PASSWORD_CHANGED_SUCCESSFULLY } from "../../config/strings.js";
 import ChangePasswordView from "../../views/user/ChangePasswordView.js";
 import { GENERAL, ORDER } from "../../config/statusCodes.js";
 import SeriousConfirmActionView from "../../views/general/SeriousConfirmActionView.js";
+import { shopRouter } from "../shop.js";
+// import Router from "../Router.js";
+// import { shopRouter } from "../shop.js";
 
-const controlRenderUserSettings = () => {
+const controlChangeLanguage = async language => {
 
-  ViewManager.render( SettingsView, controlRenderUserSettings, {
+  const { data, error } = await userModel.updateUserLanguage( language );
+
+  if ( error ) return controlRenderMessage( ERROR_CHANGING_LANGUAGE, MESSAGE.MESSAGE_ERROR, 99999 );
+
+  localStorage.setItem('lang', language);
+
+  document.location.reload( true );
+
+};
+
+export const controlRenderUserSettings = () => {
+
+  ViewManager.render( SettingsView, {
     methods: {
-      goBack: () => { ViewManager.renderPrevious(); }
+      goBack: () => {  },
+      onChangeLanguage: controlChangeLanguage
     }
   }, true );
 
@@ -27,14 +43,14 @@ const controlSwitchPrivacySetting = async ( name, value ) => {
 
 };
 
-const controlRenderUserPrivacy = async () => {
+export const controlRenderUserPrivacy = async () => {
 
   const { data, error } = await userModel.getUserPreferences();
 
-  ViewManager.render( PrivacyView, controlRenderUserPrivacy, {
-    preferences: userModel.state.preferences,
+  ViewManager.render( PrivacyView, {
+    preferences: userModel.state.preferences.privacy, 
     methods: {
-      goBack: () => { ViewManager.renderPrevious(); },
+      goBack: () => { shopRouter.back() },
       onSwitchSetting: controlSwitchPrivacySetting
     }
   }, true );
@@ -47,7 +63,7 @@ const controlSaveUserInfo = async info => {
 
   if ( error ) return controlRenderMessage( ERROR_SAVING_NEW_INFO ,MESSAGE.MESSAGE_ERROR, LONG);
 
-  controlRenderMessage("new information saved", MESSAGE.MESSAGE_SUCCESS, LONG);
+  controlRenderMessage("new information saved", MESSAGE.MESSAGE_SUCCESS );
 
 };
 
@@ -65,11 +81,11 @@ const controlSavePassword = async ( currentPassword, newPassword, newPasswordCon
 
 };
 
-const controlRenderChangePassword = async () => {
+export const controlRenderChangePassword = async () => {
 
-  ViewManager.render( ChangePasswordView, () => {  }, {
+  ViewManager.render( ChangePasswordView, {
     methods: {
-      goBack: () => { ViewManager.renderPrevious(); },
+      goBack: () => { shopRouter.back(); },
       savePassword: controlSavePassword
     }
   }, false);
@@ -100,28 +116,28 @@ const controlDeleteUser = async password => {
 
 };
 
-const controlRenderDeleteUser = async () => {
+export const controlRenderDeleteUser = async () => {
 
-  ViewManager.render( SeriousConfirmActionView, () => {}, {
+  SeriousConfirmActionView.render({
     title: 'delete account',
     informationText: 'your password',
     confirmText: 'delete',
     inputType: 'password',
     onConfirm: controlDeleteUser,
     matchConfirm: false,
-    goBack: () => { ViewManager.renderPrevious(); }
-  }, false);
+    goBack: () => { shopRouter.back(); SeriousConfirmActionView.remove(); }
+  });
 
 };
 
-const controlRenderUserAccount = async () => {
+export const controlRenderUserAccount = async () => {
 
   const { data, error } = await userModel.getUserInfo();
 
-  ViewManager.render( AccountView, controlRenderUserAccount, {
+  ViewManager.render( AccountView, {
     info: userModel.state.info,
     methods: {
-      goBack: () => { ViewManager.renderPrevious(); },
+      goBack: () => { shopRouter.back(); },
       saveUserInfo: controlSaveUserInfo,
       onChangePassword: controlRenderChangePassword,
       onDeleteAccount: controlRenderDeleteUser
@@ -132,11 +148,11 @@ const controlRenderUserAccount = async () => {
 
 const initializeListeners = () => {
 
-  openAccountBtn.addEventListener('click', controlRenderUserAccount);
+  // openAccountBtn.addEventListener('click', controlRenderUserAccount);
 
-  openPrivacyBtn.addEventListener('click', controlRenderUserPrivacy);
+  // openPrivacyBtn.addEventListener('click', controlRenderUserPrivacy);
 
-  openSettingsBtn.addEventListener('click', controlRenderUserSettings);
+  // openSettingsBtn.addEventListener('click', controlRenderUserSettings);
 
   userMenuBtn.addEventListener('click', () => {
 

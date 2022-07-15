@@ -77,7 +77,7 @@ export const controlRenderProductCategoriesFilter = () => {
 
 export const controlRenderProducts = () => {
 
-  ViewManager.render( ProductsView, controlRenderProducts, {
+  ViewManager.render( ProductsView, {
     items: shopModel.state.productsCategories,
     itemMethods: {
       onClick: controlRenderAddCartProduct

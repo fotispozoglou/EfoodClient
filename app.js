@@ -57,6 +57,7 @@ const shopRoutes = require('./routes/shop.js');
 const orderRoutes = require('./routes/order.js');
 const usersRoutes = require('./routes/users.js');
 const { GENERAL } = require('./config/statusCodes.js');
+const { strings, languages } = require('./config/strings.js');
 
 // EJS STUFF
 app.engine('ejs', ejsMate);
@@ -215,6 +216,20 @@ app.use('/', indexRoutes);
 app.use('/shop', shopRoutes);
 app.use('/order', orderRoutes);
 app.use('/', usersRoutes);
+app.get('/*', csrfProtection, ( req, res ) => {
+
+  const allStrings = strings;
+
+  const languageNumber = req.user ? languages.get( req.user.preferences.language ) : 0;
+
+  res.render('shop/index', { 
+    user: req.user, 
+    csrfToken: req.csrfToken(),
+    language: languageNumber,
+    strings: allStrings
+  });
+
+});
 
 app.use((err, req, res, next) => {
   
