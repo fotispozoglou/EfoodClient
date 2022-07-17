@@ -48,7 +48,7 @@ export default new class OrderInfoView extends View {
 
   _generateElement() {
 
-    const { cartProducts, itemMethods } = this._data;
+    const { cartProducts, totalPrice, itemMethods } = this._data;
 
     const { goBack = () => {} } = this._data.methods;
 
@@ -56,6 +56,12 @@ export default new class OrderInfoView extends View {
       .setClass('fa-solid fa-arrow-left back_btn')
       .on('click', () => { goBack(); })
       .getElement();
+
+    const totalPriceTitle = new DOMElement("p").setID("order_cart_total_title").setText('Συνολο').getElement();
+
+    const totalPriceText = new DOMElement("p").setID("order_cart_total_price").setText(`${ totalPrice }`).getElement();
+
+    const totalPriceContainer = new DOMElement("div").setID("order_cart_total_container").append( totalPriceTitle, totalPriceText ).getElement();
 
     const productsTitle = new DOMElement("p").setText( PRODUCTS ).setID("order_cart_title").getElement();
 
@@ -65,7 +71,7 @@ export default new class OrderInfoView extends View {
 
     this._clientInfo = new OrderClientInfo({  }, {});
 
-    const productsContainer = new DOMElement("div").setID("order_cart_container").append( productsTitle, productsList ).getElement();
+    const productsContainer = new DOMElement("div").setID("order_cart_container").append( productsTitle, productsList, totalPriceContainer ).getElement();
 
     const clientContainer = new DOMElement("div").setID("order_client_container").append( clientTitle, this._clientInfo.build() ).getElement();
 

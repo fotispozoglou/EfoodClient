@@ -120,7 +120,7 @@ export default new class ProductPreferences extends EditItemView {
         } 
       
       ],
-      ['comments', () => { return comments.value }]
+      ['comments', () => { return commentsElements.value }]
     );
 
     return [ ...tiersElements.map( te => { return te.build(); } ), commentsContainer ];

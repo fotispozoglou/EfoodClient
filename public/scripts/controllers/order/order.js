@@ -1,6 +1,7 @@
 import OrderInfo from "../../views/orders/OrderInfoView.js";
 import { getCartProducts } from "../../database/products.js";
 import * as orderModel from '../../models/order.js';
+import { getCartProductsTotalPrice } from '../../models/shop.js';
 
 import OrderView from "../../views/orders/OrderView.js";
 import { ORDER } from "../../config/statusCodes.js";
@@ -183,8 +184,11 @@ export const controlRenderOrderInfo = async () => {
 
   menuRight.classList.add('hidden');
 
+  const { data: totalPriceData, error: totalPriceError } = await getCartProductsTotalPrice();
+
   ViewManager.render( OrderInfo, {
     cartProducts: data.products,
+    totalPrice: totalPriceData.total.toFixed( 2 ),
     methods: {
       goBack: () => { ViewManager.renderPrevious(); }
     },
