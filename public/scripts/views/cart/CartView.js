@@ -3,7 +3,6 @@ import CartProduct from './CartProduct.js';
 import ListElement from '../base/ListElement.js';
 import DOMElement from '../base/DOMElement.js';
 import EmptyListItem from '../base/EmptyListItem.js';
-import ViewManager from '../ViewManager.js';
 import { COST, FILL_CART_WITH_PRODUCTS, ORDER_ACTION } from '../../config/strings.js';
 
 export const cartBackBtn = new DOMElement("i")

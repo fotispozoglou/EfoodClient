@@ -7,7 +7,6 @@ import EmptyListItem from '../base/EmptyListItem.js';
 import { YOU_HAVE_NO_ORDERS } from '../../config/strings.js';
 
 export let ordersBackBtn;
-const showOrdersBtn = document.querySelector("#open_orders_btn");
 
 export default new class OrdersView extends View {
   _parent = document.querySelector("#main_center");

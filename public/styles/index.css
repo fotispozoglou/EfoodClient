@@ -909,8 +909,9 @@ textarea.input_field {
 }
 
 .categories_filter_list_title {
-  padding: 4px;
+  padding: 14px;
   font-weight: bolder;
+  font-size: 1.25em;
 }
 
 .categories_filter_list {
@@ -919,10 +920,10 @@ textarea.input_field {
 }
 
 .filter {
-  margin: 5px 5px 10px 5px;
   border-radius: 4px;
   color: #333;
   transition: .25s background-color, .25s color;
+  margin: 4px;
 }
 
 .filter:hover {

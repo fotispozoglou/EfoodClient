@@ -4,8 +4,6 @@ import View, { WINDOW } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
 import PasswordInput from '../general/inputs/PasswordInput.js';
 
-const authenticationBackBtn = document.querySelector("#authentication_back_btn");
-
 export default new class AuthenticationView extends View {
   _parent = document.querySelector("#main");
   _rerender = true;

@@ -90,6 +90,8 @@ export const completeOrder = async client => {
 
   const order = { products: state.cartProducts, client };
 
+  console.log(order);
+
   const { data, error } = await POST(`${ SERVER_URL }/order`, { order });
 
   if ( !error && data.status === GENERAL.SUCCESS ) {

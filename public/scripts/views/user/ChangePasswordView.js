@@ -1,7 +1,6 @@
 import { shopRouter } from "../../controllers/shop.js";
 import DOMElement from "../base/DOMElement.js";
 import View, { WINDOW } from "../base/View.js";
-import InputElement from "../general/inputs/InputElement.js";
 import PasswordInput from "../general/inputs/PasswordInput.js";
 
 export default new class ChangePasswordView extends View {
@@ -11,7 +10,7 @@ export default new class ChangePasswordView extends View {
 
   _generateElement() {
 
-    const { goBack, savePassword } = this._data.methods;
+    const { savePassword } = this._data.methods;
 
     const backBtn = new DOMElement("div")
       .setClass('fa-solid fa-arrow-left back_btn')

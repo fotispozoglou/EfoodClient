@@ -43,9 +43,10 @@ export default class OrderClientInfo extends DOMElement {
 
     this._commentsElement = new DOMElement("textarea")
       .setClass('input_field')
-      .attributes(['placeholder', COMMENTS_LABEL]);
+      .attributes(['placeholder', COMMENTS_LABEL])
+      .getElement();
 
-    return new DOMElement("div").addClass('order_client_info').append( this._phoneElement.getElement(), this._addressElement.getElement(), this._floorElement.getElement(), commentsLabel, this._commentsElement.getElement() ).getElement();
+    return new DOMElement("div").addClass('order_client_info').append( this._phoneElement.getElement(), this._addressElement.getElement(), this._floorElement.getElement(), commentsLabel, this._commentsElement ).getElement();
 
   }
 

@@ -1,7 +1,7 @@
 import AccountView from "../../views/user/AccountView.js";
 import PrivacyView from "../../views/user/PrivacyView.js";
 import SettingsView from "../../views/user/SettingsView.js";
-import ViewManager, { closeUserMenu, openAccountBtn, openPrivacyBtn, openSettingsBtn, userMenu, userMenuBtn } from "../../views/ViewManager.js";
+import ViewManager, { closeUserMenu, userMenu, userMenuBtn } from "../../views/ViewManager.js";
 import * as userModel from '../../models/user.js';
 import { controlRenderMessage } from "../../general/messages.js";
 import { MESSAGE } from "../../config/types.js";

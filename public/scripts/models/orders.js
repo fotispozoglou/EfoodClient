@@ -1,5 +1,5 @@
-import { SERVER_URL, API_SERVER_URL } from '../config/config.js';
-import { GENERAL, ORDER } from '../config/statusCodes.js';
+import { API_SERVER_URL } from '../config/config.js';
+import { GENERAL } from '../config/statusCodes.js';
 import { DELETE, GET } from '../general/request.js';
 
 export const state = {

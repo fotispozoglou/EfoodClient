@@ -10,12 +10,7 @@ export default new class PrivacyView extends View {
 
     const { preferences } = this._data;
 
-    const { goBack, onSwitchSetting } = this._data.methods;
-
-    const backBtn = new DOMElement("div")
-      .setClass('fa-solid fa-arrow-left back_btn')
-      .on('click', () => { goBack(); })
-      .getElement();
+    const { onSwitchSetting } = this._data.methods;
 
     const title = new DOMElement("p")
       .setText( PRIVACY_SETTINGS )

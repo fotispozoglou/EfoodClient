@@ -1,4 +1,4 @@
-import { POST, POST_FORM } from "../general/request.js";
+import { POST_FORM } from "../general/request.js";
 
 export const registerUser = async formData => {
 

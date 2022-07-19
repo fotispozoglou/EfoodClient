@@ -6,8 +6,7 @@ import * as authenticatationController from './authentication/authentication.js'
 import * as ordersController from './orders/orders.js';
 import * as userController from './user/user.js';
 
-import ViewManager, { headerLogo, openAuthenticationBtn, openCartBtn, openCategoriesBtn, openOrdersBtn } from '../views/ViewManager.js';
-import ProductsView from '../views/products/ProductsView.js';
+import { openAuthenticationBtn, openCartBtn, openCategoriesBtn } from '../views/ViewManager.js';
 
 import ErrorView from '../views/ErrorView.js';
 import { GENERAL } from '../config/statusCodes.js';

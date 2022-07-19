@@ -140,14 +140,14 @@
 #categories {
   width: 100%;
   flex-direction: column;
-  background-color: var( --fixed-background );
+  background-color: #fffc;
   bottom: 0;
-  left: 0;
+  left: -100%;
   z-index: 5000;
-  height: 0vh;
+  height: 100vh;
   position: fixed;
   overflow: auto;
-  transition: .5s height;
+  transition: .5s left;
 }
 
 #categories_btn_container {
@@ -181,8 +181,9 @@
 
 .categories_filter {
   width: max-content;
-  margin: 20px auto;
-  min-width: 24em;
+  height: 100%;
+  background-color: white;
+  box-shadow: 0 0 20px 7px whitesmoke;
 }
 
 @media only screen and (min-width: 500px) {

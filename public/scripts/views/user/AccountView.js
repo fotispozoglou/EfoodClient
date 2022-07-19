@@ -1,10 +1,8 @@
-import { ACCOUNT, CHANGE_PASSWORD, DELETE_ACCOUNT, NAME, PHONE, SAVE, SURNAME, USERNAME } from '../../config/strings.js';
+import { ACCOUNT, CHANGE_PASSWORD, DELETE_ACCOUNT, NAME, PHONE, SAVE, USERNAME } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
-import View, { MAIN, WINDOW } from '../base/View.js';
+import View, { MAIN } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
 import LinkButton from '../general/LinkButton.js';
-
-import { ordersBackBtn } from '../orders/OrdersView.js';
 
 export default new class AccountView extends View {
   id = "user_account";
