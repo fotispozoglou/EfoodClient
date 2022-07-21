@@ -50,16 +50,9 @@ export default new class OrderInfoView extends View {
 
     const { cartProducts, totalPrice, itemMethods } = this._data;
 
-    const { goBack = () => {} } = this._data.methods;
-
-    const backBtn = new DOMElement("div")
-      .setClass('fa-solid fa-arrow-left back_btn')
-      .on('click', () => { goBack(); })
-      .getElement();
-
     const totalPriceTitle = new DOMElement("p").setID("order_cart_total_title").setText('Συνολο').getElement();
 
-    const totalPriceText = new DOMElement("p").setID("order_cart_total_price").setText(`${ totalPrice }`).getElement();
+    const totalPriceText = new DOMElement("p").setID("order_cart_total_price").setText(`${ totalPrice } €`).getElement();
 
     const totalPriceContainer = new DOMElement("div").setID("order_cart_total_container").append( totalPriceTitle, totalPriceText ).getElement();
 
@@ -97,7 +90,7 @@ export default new class OrderInfoView extends View {
 
     const footer = new DOMElement("div").setClass('order_info_footer').append( this._completeOrderBtn ).getElement();
 
-    return new DOMElement("div").setClass('order_info').append( backBtn, body, footer ).getElement();
+    return new DOMElement("div").setClass('order_info').append( body, footer ).getElement();
 
   }
 
