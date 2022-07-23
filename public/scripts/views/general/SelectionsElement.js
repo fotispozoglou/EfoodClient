@@ -14,6 +14,7 @@ export default class SelectionsElement extends DOMElement {
   _isExpanded = false;
   _errorText;
   _id;
+  _selectionsTitle;
 
   constructor( name, id, type, selections, selected, maximumSelections, onSelect = () => {  } ) {
     super("div");
@@ -26,6 +27,8 @@ export default class SelectionsElement extends DOMElement {
     this._selected = this._type === "radio" ? selected[ 0 ] : selected;
     this._maximumSelections = maximumSelections;
     this._onSelect = onSelect;
+    
+    console.log(this);
 
   }
 
@@ -63,6 +66,16 @@ export default class SelectionsElement extends DOMElement {
 
   }
 
+  updateTitle() {
+
+    if ( this._type === "checkbox" ) {
+
+      this._selectionsTitle.textContent = `${ this._name } - ${ this._selected.length }/${ this._maximumSelections }`;
+
+    }
+
+  }
+
   handleRadioSelect( selection, isSelected ) {
 
     const selectionID = selection.getID();
@@ -87,17 +100,21 @@ export default class SelectionsElement extends DOMElement {
 
       this._selected.splice( this._selected.indexOf( selectionID ), 1 );
 
+      this.updateTitle();
+
       return selection.unselect();
 
     }
 
-    if ( this._selectedSelections.length >= this._maximumSelections ) return false;
+    if ( this._selected.length >= this._maximumSelections ) return false;
 
     this._selectedSelections.push( selection );
 
     this._selected.push( selectionID ); 
 
     selection.select();
+
+    this.updateTitle();
 
   }
 
@@ -161,15 +178,17 @@ export default class SelectionsElement extends DOMElement {
 
     this._selectionsElement = this._generateSelections();
 
-    const selectionsTitle = new DOMElement("p").setClass('selections_title').setText( this._name ).getElement();
+    this._selectionsTitle = new DOMElement("p").setClass('selections_title').setText( this._name ).getElement();
 
-    const header = new DOMElement("div").setClass('selections_header').append( selectionsTitle ).getElement();
+    const header = new DOMElement("div").setClass('selections_header').append( this._selectionsTitle ).getElement();
 
     this._body = new DOMElement("div").setClass('selections_body').append( this._selectionsElement ).getElement();
 
     this._errorText = new DOMElement("p").setClass('selections_error');
 
     const footer = new DOMElement("div").setClass('selections_footer').append( this._errorText.getElement() ).getElement();
+
+    this.updateTitle();
 
     this._element = new DOMElement("div").setClass('selections').append( header, this._body, footer ).getElement();
 

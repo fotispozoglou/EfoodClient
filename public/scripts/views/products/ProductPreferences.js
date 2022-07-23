@@ -94,7 +94,7 @@ export default new class ProductPreferences extends EditItemView {
 
     for ( const tier of tiers ) {
 
-      const tierElement = new SelectionsElement( tier.name, tier._id, tier.type, tier.ingredients, tier.selectedIngredients, tier.maximumSelections, () => {  } );
+      const tierElement = new SelectionsElement( tier.name, tier._id, tier.type, tier.ingredients, tier.selectedIngredients, tier.maxSelections, () => {  } );
 
       tiersElements.push( tierElement );
 
