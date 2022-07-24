@@ -17,7 +17,7 @@ export default class OrderPreview extends DOMElement {
 
     this._id = _id;
     this._time = time;
-    this._totalPrice = totalPrice;
+    this._totalPrice = totalPrice.toFixed(2);
     this._orderID = orderID;
     this._status = status.number;
     this._methods = methods;

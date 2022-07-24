@@ -78,7 +78,7 @@ export default new class OrderVIew extends View {
 
     const totalPriceLabel = new DOMElement("p").setClass('total_price_label').setText( TOTAL_PRICE ).getElement();
 
-    const totalPriceText = new DOMElement("p").setClass('order_total_price').setText(`${ totalPrice }€`).getElement();
+    const totalPriceText = new DOMElement("p").setClass('order_total_price').setText(`${ totalPrice.toFixed(2) }€`).getElement();
 
     const totalPriceContainer = new DOMElement("div").setClass('order_price_container').append( totalPriceLabel, totalPriceText ).getElement();
 
