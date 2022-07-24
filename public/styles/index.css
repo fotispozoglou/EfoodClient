@@ -984,6 +984,9 @@ textarea.input_field {
 #user_account {
   display: flex;
   flex-direction: column;
+  max-width: 45em;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .switch_element {
@@ -1037,6 +1040,22 @@ textarea.input_field {
   margin-bottom: auto;
   margin-right: 0.1em;
   background-color: white;
+}
+
+#privacy_settings {
+  display: flex;
+  flex-direction: column;
+  max-width: 45em;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#settings_settings {
+  display: flex;
+  flex-direction: column;
+  max-width: 45em;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .privacy_settings_title {

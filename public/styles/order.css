@@ -64,6 +64,8 @@
   border: 2px solid #f2f2f2;
   border-radius: 4px;
   transition: .25s transform;
+  width: 22em;
+  height: max-content;
 }
 
 .order_preview:hover {
@@ -104,9 +106,12 @@
 }
 
 #orders .list {
-  max-width: 35em;
   margin: 0 auto;
   width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .back_btn {

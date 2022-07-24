@@ -68,8 +68,11 @@ const renderViews = async () => {
 
 const initializeListeners = () => {
 
+  const navbar = document.querySelector("#navbar");
+
   const resizeOps = () => {
     document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
+    document.documentElement.style.setProperty("--navbar-height", navbar.clientHeight + "px");
   };
 
   resizeOps();

@@ -5,6 +5,7 @@ import SelectionsElement from '../general/SelectionsElement.js';
 
 export default new class SettingsView extends View {
   _parent = document.querySelector("#main_center");
+  id = "settings_settings";
 
   _generateElement() {
 
@@ -31,7 +32,7 @@ export default new class SettingsView extends View {
       }
     );
 
-    return new DOMElement("div").append( language.build() ).getElement();
+    return new DOMElement("div").setID("settings_settings").append( language.build() ).getElement();
 
   }
 

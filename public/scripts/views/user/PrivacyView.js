@@ -5,6 +5,7 @@ import SwitchInput from '../general/inputs/SwitchInput.js';
 
 export default new class PrivacyView extends View {
   _parent = document.querySelector("#main_center");
+  id = "privacy_settings";
 
   _generateElement() {
 
@@ -21,7 +22,7 @@ export default new class PrivacyView extends View {
 
     const phonePrivacy = new SwitchInput( "visible_phone", VISIBLE_PHONE, preferences.privatePhone, onSwitchSetting ).build();
 
-    return new DOMElement("div").append( title, namePrivacy, phonePrivacy ).getElement();
+    return new DOMElement("div").setID("privacy_settings").append( title, namePrivacy, phonePrivacy ).getElement();
 
   }
 

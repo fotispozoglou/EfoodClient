@@ -77,6 +77,7 @@ export default new class ProductsView extends ListView {
     cartBtn.classList.add('hidden');
     openCategoriesBtn.classList.add('hidden');
     document.querySelector("#categories").classList.add('hidden');
+    document.querySelector("#main_right").classList.add('hidden');
 
   }
 
