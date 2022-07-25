@@ -6,6 +6,8 @@ if ( process.env.NODE_ENV !== "production" ) {
 
 }
 
+require('dotenv').config();
+
 const express = require("express");
 const app = express();
 const ejsMate = require('ejs-mate');
@@ -53,11 +55,11 @@ module.exports.csrfProtection = csrfProtection;
 
 // DEFINE APP ROUTES
 const indexRoutes = require('./routes/index.js');
-const shopRoutes = require('./routes/shop.js');
 const orderRoutes = require('./routes/order.js');
 const usersRoutes = require('./routes/users.js');
 const { GENERAL } = require('./config/statusCodes.js');
 const { strings, languages } = require('./config/strings.js');
+const { renderLimiter } = require('./middleware/limiters.js');
 
 // EJS STUFF
 app.engine('ejs', ejsMate);
@@ -75,7 +77,7 @@ app.use(mongoSanitize({
 app.use( hpp() );
 app.use(expectCt({ enforce: true, maxAge: 123 }));
 
-const secret = 'thisshouldbeabettersecret!'; // process.env.SECRET
+const secret = process.env.SESSION_SECRET;
 
 const store = MongoDBStore.create({
   mongoUrl: dbUrl,
@@ -212,11 +214,10 @@ app.use((req, res, next) => {
 
 // })
 
-app.use('/', indexRoutes);
-app.use('/shop', shopRoutes);
+app.use('/', renderLimiter, indexRoutes);
 app.use('/order', orderRoutes);
 app.use('/', usersRoutes);
-app.get('/*', csrfProtection, ( req, res ) => {
+app.get('/*', csrfProtection, renderLimiter, ( req, res ) => {
 
   const allStrings = strings;
 

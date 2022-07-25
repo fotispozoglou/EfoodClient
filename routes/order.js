@@ -5,7 +5,6 @@ const order = require('../controllers/order.js');
 const { isLoggedIn } = require('../middleware/users.js');
 
 router.route('/')
-  .get( order.renderOrder )
   .post( isLoggedIn, csrfProtection, order.completeOrder);
 
 module.exports = router;

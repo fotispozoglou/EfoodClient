@@ -90,8 +90,6 @@ export const completeOrder = async client => {
 
   const order = { products: state.cartProducts, client };
 
-  console.log(order);
-
   const { data, error } = await POST(`${ SERVER_URL }/order`, { order });
 
   if ( !error && data.status === GENERAL.SUCCESS ) {
@@ -99,6 +97,12 @@ export const completeOrder = async client => {
     if ( data.orderStatus === ORDER.HAS_PENDING_ORDER || data.orderStatus === ORDER.STATUS_CANCELED || data.orderStatus === GENERAL.NOT_AUTHENTICATED ) {
 
       return { orderStatus: data.orderStatus, status: data.status };
+
+    }
+
+    if ( data.orderStatus === GENERAL.ERROR ) {
+
+      return { orderStatus: data.orderStatus, invalidFields: data.invalidFields };
 
     }
 

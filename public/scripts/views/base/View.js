@@ -85,7 +85,7 @@ export default class View {
 
   }
 
-  remove() { this._element.remove(); console.log("REMOVING " + this.id); delete this; }
+  remove() { this._element.remove(); delete this; }
 
   _generateElement() { return new DOMElement("div"); }
 

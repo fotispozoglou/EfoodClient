@@ -8,12 +8,6 @@ const jwt = require('jsonwebtoken');
 
 const orderToken = jwt.sign({ code: process.env.CLIENT_SERVER_SECRET }, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 
-module.exports.renderOrder = async ( req, res ) => {
-
-  res.render('order/index');
-
-};
-
 module.exports.completeOrder = async ( req, res ) => {
 
   const user = req.user;
@@ -48,12 +42,21 @@ module.exports.completeOrder = async ( req, res ) => {
 
       }
 
-      return res.send(JSON.stringify({ status: GENERAL.SUCCESS, orderStatus: response.data.status, orderID: response.data.orderID, order: response.data.order }));
+      if ( response.data.status === GENERAL.ERROR ) {
+
+        return res.send({ status: GENERAL.SUCCESS, orderStatus: GENERAL.ERROR, invalidFields: response.data.invalidFields });
+
+      }
+
+      return res.send(JSON.stringify({ 
+        status: GENERAL.SUCCESS, 
+        orderStatus: response.data.status, 
+        orderID: response.data.orderID, 
+        order: response.data.order 
+      }));
 
     })
     .catch(e => {  
-
-      console.log(e.message);
 
       return res.send(JSON.stringify({ status: GENERAL.ERROR }));
 

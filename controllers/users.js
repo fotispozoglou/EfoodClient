@@ -3,6 +3,8 @@
 const User = require('../models/user');
 var jwt = require('jsonwebtoken');
 
+const sanitizeHtml = require('sanitize-html');
+
 const axios = require('axios');
 
 const { GENERAL, ORDER } = require('../config/statusCodes.js');
@@ -31,7 +33,7 @@ module.exports.register = async ( req, res ) => {
     const { username, password } = req.body;
 
     const user = new User({ 
-      username, 
+      username: sanitizeHtml( username ), 
       name: '',
       phone: '',
       preferences: { 
@@ -129,7 +131,7 @@ module.exports.logout = ( req, res ) => {
 
 module.exports.getUserInfo = async ( req, res ) => {
 
-  const { username, name, phone } = req.user;
+  const { username, name, phone } = sanitizeHtml(req.user);
 
   res.send(JSON.stringify({ status: GENERAL.SUCCESS, username, name, phone }));
 
@@ -141,7 +143,9 @@ module.exports.saveUserInfo = async ( req, res ) => {
 
   const userID = req.user._id;
 
-  await User.updateOne({ _id: userID }, { $set: { name: info.name, phone: info.phone, username: info.username } })
+  const newUserInfo = { name: sanitizeHtml(info.name), phone: sanitizeHtml(info.phone), username: sanitizeHtml(info.username)  };
+
+  await User.updateOne({ _id: userID }, { $set: newUserInfo });
 
   res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
 

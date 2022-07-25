@@ -44,6 +44,12 @@ export default new class OrderInfoView extends View {
 
   }
 
+  showErrors( invalidFields ) {
+
+    this._clientInfo.showErrors( invalidFields );
+
+  }
+
   hide() { this.remove(); delete this; }
 
   _generateElement() {

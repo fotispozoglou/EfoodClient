@@ -20,6 +20,7 @@ import { ALREADY_ACTIVE_ORDER, ERROR_LOADING_CART, ERROR_MAKING_ORDER, NEED_TO_L
 import { controlRenderLogin } from "../authentication/authentication.js";
 import { isAuthenticated } from "../../general/request.js";
 import AuthenticationView from "../../views/authentication/AuthenticationView.js";
+import { shopRouter } from "../shop.js";
 
 let hasOrderStatusError = false;
 
@@ -123,9 +124,9 @@ const controlCompleteOrder = async () => {
 
   }
 
-  const { orderStatus, status, orderID, order, error } = await orderModel.completeOrder( clientInfo );
+  const { orderStatus, invalidFields, orderID, order, error } = await orderModel.completeOrder( clientInfo );
 
-  if ( error ) return controlRenderMessage( ERROR_MAKING_ORDER , MESSAGE.MESSAGE_ERROR);
+  if ( error ) return controlRenderMessage( ERROR_MAKING_ORDER , MESSAGE.MESSAGE_ERROR );
 
   if ( orderStatus === GENERAL.NOT_AUTHENTICATED ) {
 
@@ -135,24 +136,23 @@ const controlCompleteOrder = async () => {
 
   }
 
-  if ( orderStatus === ORDER.HAS_PENDING_ORDER || order.status.number === ORDER.STATUS_CANCELED ) {
+  if ( order && ( orderStatus === ORDER.HAS_PENDING_ORDER || order.status.number === ORDER.STATUS_CANCELED ) ) {
 
     return controlRenderMessage( ALREADY_ACTIVE_ORDER , MESSAGE.MESSAGE_ERROR);
 
   }
 
+  if ( orderStatus === GENERAL.ERROR ) {
+
+    if ( invalidFields.length > 0 ) return OrderInfo.showErrors( invalidFields );
+
+    return controlRenderMessage( ERROR_MAKING_ORDER , MESSAGE.MESSAGE_ERROR );
+
+  }
+
   if ( !error ) {
 
-    await controlRenderOrders();
-
-    ViewManager.render( OrderView, {  
-      order,
-      stopCheckingStatus: () => { if ( order.status.number !== ORDER.STATUS_PENDING ) orderModel.stopCheckOrderTimeout(); }
-    }, false );
-
-    controlOrderStatusChange( { status: order.status }, orderID );
-  
-    controlStartCheckingOrderStatus( orderID ); 
+    shopRouter.go(`/orders/${ order._id }`);
 
   }
 

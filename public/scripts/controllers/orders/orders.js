@@ -11,7 +11,8 @@ import statusColors from "../../config/colors.js";
 import ViewManager, { openOrdersBtn, ordersErrorIcon } from "../../views/ViewManager.js";
 import { controlRenderMessage } from "../../general/messages.js";
 import { MESSAGE } from "../../config/types.js";
-import { ERROR_LOADING_ORDERS } from "../../config/strings.js";
+import { ERROR_LOADING_ORDER, ERROR_LOADING_ORDERS } from "../../config/strings.js";
+import { shopRouter } from "../shop.js";
 
 let hasOrderStatusError = false;
 
@@ -124,7 +125,13 @@ export const controlRenderOrder = async ({ orderID }) => {
 
   const { data, error } = await ordersModel.loadOrder( orderID );
 
-  if ( error ) return controlRenderMessage( ERROR_LOADING_ORDER , MESSAGE.MESSAGE_ERROR);
+  if ( error ) { 
+
+    shopRouter.go('/orders');
+    
+    return controlRenderMessage( ERROR_LOADING_ORDER , MESSAGE.MESSAGE_ERROR);
+
+  }
 
   const { order } = data;
 

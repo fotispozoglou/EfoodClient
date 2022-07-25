@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const catchAsync = require('../utils/catchAsync.js');
 const users = require('../controllers/users.js');
-const { isLoggedIn } = require('../middleware/users.js');
+const { isLoggedIn, validatePreference } = require('../middleware/users.js');
 const { loginLimiter, registerLimiter } = require('../middleware/limiters.js');
 const { csrfProtection } = require('../app.js');
 
@@ -11,13 +11,13 @@ router.post('/generate/token', users.getAPIToken);
 
 router.route('/register')
   .post(
-    // registerLimiter,
+    registerLimiter,
     catchAsync( users.register )
   );
 
 router.route('/login')
   .post( 
-    // loginLimiter,
+    loginLimiter,
     catchAsync( users.login )
   );
 
@@ -27,7 +27,7 @@ router.route('/info')
 
 router.route('/preferences')
   .get( isLoggedIn, catchAsync( users.getPrivacySettings ) )
-  .put( csrfProtection, isLoggedIn, catchAsync( users.updatePrivacySettings ) );
+  .put( csrfProtection, isLoggedIn, validatePreference, catchAsync( users.updatePrivacySettings ) );
 
 router.post('/language', csrfProtection, isLoggedIn, catchAsync( users.changeUserLanguage ));
 
