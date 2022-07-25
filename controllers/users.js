@@ -53,7 +53,7 @@ module.exports.register = async ( req, res ) => {
   
       const token = await generateAPIToken({ username: registeredUser.username, _id: registeredUser._id });
   
-      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ) });
+      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ), httpOnly: true });
 
       res.send(JSON.stringify({ status: GENERAL.SUCCESS, registered: true }));
     
@@ -81,7 +81,7 @@ module.exports.login = async (req, res) => {
 
       const token = await generateAPIToken({ username: req.user.username, _id: req.user._id });
   
-      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI  ) });
+      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI  ), httpOnly: true });
 
       res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: true }));
 
@@ -99,7 +99,7 @@ module.exports.getAPIToken = async ( req, res ) => {
 
   const token = await generateAPIToken( { username: user.username, _id: user._id } );
 
-  res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ) });
+  res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ), httpOnly: true });
 
   res.send(JSON.stringify({ w: true }));
 
