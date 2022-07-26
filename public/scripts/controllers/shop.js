@@ -97,7 +97,7 @@ const initializeItems = async () => {
 
 const init = async () => {
 
-  setAPIToken( window.api_token, window.user ? window.user.isLoggedIn : false );
+  setAPIToken( window.api_token, window.token, window.user ? window.user.isLoggedIn : false );
 
   delete window.api_token;
 

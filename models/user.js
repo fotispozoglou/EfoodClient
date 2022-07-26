@@ -28,7 +28,8 @@ const UserSchema = new Schema({
       default: 'EN',
       enum: ['EN', 'GR']
     }
-  }
+  },
+  token: String
 });
 
 UserSchema.plugin( passportLocalMongoose, options );

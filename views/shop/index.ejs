@@ -44,9 +44,10 @@
 <script>
 
   window.user = {};
-  window.user.id = "<%- currentUser._id %>"
-  window.user.username = "<%- currentUser.username %>"
-  window.api_token = "<%- csrfToken %>"
+  window.user.id = "<%= currentUser._id %>"
+  window.user.username = "<%= currentUser.username %>"
+  window.api_token = "<%= csrfToken %>"
+  window.token = "<%= currentUser.token %>"
   window.user.isLoggedIn = true;
 
   const isLoggedIn = window.user.isLoggedIn;

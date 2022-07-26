@@ -6,6 +6,13 @@
   "scripts": {
     "start": "concurrently --kill-others \"nodemon --delay 3 app.js\" \"nodemon --delay 3 ../EfoodAPI/app.js \" "
   },
+  "nodemonConfig": {
+    "ignore": [
+      "/home/fotis/Projects/Efood/EfoodAdmin/public/fontawesome/svgs/solid/*.svg",
+      "/home/fotis/Projects/Efood/EfoodAdmin/public/fontawesome/svgs/brands/*.svg",
+      "/home/fotis/Projects/Efood/EfoodAdmin/public/fontawesome/svgs/regular/*.svg"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

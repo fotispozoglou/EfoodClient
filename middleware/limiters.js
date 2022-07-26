@@ -33,7 +33,7 @@ const registerLimiter = rateLimit({
     expireTimeMs: 7 * 24 * 60 * 60 * 1000,
     errorHandler: console.error.bind(null, 'rate-limit-mongo')
   }),
-  max: 1,
+  max: 4,
   windowMs: 7 * 24 * 60 * 60 * 1000
 });
 

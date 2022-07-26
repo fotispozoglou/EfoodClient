@@ -1,5 +1,6 @@
 import ErrorView from "../views/ErrorView.js";
 let API_TOKEN = null;
+let TOKEN = null;
 let isLoggedIn = false;
 
 export const isAuthenticated = async () => {
@@ -8,10 +9,11 @@ export const isAuthenticated = async () => {
 
 };
 
-export const setAPIToken = ( key, loggedIn ) => {
+export const setAPIToken = ( key, key2, loggedIn ) => {
 
   API_TOKEN = key;
   isLoggedIn = loggedIn;
+  TOKEN = key2;
 
 };
 
@@ -52,12 +54,10 @@ const getRequestOptions = async ( method, body = {}) => {
 
   hasInternetError = false;
 
-  const token = getCookie('api_token');
-
   const options = {
     method,
     headers: {
-      'Authorization': `Bearer ${ token }`,
+      'Authorization': `Bearer ${ TOKEN }`,
       'Content-type': 'application/json',
       'CSRF-Token': API_TOKEN
     }

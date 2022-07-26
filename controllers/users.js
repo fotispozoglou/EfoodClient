@@ -53,7 +53,7 @@ module.exports.register = async ( req, res ) => {
   
       const token = await generateAPIToken({ username: registeredUser.username, _id: registeredUser._id });
   
-      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ), httpOnly: true, secure: true });
+      await User.updateOne({ _id: registeredUser._id }, { $set: { token } });
 
       res.send(JSON.stringify({ status: GENERAL.SUCCESS, registered: true }));
     
@@ -80,9 +80,9 @@ module.exports.login = async (req, res) => {
       if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: false }));
 
       const token = await generateAPIToken({ username: req.user.username, _id: req.user._id });
-  
-      res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI  ), httpOnly: true, secure: true });
 
+      await User.updateOne({ _id: req.user._id }, { $set: { token } });
+  
       res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: true }));
 
     });
@@ -120,9 +120,7 @@ module.exports.logout = ( req, res ) => {
   req.logout(function(err) {
     
     if (err) { return next(err); }
-    
-    res.clearCookie('api_token');
-      
+          
     res.redirect('/shop');
 
   });
