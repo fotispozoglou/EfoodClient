@@ -111,7 +111,7 @@ app.use(function(req, res, next) {
   
   if ( toobusy() ) {
   
-    res.send(503, "Server Too Busy");
+    res.status(503).send("Server Too Busy");
   
   } else {
   
@@ -258,6 +258,6 @@ const port = 8000;
 
 app.listen(port, () => {
 
-  console.log("Client Server Started");
+  logger.info("Client Server Started");
 
 });

@@ -132,9 +132,7 @@ export default new class OrderVIew extends View {
     return new DOMElement("div")
       .setClass('order_background')
       .on('click', () => { 
-        
-        stopCheckingStatus(); 
-        
+                
         this.remove(); 
       
         shopRouter.go('/orders');

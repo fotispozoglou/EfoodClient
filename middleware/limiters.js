@@ -21,7 +21,7 @@ const loginLimiter = rateLimit({
     expireTimeMs: 60 * 60 * 1000,
     errorHandler: console.error.bind(null, 'rate-limit-mongo')
   }),
-  max: 4,
+  max: 15,
   windowMs: 60 * 60 * 1000
 });
 
@@ -37,8 +37,9 @@ const registerLimiter = rateLimit({
   windowMs: 7 * 24 * 60 * 60 * 1000
 });
 
+
 module.exports = {
   renderLimiter,
   loginLimiter,
-  registerLimiter
+  registerLimiter,
 };

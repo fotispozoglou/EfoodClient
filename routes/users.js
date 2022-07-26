@@ -4,8 +4,9 @@ const passport = require('passport');
 const catchAsync = require('../utils/catchAsync.js');
 const users = require('../controllers/users.js');
 const { isLoggedIn, validatePreference } = require('../middleware/users.js');
-const { loginLimiter, registerLimiter } = require('../middleware/limiters.js');
+const { registerLimiter, loginLimiter } = require('../middleware/limiters.js');
 const { csrfProtection } = require('../app.js');
+const { GENERAL } = require('../config/statusCodes.js');
 
 router.post('/generate/token', users.getAPIToken);
 

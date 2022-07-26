@@ -28,10 +28,12 @@ module.exports.completeOrder = async ( req, res ) => {
 
   const config = {
     headers: {
-      'server-token': `Bearer ${orderToken}`,
+      'server-token': `Bearer ${ orderToken }`,
       'authorization': authHeader
     }
   };
+
+  console.log(user);
 
   await axios.post(`${ API_URL }/orders`, { order: { products, client, user } }, config)
     .then(response => {

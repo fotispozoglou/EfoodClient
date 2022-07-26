@@ -84,7 +84,7 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
     let { backgroundColor } = statusColors.get( status.number );
 
-    if ( ViewManager.selectedViewID === OrdersView.getViewID() ) {
+    if ( ViewManager.selectedViewID === OrdersView.getID() ) {
 
       backgroundColor = statusColors.get( ORDER.NOTHING ).backgroundColor;
 

@@ -82,6 +82,8 @@ const controlOrderStatusChange = async ( response, orderID ) => {
 
   OrdersView.updateOrder( orderID, status );
 
+  console.log(status);
+
   if ( status.number != ORDER.STATUS_COMPLETED && status.number != ORDER.STATUS_CANCELED ) { 
 
     const { backgroundColor } = statusColors.get( status.number );

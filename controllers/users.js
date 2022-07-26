@@ -34,7 +34,7 @@ module.exports.register = async ( req, res ) => {
 
     const user = new User({ 
       username: sanitizeHtml( username ), 
-      name: '',
+      name: sanitizeHtml( username ),
       phone: '',
       preferences: { 
         privacy: {
