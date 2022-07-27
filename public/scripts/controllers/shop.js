@@ -6,7 +6,7 @@ import * as authenticatationController from './authentication/authentication.js'
 import * as ordersController from './orders/orders.js';
 import * as userController from './user/user.js';
 
-import { openAuthenticationBtn, openCartBtn, openCategoriesBtn } from '../views/ViewManager.js';
+import ViewManager, { openAuthenticationBtn, openCartBtn, openCategoriesBtn } from '../views/ViewManager.js';
 
 import ErrorView from '../views/ErrorView.js';
 import { GENERAL } from '../config/statusCodes.js';
@@ -15,6 +15,7 @@ import { setAPIToken } from '../general/request.js';
 
 import Router from './Router.js';
 import CartView from '../views/cart/CartView.js';
+import ProductsView from '../views/products/ProductsView.js';
 
 export const shopRouter = new Router(['/shop', productsController.controlRenderProducts]);
 
@@ -76,6 +77,16 @@ const initializeListeners = () => {
   };
 
   resizeOps();
+
+  document.querySelector("#search_products_input").addEventListener('input', e => {
+
+    if ( ViewManager.isRenderedView( ProductsView ) ) {
+
+      ProductsView.filter( e.target.value );
+
+    }
+
+  });
 
   window.addEventListener("resize", resizeOps);
 

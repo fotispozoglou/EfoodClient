@@ -1232,6 +1232,7 @@ textarea.input_field {
   #main_right {
     width: auto;
     display: flex;
+    z-index: 19;
   }
 
   #main_left {

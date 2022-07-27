@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently --kill-others \"nodemon --delay 3 app.js\" \"nodemon --delay 3 ../EfoodAPI/app.js \" "
+    "start": "concurrently --kill-others \"nodemon --delay 3 app.js\" "
   },
   "nodemonConfig": {
     "ignore": [

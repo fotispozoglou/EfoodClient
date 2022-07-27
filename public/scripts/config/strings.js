@@ -10,7 +10,15 @@ export const GR = 1;
 
 let lang = languages.get(localStorage.getItem('lang'));
 
-if ( lang !== 0 && lang !== 1 ) lang = 0;
+
+
+if ( lang !== 0 && lang !== 1 || !lang ) {
+
+  localStorage.setItem('lang', "EN");
+
+  lang = 0;
+
+}
 
 export const ACCOUNT = ['account', 'λογαριασμός'][ lang ];
 export const PRIVACY = ['privacy', 'ιδιωτικότητα'][ lang ];
