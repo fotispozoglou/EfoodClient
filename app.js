@@ -54,7 +54,6 @@ const csrfProtection = csrf();
 module.exports.csrfProtection = csrfProtection;
 
 // DEFINE APP ROUTES
-const indexRoutes = require('./routes/index.js');
 const orderRoutes = require('./routes/order.js');
 const usersRoutes = require('./routes/users.js');
 const { GENERAL } = require('./config/statusCodes.js');
@@ -214,9 +213,13 @@ app.use((req, res, next) => {
 
 // })
 
-app.use('/', renderLimiter, indexRoutes);
 app.use('/order', orderRoutes);
 app.use('/', usersRoutes);
+app.get('/', ( req, res ) => {
+
+  res.redirect('/shop');
+
+});
 app.get('/*', csrfProtection, renderLimiter, ( req, res ) => {
 
   const allStrings = strings;

@@ -121,6 +121,7 @@ const init = async () => {
   initializeListeners();
 
   shopRouter.route(
+    { path: '/', render: productsController.controlRenderProducts },
     { path: '/shop', render: productsController.controlRenderProducts },
     { path: '/account', render: userController.controlRenderUserAccount },
     { path: '/account/change_password', render: userController.controlRenderChangePassword },

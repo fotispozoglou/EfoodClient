@@ -28,6 +28,7 @@
   margin: 0 auto;
   padding: 6px;
   display: flex;
+  background-color: #fff;
   flex-direction: column;
 }
 

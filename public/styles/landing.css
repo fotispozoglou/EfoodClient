@@ -3,21 +3,8 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
-#root {
-  /* background-image: url(https://www.e-food.gr/cdn-cgi/image/w=360,h=440,f=auto,q=100/site-assets/img/bg/hero/home/Desktop/EF-afternoon-red.jpg); */
-  background-image: url(/back.png);
-  position: relative;
-  background-size: auto;
-  background-position: 50%;
-  background-repeat: no-repeat;
-}
-
 #main {
   background-color: rgba(0, 0, 0, 0);
-}
-
-body {
-  background-color: #EE4541;
 }
 
 #header {
