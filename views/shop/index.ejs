@@ -57,6 +57,14 @@
 
 <% } %>
 
+<script>
+
+  window.app = '<%- JSON.stringify( app ) %>';
+
+  window.app = JSON.parse( window.app );
+
+</script>
+
 <script type="module" src="/scripts/controllers/shop.js"></script>
 
 <%- include('../partials/footer.ejs'); %>

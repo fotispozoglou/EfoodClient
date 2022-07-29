@@ -33,10 +33,10 @@ const MongoDBStore = require("connect-mongo");
 
 const logger = require('./logger/logger.js');
 
-const { SERVER_IP, API_URL, SERVER_URL } = require('./config/config.js');
+const { SERVER_IP, API_URL, SERVER_URL, IS_PRODUCTION } = require('./config/config.js');
 
 // MONGO STUFF 
-const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/efood';
+const dbUrl = IS_PRODUCTION ? process.env.MONGO_URL : 'mongodb://localhost:27017/efood';
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -204,7 +204,12 @@ app.get('/*', csrfProtection, renderLimiter, ( req, res ) => {
     user: req.user, 
     csrfToken: req.csrfToken(),
     language: languageNumber,
-    strings: allStrings
+    strings: allStrings,
+    app: {
+      enviroment: process.env.NODE_ENV,
+      API_URL: API_URL,
+      SERVER_URL: SERVER_URL
+    }
   });
 
 });
