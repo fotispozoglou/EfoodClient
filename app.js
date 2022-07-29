@@ -187,32 +187,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use( function ( req, res, next ) {
-
-//   if ( !['POST', 'PUT', 'DELETE'].includes(req.method) ) {
-  
-//     next();
-  
-//     return;
-  
-//   }
-
-//   getRawBody(req, {  
-//     length: req.headers['content-length'],
-//     limit: '10kb',
-//     encoding: contentType.parse(req).parameters.charset
-//   }, function ( err, string ) {
-
-//     if (err) return next(err);
-
-//     req.text = string;
-
-//     next();
-
-//   });
-
-// })
-
 app.use('/order', orderRoutes);
 app.use('/', usersRoutes);
 app.get('/', ( req, res ) => {
