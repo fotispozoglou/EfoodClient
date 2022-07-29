@@ -94,11 +94,8 @@ const sessionConfig = {
   cookie: {
     httpOnly: true,
     secure: true,
-    path: '/',
-    domain: `.${ SERVER_URL }:${ port }`,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: true
+    maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }
 
