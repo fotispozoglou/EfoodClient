@@ -35,6 +35,9 @@ const logger = require('./logger/logger.js');
 
 const { SERVER_IP } = require('./config/config.js');
 
+console.log("process.env.MONGO_URL");
+console.log(process.env.MONGO_URL);
+
 // MONGO STUFF 
 const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/efood';
 
