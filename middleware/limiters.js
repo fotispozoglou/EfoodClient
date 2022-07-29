@@ -1,9 +1,11 @@
 const rateLimit = require('express-rate-limit');
 const MongoStore = require('rate-limit-mongo');
 
+const dbUrl = process.env.MONG_URL;
+
 const renderLimiter = rateLimit({
   store: new MongoStore({
-    uri: 'mongodb://127.0.0.1:27017/efood',
+    uri: dbUrl,
     user: '',
     password: '',
     expireTimeMs: 60 * 60 * 1000,
@@ -15,7 +17,7 @@ const renderLimiter = rateLimit({
 
 const loginLimiter = rateLimit({
   store: new MongoStore({
-    uri: 'mongodb://127.0.0.1:27017/efood',
+    uri: dbUrl,
     user: '',
     password: '',
     expireTimeMs: 60 * 60 * 1000,
@@ -27,7 +29,7 @@ const loginLimiter = rateLimit({
 
 const registerLimiter = rateLimit({
   store: new MongoStore({
-    uri: 'mongodb://127.0.0.1:27017/efood',
+    uri: dbUrl,
     user: '',
     password: '',
     expireTimeMs: 7 * 24 * 60 * 60 * 1000,

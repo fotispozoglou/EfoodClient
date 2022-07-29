@@ -225,7 +225,7 @@ app.get('/', ( req, res ) => {
   res.redirect('/shop');
 
 });
-app.get('/*', csrfProtection, ( req, res ) => {
+app.get('/*', csrfProtection, renderLimiter, ( req, res ) => {
 
   const allStrings = strings;
 
