@@ -41,6 +41,8 @@ console.log(process.env.MONGO_URL);
 // MONGO STUFF 
 const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/efood';
 
+console.log(dbUrl);
+
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
