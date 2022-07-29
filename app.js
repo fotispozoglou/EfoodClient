@@ -85,6 +85,8 @@ const store = MongoDBStore.create({
   touchAfter: 24 * 60 * 60
 });
 
+app.set('trust proxy', 1);
+
 const sessionConfig = {
   store,
   secret,
@@ -93,7 +95,7 @@ const sessionConfig = {
   name: 'sessionID',
   cookie: {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
