@@ -257,7 +257,7 @@ app.use((err, req, res, next) => {
 
 // LISTEN
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
 
