@@ -100,7 +100,7 @@ const sessionConfig = {
 }
 
 const corsOptions = {
-  origin: [`${ SERVER_URL }:${ port }`],
+  origin: [`${ SERVER_URL }`],
   optionsSuccessStatus: 200
 }
 
