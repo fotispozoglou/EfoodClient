@@ -33,7 +33,7 @@ const MongoDBStore = require("connect-mongo");
 
 const logger = require('./logger/logger.js');
 
-const { SERVER_IP } = require('./config/config.js');
+const { SERVER_IP, API_URL } = require('./config/config.js');
 
 // MONGO STUFF 
 const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/efood';
@@ -135,7 +135,7 @@ app.use(helmet.contentSecurityPolicy({
     scriptSrc: ["'self'", "'unsafe-inline'"],
     styleSrc: ["'self'", ...stylesSources],
     fontSrc: ["'self'"],
-    connectSrc: ["'self'", `http://${ SERVER_IP }:3000`]
+    connectSrc: ["'self'", `${ API_URL }`]
   }
 }));
 
