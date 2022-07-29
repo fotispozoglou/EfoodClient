@@ -77,6 +77,7 @@ app.use( hpp() );
 app.use(expectCt({ enforce: true, maxAge: 123 }));
 
 const secret = process.env.SECRET;
+const port = process.env.PORT || 8000;
 
 const store = MongoDBStore.create({
   mongoUrl: dbUrl,
@@ -94,7 +95,7 @@ const sessionConfig = {
     httpOnly: true,
     secure: true,
     path: '/',
-    domain: `.${ SERVER_URL }`,
+    domain: `.${ SERVER_URL }:${ port }`,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: true
@@ -102,7 +103,7 @@ const sessionConfig = {
 }
 
 const corsOptions = {
-  origin: [`${ SERVER_URL }`],
+  origin: [`${ SERVER_URL }:${ port }`],
   optionsSuccessStatus: 200
 }
 
@@ -230,8 +231,6 @@ app.use((err, req, res, next) => {
 });
 
 // LISTEN
-
-const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
 
