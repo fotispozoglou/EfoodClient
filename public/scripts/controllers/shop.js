@@ -16,6 +16,7 @@ import { setAPIToken } from '../general/request.js';
 import Router from './Router.js';
 import CartView from '../views/cart/CartView.js';
 import ProductsView from '../views/products/ProductsView.js';
+import { setUserInformation } from '../models/user.js';
 
 export const shopRouter = new Router(['/shop', productsController.controlRenderProducts]);
 
@@ -108,6 +109,8 @@ const initializeItems = async () => {
 
 const init = async () => {
 
+  if ( window.user ) setUserInformation( window.user.info );
+
   setAPIToken( window.api_token, window.token, window.user ? window.user.isLoggedIn : false );
 
   delete window.api_token;
@@ -121,17 +124,23 @@ const init = async () => {
   initializeListeners();
 
   shopRouter.route(
-    { path: '/', render: productsController.controlRenderProducts },
-    { path: '/shop', render: productsController.controlRenderProducts },
-    { path: '/account', render: userController.controlRenderUserAccount },
-    { path: '/account/change_password', render: userController.controlRenderChangePassword },
-    { path: '/account/delete', render: userController.controlRenderDeleteUser },
-    { path: '/privacy', render: userController.controlRenderUserPrivacy },
-    { path: '/settings', render: userController.controlRenderUserSettings },
-    { path: '/orders', render: ordersController.controlRenderOrders },
-    { path: '/orders/:orderID', render: ordersController.controlRenderOrder, originPath: '/orders' },
-    { path: '/authenticate', render: authenticatationController.controlRenderLogin }
+    { path: '/shop', render: productsController.controlRenderProducts }
   );
+
+  if ( window.user && window.user.isLoggedIn ) {
+
+    shopRouter.route(
+      { path: '/account', render: userController.controlRenderUserAccount },
+      { path: '/account/change_password', render: userController.controlRenderChangePassword },
+      { path: '/account/delete', render: userController.controlRenderDeleteUser },
+      { path: '/privacy', render: userController.controlRenderUserPrivacy },
+      { path: '/settings', render: userController.controlRenderUserSettings },
+      { path: '/orders', render: ordersController.controlRenderOrders },
+      { path: '/orders/:orderID', render: ordersController.controlRenderOrder, originPath: '/orders' },
+      { path: '/authenticate', render: authenticatationController.controlRenderLogin }
+    );
+
+  }
 
   shopRouter.init( window.location.pathname );
 

@@ -48,6 +48,7 @@
   window.user.username = "<%= currentUser.username %>"
   window.api_token = "<%= csrfToken %>"
   window.token = "<%= currentUser.token %>"
+  window.user.info = '<%- JSON.stringify({ name: currentUser.name, phone: currentUser.phone, address: currentUser.address, floor: currentUser.floor }) %>';
   window.user.isLoggedIn = true;
 
   const isLoggedIn = window.user.isLoggedIn;

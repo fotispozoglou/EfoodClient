@@ -42,7 +42,7 @@ export default new class ViewManager {
 
     if ( this._renderedView ) {
 
-      this._renderedView.hideElements();
+      if ( view.getType() === MAIN ) this._renderedView.hideElements();
 
       if ( hideCurrent ) this._renderedView.remove();
 

@@ -12,14 +12,18 @@ router.post('/generate/token', users.getAPIToken);
 
 router.route('/register')
   .post(
-    registerLimiter,
     catchAsync( users.register )
   );
 
 router.route('/login')
   .post( 
+    catchAsync( users.login ),
     loginLimiter,
-    catchAsync( users.login )
+    ( req, res ) => {
+
+      res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: false }));
+
+    }
   );
 
 router.route('/info')

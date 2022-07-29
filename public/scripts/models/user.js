@@ -9,8 +9,16 @@ export const state = {
   info: {
     name: '',
     phone: '',
-    username: ''
+    username: '',
+    address: '',
+    floor: ''
   }
+};
+
+export const setUserInformation = async info => {
+
+  state.info = JSON.parse( info );
+
 };
 
 export const updateUserLanguage = async language => {
@@ -46,6 +54,8 @@ export const getUserInfo = async () => {
     state.info.username = data.username;
     state.info.phone = data.phone;
     state.info.name = data.name;
+    state.info.address = data.address;
+    state.info.floor = data.floor;
 
   }
 

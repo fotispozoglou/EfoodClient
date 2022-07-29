@@ -1001,7 +1001,7 @@ textarea.input_field {
 }
 
 .switch_circle_container {
-  width: calc( 2.4em );
+  width: 55px;
   height: 1em;
   margin-left: 20px;
   background-color: white;

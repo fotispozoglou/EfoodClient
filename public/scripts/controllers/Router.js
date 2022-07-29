@@ -13,7 +13,7 @@ export default class Router {
 
   route( ...routes ) {
 
-    this._routes = [ ...routes ];
+    this._routes.push( ...routes );
 
   }
 
@@ -45,11 +45,10 @@ export default class Router {
 
     let match = potentialMatches.find(potentialMatch => potentialMatch.result !== null);
 
-    if (!match) {
-      match = {
-        route: this._routes[0],
-        result: [location.pathname]
-      };
+    if ( !match ) {
+
+      return this.go( this._routes[ 0 ].path );
+    
     }
 
     await match.route.render( this.getParams( match ) );

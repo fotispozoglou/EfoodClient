@@ -7,10 +7,18 @@ export default class OrderClientInfo extends DOMElement {
   _addressElement;
   _floorElement;
   _commentsElement;
+  _name;
+  _phone;
+  _address;
+  _floor;
 
-  constructor({ username, contact }, methods ) {
+  constructor({ name, phone, address, floor }, methods ) {
     super("div");
 
+    this._name = name;
+    this._phone = phone;
+    this._address = address;
+    this._floor = floor;
 
   }
 
@@ -41,15 +49,15 @@ export default class OrderClientInfo extends DOMElement {
 
   build() {
 
-    this._phoneElement = new InputElement(PHONE, "", () => {  }, true)
+    this._phoneElement = new InputElement(PHONE, this._phone, () => {  }, true)
       .setPlaceholder('phone number')
       .addClass('order_client_info_input')
 
-    this._addressElement  = new InputElement(ADDRESS, "", () => {  }, true)
+    this._addressElement  = new InputElement(ADDRESS, this._address, () => {  }, true)
       .setPlaceholder('where should we deliver your food ?')
       .addClass('order_client_info_input')
 
-    this._floorElement = new InputElement(FLOOR, "", () => {  }, true)
+    this._floorElement = new InputElement(FLOOR, this._floor, () => {  }, true)
       .setPlaceholder('on which floor ? ( if any )')
       .addClass('order_client_info_input')
 

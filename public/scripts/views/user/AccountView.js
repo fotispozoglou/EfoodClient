@@ -1,4 +1,4 @@
-import { ACCOUNT, CHANGE_PASSWORD, DELETE_ACCOUNT, NAME, PHONE, SAVE, USERNAME } from '../../config/strings.js';
+import { ACCOUNT, ADDRESS, CHANGE_PASSWORD, DELETE_ACCOUNT, FLOOR, NAME, PHONE, SAVE, USERNAME } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
 import View, { MAIN } from '../base/View.js';
 import InputElement from '../general/inputs/InputElement.js';
@@ -11,7 +11,7 @@ export default new class AccountView extends View {
 
   _generateElement() {
 
-    const { username, name, phone } = this._data.info;
+    const { username, name, phone, address, floor } = this._data.info;
 
     const { saveUserInfo } = this._data.methods;
 
@@ -26,6 +26,10 @@ export default new class AccountView extends View {
 
     const phoneElement = new InputElement( PHONE, phone, () => {}, true );
 
+    const addressElement = new InputElement( ADDRESS, address, () => {}, true );
+
+    const floorElement = new InputElement( FLOOR, floor, () => {}, true );
+
     const saveBtn = new DOMElement("button")
       .setText( SAVE )
       .on('click', () => { 
@@ -33,7 +37,9 @@ export default new class AccountView extends View {
         const info = {
           username: usernameElement.getValue(),
           name: nameElement.getValue(),
-          phone: phoneElement.getValue()
+          phone: phoneElement.getValue(),
+          address: addressElement.getValue(),
+          floor: floorElement.getValue()
         };
 
         saveUserInfo( info );
@@ -50,6 +56,8 @@ export default new class AccountView extends View {
       usernameElement.getElement(), 
       nameElement.getElement(),
       phoneElement.getElement(),
+      addressElement.getElement(),
+      floorElement.getElement(),
       saveBtn,
       changePasswordBtn.build(),
       deleteAccountBtn.build()

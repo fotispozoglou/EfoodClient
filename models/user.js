@@ -18,6 +18,8 @@ const options = {
 const UserSchema = new Schema({
   name: String,
   phone: String,
+  address: String,
+  floor: String,
   preferences: {
     privacy: {
       privateName: Boolean,

@@ -36,6 +36,8 @@ module.exports.register = async ( req, res ) => {
       username: sanitizeHtml( username ), 
       name: sanitizeHtml( username ),
       phone: '',
+      address: '',
+      floor: '',
       preferences: { 
         privacy: {
           privateName: true, 
@@ -67,13 +69,17 @@ module.exports.register = async ( req, res ) => {
 
 }
 
-module.exports.login = async (req, res) => {
+module.exports.login = async (req, res, next) => {
 
-  passport.authenticate('local', function(err, user, info) {
+  passport.authenticate('local', { failureRedirect: '/login/failed' }, function(err, user, info) {
     
     if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR, authenticated: false }));
 
-    if ( !user ) return res.send(JSON.stringify({ status: GENERAL.SUCCESS, authenticated: false }));
+    if ( !user || ( info && info === "IncorrectPasswordError" ) ) {
+      
+      return next();
+
+    }
 
     req.login(user, async function( err ) {
 
@@ -129,9 +135,16 @@ module.exports.logout = ( req, res ) => {
 
 module.exports.getUserInfo = async ( req, res ) => {
 
-  const { username, name, phone } = sanitizeHtml(req.user);
+  const { username, name, phone, address, floor } = req.user;
 
-  res.send(JSON.stringify({ status: GENERAL.SUCCESS, username, name, phone }));
+  res.send(JSON.stringify({ 
+    status: GENERAL.SUCCESS, 
+    username: sanitizeHtml( username ), 
+    name: sanitizeHtml( name ), 
+    phone: sanitizeHtml( phone ),
+    address: sanitizeHtml( address ), 
+    floor: sanitizeHtml( floor )
+  }));
 
 };
 
@@ -141,7 +154,13 @@ module.exports.saveUserInfo = async ( req, res ) => {
 
   const userID = req.user._id;
 
-  const newUserInfo = { name: sanitizeHtml(info.name), phone: sanitizeHtml(info.phone), username: sanitizeHtml(info.username)  };
+  const newUserInfo = { 
+    name: sanitizeHtml( info.name ), 
+    phone: sanitizeHtml( info.phone ), 
+    username: sanitizeHtml( info.username ),
+    address: sanitizeHtml( info.address ),
+    floor: sanitizeHtml( info.floor )
+  };
 
   await User.updateOne({ _id: userID }, { $set: newUserInfo });
 

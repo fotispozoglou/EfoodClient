@@ -2,6 +2,7 @@ import OrderInfo from "../../views/orders/OrderInfoView.js";
 import { getCartProducts } from "../../database/products.js";
 import * as orderModel from '../../models/order.js';
 import { getCartProductsTotalPrice } from '../../models/shop.js';
+import { state as userState } from '../../models/user.js';
 
 import OrderView from "../../views/orders/OrderView.js";
 import { ORDER } from "../../config/statusCodes.js";
@@ -81,8 +82,6 @@ const controlOrderStatusChange = async ( response, orderID ) => {
   OrderView.updateStatus( status );
 
   OrdersView.updateOrder( orderID, status );
-
-  console.log(status);
 
   if ( status.number != ORDER.STATUS_COMPLETED && status.number != ORDER.STATUS_CANCELED ) { 
 
@@ -191,6 +190,7 @@ export const controlRenderOrderInfo = async () => {
   ViewManager.render( OrderInfo, {
     cartProducts: data.products,
     totalPrice: totalPriceData.total.toFixed( 2 ),
+    user: userState.info,
     methods: {
       goBack: () => { ViewManager.renderPrevious(); }
     },

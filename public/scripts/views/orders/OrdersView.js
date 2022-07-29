@@ -38,8 +38,6 @@ export default new class OrdersView extends View {
 
   updateList( ...items ) {
 
-    console.log(items);
-
     this._ordersList.refresh( ...items );
 
   }

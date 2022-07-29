@@ -12,13 +12,13 @@ const validatePreference = async ( req, res, next ) => {
 
   const { preference } = req.body;
 
-  if ( preference.name !== "visible_name" || preference.name !== "visible_phone" ) {
+  if ( preference.name !== "visible_name" && preference.name !== "visible_phone" ) {
 
     return res.status( 404 ).send();
 
   }
 
-  if ( preference.value !== false || preference.value !== true ) {
+  if ( preference.value !== false && preference.value !== true ) {
 
     return res.status( 404 ).send();
 

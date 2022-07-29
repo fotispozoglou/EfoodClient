@@ -15,8 +15,6 @@ export default new class ProductsView extends ListView {
 
   filter( value ) {
 
-    console.log( value );
-
     let found = false;
 
     for ( const itemElement of this._itemsElements ) {

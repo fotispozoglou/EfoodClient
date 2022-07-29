@@ -30,8 +30,6 @@ export const addNotification = notification => {
 
   notifications.push( notification );
 
-  console.log(notification);
-
   handleNotificationsQueue();
 
 };

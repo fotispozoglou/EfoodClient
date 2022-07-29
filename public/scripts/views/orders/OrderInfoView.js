@@ -54,7 +54,7 @@ export default new class OrderInfoView extends View {
 
   _generateElement() {
 
-    const { cartProducts, totalPrice, itemMethods } = this._data;
+    const { cartProducts, totalPrice, itemMethods, user } = this._data;
 
     const totalPriceTitle = new DOMElement("p").setID("order_cart_total_title").setText('Συνολο').getElement();
 
@@ -68,7 +68,7 @@ export default new class OrderInfoView extends View {
 
     const clientTitle = new DOMElement("p").setText( ORDER_LABEL ).setID("order_client_title").getElement();
 
-    this._clientInfo = new OrderClientInfo({  }, {});
+    this._clientInfo = new OrderClientInfo(user, {});
 
     const productsContainer = new DOMElement("div").setID("order_cart_container").append( productsTitle, productsList, totalPriceContainer ).getElement();
 

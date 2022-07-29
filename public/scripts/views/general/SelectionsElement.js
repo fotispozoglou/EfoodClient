@@ -28,8 +28,6 @@ export default class SelectionsElement extends DOMElement {
     this._maximumSelections = maximumSelections;
     this._onSelect = onSelect;
     
-    console.log(this);
-
   }
 
   getSelected() { 
@@ -61,8 +59,6 @@ export default class SelectionsElement extends DOMElement {
   }
 
   showEmptyMessage() {
-
-    console.log("EMPTY");
 
   }
 

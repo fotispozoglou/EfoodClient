@@ -23,8 +23,6 @@ export default class ListView extends View {
 
   hideNoSearched() {
 
-    console.log(1);
-
     this._noSearch.remove();
 
     this._noSearchRendered = false;
@@ -32,8 +30,6 @@ export default class ListView extends View {
   }
 
   showNoSearched() {
-
-    console.log(1);
 
     if ( !this._body ) return;
 
@@ -91,7 +87,6 @@ export default class ListView extends View {
 
   updateList( ...items ) {
 
-    console.log(this);
 
   }
 
@@ -103,8 +98,6 @@ export default class ListView extends View {
     let itemsIndex = 0;
 
     while ( !foundAll && itemsIndex < this._itemsElements.length ) {
-
-      console.log(`${this._itemsElements[ itemsIndex ].getID()}`);
 
       if ( itemsIDS.includes( this._itemsElements[ itemsIndex ].getID() ) ) {
 

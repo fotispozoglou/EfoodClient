@@ -119,8 +119,6 @@ export const PUT = async ( url, body ) => {
 
   const { options, error } = await getRequestOptions('PUT', body);
 
-  console.log( options );
-
   if ( error ) return { error: Error("Cannot Get Options") };
 
   return await fetch( url, options )
@@ -143,8 +141,6 @@ export const PUT = async ( url, body ) => {
 export const DELETE = async ( url, body ) => {
 
   const { options, error } = await getRequestOptions('DELETE', body);
-
-  console.log( options );
 
   if ( error ) return { error: Error("Cannot Get Options") };
 

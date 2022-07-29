@@ -36,7 +36,7 @@ const logger = require('./logger/logger.js');
 const { SERVER_IP } = require('./config/config.js');
 
 // MONGO STUFF 
-const dbUrl = 'mongodb://localhost:27017/efood'; // process.env.DB_URL
+const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/efood';
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -76,7 +76,7 @@ app.use(mongoSanitize({
 app.use( hpp() );
 app.use(expectCt({ enforce: true, maxAge: 123 }));
 
-const secret = process.env.SESSION_SECRET;
+const secret = process.env.SECRET;
 
 const store = MongoDBStore.create({
   mongoUrl: dbUrl,
