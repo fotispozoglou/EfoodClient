@@ -1,7 +1,7 @@
 const rateLimit = require('express-rate-limit');
 const MongoStore = require('rate-limit-mongo');
 
-const dbUrl = process.env.MONG_URL;
+const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/efood';
 
 const renderLimiter = rateLimit({
   store: new MongoStore({
