@@ -33,7 +33,7 @@ const MongoDBStore = require("connect-mongo");
 
 const logger = require('./logger/logger.js');
 
-const { SERVER_IP, API_URL } = require('./config/config.js');
+const { SERVER_IP, API_URL, SERVER_URL } = require('./config/config.js');
 
 // MONGO STUFF 
 const dbUrl = process.env.MONGO_URL || 'mongodb://localhost:27017/efood';
@@ -92,9 +92,9 @@ const sessionConfig = {
   name: 'sessionID',
   cookie: {
     httpOnly: true,
-    // secure: true,
+    secure: true,
     path: '/',
-    domain: `.${ SERVER_IP }`,
+    domain: `.${ SERVER_URL }`,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     sameSite: true
@@ -102,7 +102,7 @@ const sessionConfig = {
 }
 
 const corsOptions = {
-  origin: [`http://${ SERVER_IP }:8000`],
+  origin: [`${ SERVER_URL }`],
   optionsSuccessStatus: 200
 }
 
