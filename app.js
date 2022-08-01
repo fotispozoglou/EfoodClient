@@ -46,7 +46,9 @@ mongoose.connect(dbUrl, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-    console.log("Database connected");
+  
+  logger.info("Database Connected");
+
 });
 
 const csrfProtection = csrf();
@@ -219,14 +221,6 @@ app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
 
   if (!err.message) err.message = 'Server Error';
-
-  // console.log(statusCode);
-
-  // if (err.code !== 'EBADCSRFTOKEN') {
-
-
-
-  // }
 
   logger.info( err.stack );
   

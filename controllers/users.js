@@ -164,7 +164,7 @@ module.exports.saveUserInfo = async ( req, res ) => {
 
   await User.updateOne({ _id: userID }, { $set: newUserInfo });
 
-  res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+  res.send(JSON.stringify({ status: GENERAL.SUCCESS, info: newUserInfo }));
 
 };
 

@@ -63,6 +63,14 @@ const controlSaveUserInfo = async info => {
 
   if ( error ) return controlRenderMessage( ERROR_SAVING_NEW_INFO ,MESSAGE.MESSAGE_ERROR, LONG);
 
+  userModel.setUserInformation(JSON.stringify({
+    name: info.name,
+    floor: info.floor,
+    address: info.address,
+    phone: info.phone,
+    username: info.username
+  }));
+
   controlRenderMessage("new information saved", MESSAGE.MESSAGE_SUCCESS );
 
 };

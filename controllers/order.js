@@ -33,8 +33,6 @@ module.exports.completeOrder = async ( req, res ) => {
     }
   };
 
-  console.log(user);
-
   await axios.post(`${ API_URL }/orders`, { order: { products, client, user } }, config)
     .then(response => {
 
