@@ -6,7 +6,7 @@ import * as userModel from '../../models/user.js';
 import { controlRenderMessage } from "../../general/messages.js";
 import { MESSAGE } from "../../config/types.js";
 import { LONG, SHORT } from "../../views/general/Notification.js";
-import { ACCOUNT_DELETED, ALREADY_ACTIVE_ORDER_DELETE, ERROR_CHANGING_LANGUAGE, ERROR_DELETING_USER, ERROR_SAVING_NEW_INFO, ERROR_UPDATING_PASSWORD, PASSWORD_CHANGED_SUCCESSFULLY } from "../../config/strings.js";
+import { ACCOUNT_DELETED, ALREADY_ACTIVE_ORDER_DELETE, DELETE, DELETE_ACCOUNT, ERROR_CHANGING_LANGUAGE, ERROR_DELETING_USER, ERROR_SAVING_NEW_INFO, ERROR_UPDATING_PASSWORD, PASSWORD_CHANGED_SUCCESSFULLY, YOUR_PASSWORD } from "../../config/strings.js";
 import ChangePasswordView from "../../views/user/ChangePasswordView.js";
 import { GENERAL, ORDER } from "../../config/statusCodes.js";
 import SeriousConfirmActionView from "../../views/general/SeriousConfirmActionView.js";
@@ -81,7 +81,7 @@ const controlSavePassword = async ( currentPassword, newPassword, newPasswordCon
 
   if ( error || ( data && data.status === GENERAL.ERROR ) ) {
 
-    return controlRenderMessage( ERROR_UPDATING_PASSWORD, MESSAGE.MESSAGE_ERROR );
+    return controlRenderMessage( data.message || ERROR_UPDATING_PASSWORD, MESSAGE.MESSAGE_ERROR );
 
   }
 
@@ -127,9 +127,9 @@ const controlDeleteUser = async password => {
 export const controlRenderDeleteUser = async () => {
 
   SeriousConfirmActionView.render({
-    title: 'delete account',
-    informationText: 'your password',
-    confirmText: 'delete',
+    title: DELETE_ACCOUNT,
+    informationText: YOUR_PASSWORD,
+    confirmText: DELETE,
     inputType: 'password',
     onConfirm: controlDeleteUser,
     matchConfirm: false,

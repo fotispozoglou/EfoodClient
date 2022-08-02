@@ -30,12 +30,27 @@ module.exports.CHOOSE_BETWEEN = [
   'διάλεξε ανάμεσα σε '
 ];
 module.exports.CATEGORIES_OF_PRODUCTS = [
-  ' categories of products',
-  ' κατηγωρίες προϊόντων'
+  'categories of products',
+  'κατηγωρίες προϊόντων'
 ];
 module.exports.POPULAR_PRODUCTS = [
   'popular products',
   'δημοφιλή προϊόντα'
+];
+
+module.exports.WRONG_PASSWORD = [
+  'the password is incorrect',
+  'ο κωδικός είναι λανθασμένος'
+];
+
+module.exports.PASSWORDS_NOT_MATCH = [
+  "passwords confirm don't match",
+  'οι κωδικοί επιβεβαίωσης δεν ταιριάζουν'
+];
+
+module.exports.REGISTERATION_DISABLED = [
+  'registration is disabled for this app',
+  'η δυνατότητα εγγραφής έχει απενεργοποιηθεί σε αυτή την εφαρμογή'
 ];
 
 module.exports.strings = new Map([

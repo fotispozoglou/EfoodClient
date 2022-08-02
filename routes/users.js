@@ -8,8 +8,6 @@ const { registerLimiter, loginLimiter } = require('../middleware/limiters.js');
 const { csrfProtection } = require('../app.js');
 const { GENERAL } = require('../config/statusCodes.js');
 
-router.post('/generate/token', users.getAPIToken);
-
 router.route('/register')
   .post(
     catchAsync( users.register )
@@ -41,8 +39,6 @@ router.route('/password')
 
 router.route('/deleteUser')
   .post( csrfProtection, isLoggedIn, catchAsync( users.deleteUser ) );
-
-router.post('/admin/information', csrfProtection, users.getUserInformation);
 
 router.post('/authenticated', ( req, res ) => {
 

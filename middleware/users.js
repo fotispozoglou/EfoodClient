@@ -1,4 +1,5 @@
 const { GENERAL } = require("../config/statusCodes");
+const logger = require("../logger/logger");
 
 const isLoggedIn = async ( req, res, next ) => {
 

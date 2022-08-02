@@ -10,6 +10,7 @@ const axios = require('axios');
 const { GENERAL, ORDER } = require('../config/statusCodes.js');
 const { API_URL } = require('../config/config');
 const passport = require('passport');
+const { PASSWORDS_NOT_MATCH, languages, WRONG_PASSWORD, REGISTERATION_DISABLED } = require('../config/strings');
 
 const COOKIE_EXPIRE_SECONDS = 7 * ( 24 * 3600 );
 const COOKIE_EXPIRE_MILLI = 7 * ( 24 * 3600 * 1000 );
@@ -27,6 +28,14 @@ const generateAPIToken = async user => {
 };
 
 module.exports.register = async ( req, res ) => {
+
+  const languageNumber = req.user ? languages.get( req.user.preferences.language ) : 0;
+
+  return res.send(JSON.stringify({ 
+    status: GENERAL.ERROR, 
+    registered: false,
+    message: REGISTERATION_DISABLED[ languageNumber ]
+  }));
 
   try {
 
@@ -97,30 +106,6 @@ module.exports.login = async (req, res, next) => {
 
 }
 
-module.exports.getAPIToken = async ( req, res ) => {
-
-  const { user } = req;
-
-  if ( !user ) return res.sendStatus( 401 );
-
-  const token = await generateAPIToken( { username: user.username, _id: user._id } );
-
-  res.cookie('api_token', token, { expires: new Date( Date.now() + COOKIE_EXPIRE_MILLI ), httpOnly: true, secure: true });
-
-  res.send(JSON.stringify({ w: true }));
-
-};
-
-module.exports.getUserInformation = async ( req, res ) => {
-
-  const { clientID } = req.body;
-
-  const user = await User.findById( clientID );
-
-  res.send(JSON.stringify({ user }));
-
-};
-
 module.exports.logout = ( req, res ) => {
 
   req.logout(function(err) {
@@ -162,7 +147,7 @@ module.exports.saveUserInfo = async ( req, res ) => {
     floor: sanitizeHtml( info.floor )
   };
 
-  await User.updateOne({ _id: userID }, { $set: newUserInfo });
+  // await User.updateOne({ _id: userID }, { $set: newUserInfo });
 
   res.send(JSON.stringify({ status: GENERAL.SUCCESS, info: newUserInfo }));
 
@@ -182,13 +167,33 @@ module.exports.updateUserPassword = async ( req, res ) => {
 
   const foundUser = await User.findById( req.user._id );
 
-  await foundUser.changePassword( currentPassword, newPassword, function( err ) {
+  const languageNumber = req.user ? languages.get( req.user.preferences.language ) : 0;
 
-    if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR }));
+  if ( newPassword !== newPasswordConfirm ) {
+
+    return res.send(JSON.stringify({ status: GENERAL.ERROR, message: PASSWORDS_NOT_MATCH[ languageNumber ] }));
+
+  }
+
+  foundUser.authenticate( currentPassword, async function( error, model, passwordError ) {
+
+    if ( passwordError || error ) {
+
+      return res.send(JSON.stringify({ status: GENERAL.ERROR, message: WRONG_PASSWORD[ languageNumber ] }));
+
+    }
 
     res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
 
   });
+
+  // await foundUser.changePassword( currentPassword, newPassword, function( err ) {
+
+  //   if ( err ) return res.send(JSON.stringify({ status: GENERAL.ERROR }));
+
+  //   res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+
+  // });
 
 };
 
@@ -198,15 +203,15 @@ module.exports.updatePrivacySettings = async ( req, res ) => {
 
   const userID = req.user._id; 
 
-  if ( preference.name === "visible_name" ) {
+  // if ( preference.name === "visible_name" ) {
 
-    await User.updateOne({ _id: userID }, { 'preferences.privacy.privateName': preference.value })
+  //   await User.updateOne({ _id: userID }, { 'preferences.privacy.privateName': preference.value })
 
-  } else if ( preference.name === "visible_phone" ) {
+  // } else if ( preference.name === "visible_phone" ) {
 
-    await User.updateOne({ _id: userID }, { 'preferences.privacy.privatePhone': preference.value });
+  //   await User.updateOne({ _id: userID }, { 'preferences.privacy.privatePhone': preference.value });
 
-  }
+  // }
 
   res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
 
@@ -226,43 +231,45 @@ module.exports.deleteUser = async ( req, res ) => {
 
     }
 
-    const config = {
-      headers: {
-        'server-token': `Bearer ${orderToken}`
-      }
-    };
+    return res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+
+    // const config = {
+    //   headers: {
+    //     'server-token': `Bearer ${orderToken}`
+    //   }
+    // };
   
-    await axios.post(`${ API_URL }/orders/removeClientInfo`, { userID: req.user._id }, config)
-      .then(async response => {
+    // await axios.post(`${ API_URL }/orders/removeClientInfo`, { userID: req.user._id }, config)
+    //   .then(async response => {
 
-        if ( response.data.hasPendingOrders ) {
+    //     if ( response.data.hasPendingOrders ) {
 
-          return res.send(JSON.stringify({ status: GENERAL.SUCCESS, deleteStatus: ORDER.HAS_PENDING_ORDER }));
+    //       return res.send(JSON.stringify({ status: GENERAL.SUCCESS, deleteStatus: ORDER.HAS_PENDING_ORDER }));
 
-        }
+    //     }
 
-        await user.remove();
+    //     await user.remove();
   
-        req.logout(function(err) {
+    //     req.logout(function(err) {
           
-          if (err) {
+    //       if (err) {
       
-            return res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+    //         return res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
       
-          }
+    //       }
           
-          res.clearCookie('api_token');
+    //       res.clearCookie('api_token');
             
-          res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+    //       res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
 
-        });
+    //     });
 
-      })
-      .catch(e => {
+    //   })
+    //   .catch(e => {
     
-        return res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
+    //     return res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
     
-      });
+    //   });
 
   });
 
@@ -274,7 +281,7 @@ module.exports.changeUserLanguage = async ( req, res ) => {
 
   req.user.preferences.language = language;
 
-  await User.updateOne({ _id: req.user._id }, { $set: { 'preferences.language': language } });
+  // await User.updateOne({ _id: req.user._id }, { $set: { 'preferences.language': language } });
 
   res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
 

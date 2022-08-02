@@ -1,3 +1,4 @@
+import { CANCEL, TO_CONFIRM, TYPE } from '../../config/strings.js';
 import DOMElement from '../base/DOMElement.js';
 import View from '../base/View.js';
 import InputElement from './inputs/InputElement.js';
@@ -15,7 +16,7 @@ export default new class SeriousConfirmActionView extends View {
       .setID("serious_confirm_action_cancel")
       .on('click', () => { goBack(); })
       .setClass('cancel_btn')
-      .setText("cancel")
+      .setText( CANCEL )
       .getElement();
 
     const titleElement = new DOMElement("p").setID("serious_confirm_action_title").setText( title ).getElement();
@@ -30,7 +31,7 @@ export default new class SeriousConfirmActionView extends View {
 
     } else {
 
-      labelElement.appendHTML(`<p>type ${ informationText } to confirm</p>`);
+      labelElement.appendHTML(`<p>${ TYPE } ${ informationText } ${ TO_CONFIRM }</p>`);
 
     }
 

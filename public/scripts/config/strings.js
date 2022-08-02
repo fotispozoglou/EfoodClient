@@ -46,6 +46,31 @@ export const SAVE = ['save', 'αποθήκευση'][ lang ];
 export const CHANGE_PASSWORD = ['change password', 'αλλαγή κωδικού'][ lang ];
 export const DELETE_ACCOUNT = ['delete account', 'διαγραφή λογαριασμού'][ lang ];
 
+export const YOUR_PASSWORD = [
+  'your password',
+  'τον κωδικό σου'
+][ lang ];
+
+export const DELETE = [
+  'delete',
+  'διαγραφη'
+][ lang ];
+
+export const CANCEL = [
+  'cancel',
+  'άκυρο'
+][ lang ];
+
+export const TYPE = [
+  'type',
+  'γράψε'
+][ lang ];
+
+export const TO_CONFIRM = [
+  'to confirm',
+  'για επιβεβαίωση'
+][ lang ];
+
 export const COST = ['cost', 'κόστος'][ lang ];
 export const ORDER_ACTION = ['order', 'παράγγειλε'][ lang ];
 
@@ -224,6 +249,21 @@ export const MISSING_PASSWORD = [
 export const ERROR_CHANGING_LANGUAGE = [
   'error changing language',
   'πρόβλημα αλλαγής γλώσσας'
+][ lang ];
+
+export const CURRENT_PASSWORD = [
+  'current password',
+  'τωρινός κωδικός'
+][ lang ];
+
+export const NEW_PASSWORD = [
+  'new password',
+  'νέος κωδικός'
+][ lang ];
+
+export const CONFIRM_NEW_PASSWORD = [
+  'confirm new password',
+  'επιβεβαίωση νέου κωδικού'
 ][ lang ];
 
 const statusTexts = new Map();

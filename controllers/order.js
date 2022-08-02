@@ -18,48 +18,50 @@ module.exports.completeOrder = async ( req, res ) => {
 
   }
 
-  if ( user.preferences.privateName ) user.name = 'private';
+  return res.send({ status: GENERAL.SUCCESS, orderStatus: ORDER.HAS_PENDING_ORDER });
 
-  if ( user.preferences.privatePhone ) user.phone = 'private';
+  // if ( user.preferences.privateName ) user.name = 'private';
 
-  const authHeader = req.headers['authorization'];
+  // if ( user.preferences.privatePhone ) user.phone = 'private';
 
-  const { products, client } = req.body.order;
+  // const authHeader = req.headers['authorization'];
 
-  const config = {
-    headers: {
-      'server-token': `Bearer ${ orderToken }`,
-      'authorization': authHeader
-    }
-  };
+  // const { products, client } = req.body.order;
 
-  await axios.post(`${ API_URL }/orders`, { order: { products, client, user } }, config)
-    .then(response => {
+  // const config = {
+  //   headers: {
+  //     'server-token': `Bearer ${ orderToken }`,
+  //     'authorization': authHeader
+  //   }
+  // };
 
-      if ( response.data.status === ORDER.HAS_PENDING_ORDER ) {
+  // await axios.post(`${ API_URL }/orders`, { order: { products, client, user } }, config)
+  //   .then(response => {
 
-        return res.send({ status: GENERAL.SUCCESS, orderStatus: ORDER.HAS_PENDING_ORDER });
+  //     if ( response.data.status === ORDER.HAS_PENDING_ORDER ) {
 
-      }
+  //       return res.send({ status: GENERAL.SUCCESS, orderStatus: ORDER.HAS_PENDING_ORDER });
 
-      if ( response.data.status === GENERAL.ERROR ) {
+  //     }
 
-        return res.send({ status: GENERAL.SUCCESS, orderStatus: GENERAL.ERROR, invalidFields: response.data.invalidFields });
+  //     if ( response.data.status === GENERAL.ERROR ) {
 
-      }
+  //       return res.send({ status: GENERAL.SUCCESS, orderStatus: GENERAL.ERROR, invalidFields: response.data.invalidFields });
 
-      return res.send(JSON.stringify({ 
-        status: GENERAL.SUCCESS, 
-        orderStatus: response.data.status, 
-        orderID: response.data.orderID, 
-        order: response.data.order 
-      }));
+  //     }
 
-    })
-    .catch(e => {  
+  //     return res.send(JSON.stringify({ 
+  //       status: GENERAL.SUCCESS, 
+  //       orderStatus: response.data.status, 
+  //       orderID: response.data.orderID, 
+  //       order: response.data.order 
+  //     }));
 
-      return res.send(JSON.stringify({ status: GENERAL.ERROR }));
+  //   })
+  //   .catch(e => {  
 
-    });
+  //     return res.send(JSON.stringify({ status: GENERAL.ERROR }));
+
+  //   });
 
 };
