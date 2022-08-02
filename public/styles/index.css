@@ -1081,6 +1081,11 @@ textarea.input_field {
   background-color: var( --fixed-background );
 }
 
+#change_password .input {
+  width: 90%;
+  max-width: 35em;
+}
+
 #serious_confirm_action_background {
   background-color: var(--fixed-background);
   width: 100%;

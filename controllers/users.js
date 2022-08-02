@@ -281,7 +281,7 @@ module.exports.changeUserLanguage = async ( req, res ) => {
 
   req.user.preferences.language = language;
 
-  // await User.updateOne({ _id: req.user._id }, { $set: { 'preferences.language': language } });
+  await User.updateOne({ _id: req.user._id }, { $set: { 'preferences.language': language } });
 
   res.send(JSON.stringify({ status: GENERAL.SUCCESS }));
 
