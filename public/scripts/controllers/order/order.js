@@ -137,7 +137,9 @@ const controlCompleteOrder = async () => {
 
   }
 
-  if ( order && ( orderStatus === ORDER.HAS_PENDING_ORDER || order.status.number === ORDER.STATUS_CANCELED ) ) {
+  console.log(order, orderStatus);
+
+  if (  orderStatus === ORDER.HAS_PENDING_ORDER || order.status.number === ORDER.STATUS_CANCELED ) {
 
     return controlRenderMessage( ALREADY_ACTIVE_ORDER , MESSAGE.MESSAGE_ERROR);
 
