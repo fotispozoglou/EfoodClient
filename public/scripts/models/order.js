@@ -48,6 +48,8 @@ const setTimeoutTime = time => {
 
 export const startCheckOrder = async ( orderID, responseCallback ) => {
 
+  return;
+
   if ( state.trackingOrder ) return;
 
   state.trackingOrder = true;
