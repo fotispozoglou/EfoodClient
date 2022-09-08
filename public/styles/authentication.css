@@ -57,3 +57,14 @@
   flex-direction: column;
   width: 100%;
 }
+
+#login_helper {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 5px auto;
+}
+
+#login_helper p span {
+  font-weight: bolder;
+}

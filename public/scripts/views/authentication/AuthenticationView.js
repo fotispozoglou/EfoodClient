@@ -58,7 +58,12 @@ export default new class AuthenticationView extends View {
       .on('click', () => { this.renderRegister(); })
       .getElement();
 
-    loginForm.append( username.getElement(), password.getElement(), loginBtn );
+    const loginHelperContainer = new DOMElement("div")
+      .appendHTML('<p><span>username - </span>fotis</p><p><span>password - </span>password</p>')
+      .setID("login_helper")
+      .getElement();
+
+    loginForm.append( username.getElement(), password.getElement(), loginHelperContainer, loginBtn );
 
     this._loginElement = new DOMElement("div").setID("authentication_login").append( loginForm.getElement(), renderRegisterBtn ).getElement();
 
