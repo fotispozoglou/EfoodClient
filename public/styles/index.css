@@ -1138,6 +1138,15 @@ textarea.input_field {
   padding: 8px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+#serious_confirm_action_actions .cancel_btn {
+  margin-right: 5px;
+}
+
+#serious_confirm_action_actions button {
+  margin: inherit;
 }
 
 #user_account button {
