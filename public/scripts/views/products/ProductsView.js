@@ -8,7 +8,7 @@ export const searchProducts = document.querySelector("#search_products_input");
 const cartBtn = document.querySelector("#cart_btn_container");
 
 export default new class ProductsView extends ListView {
-  _parent = document.querySelector("#main_center");
+  _parent = document.querySelector("#products-container");
   _rerender = false;
   _noSearchText = NO_PRODUCTS_FOUND;
   id = "products";

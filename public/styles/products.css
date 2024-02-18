@@ -152,14 +152,11 @@
 }
 
 #categories_btn_container {
-  position: fixed;
+  /* position: fixed; */
   background-color: white;
   padding: 10px;
   border-radius: 8px;
   display: flex;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 2em;
   text-align: center;
   max-width: 140px;
   background-color: #ffffff;

@@ -1246,6 +1246,10 @@ textarea.input_field {
     overflow: auto!important;
   }
 
+  #cart_categories_container {
+    display: none!important;
+  }
+
   #cart_btn_container, #categories_btn_container {
     display: none!important;
   }
