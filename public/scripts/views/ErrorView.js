@@ -10,7 +10,7 @@ export default new class ErrorView extends View {
 
     const { text } = this._data;
 
-    const errorIcon = new DOMElement("img").setID("error_icon").attributes(['src', '/logo_error.svg']).getElement();
+    const errorIcon = new DOMElement("img").setID("error_icon").attributes(['src', '/efood_d.svg']).style(["width", "129px"]).getElement();
 
     const errorText = new DOMElement("p").setID("error_text").setText( text ).getElement();
 

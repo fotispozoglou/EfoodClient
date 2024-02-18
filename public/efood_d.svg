@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="129mm"
+   height="56mm"
+   viewBox="0 0 487.55904 211.65355"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <rect
+       x="20.888399"
+       y="41.93412"
+       width="161.49457"
+       height="155.42455"
+       id="rect3" />
+    <rect
+       x="20.888399"
+       y="41.93412"
+       width="161.49457"
+       height="155.42455"
+       id="rect3-3" />
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter3"
+       x="-0.098189899"
+       y="-0.098189899"
+       width="1.1963798"
+       height="1.1963798">
+      <feGaussianBlur
+         stdDeviation="5.7277441"
+         id="feGaussianBlur3" />
+    </filter>
+  </defs>
+  <g
+     id="layer1">
+    <g
+       id="g4"
+       transform="translate(-4)">
+      <g
+         id="g3"
+         transform="matrix(0.80382255,0,0,0.80382255,0.558506,22.269699)"
+         style="fill:#222222;fill-opacity:1">
+        <rect
+           style="fill:#222222;fill-opacity:1;stroke-width:0.934836;filter:url(#filter3)"
+           id="rect2"
+           width="140"
+           height="140"
+           x="17.536301"
+           y="35.965881"
+           ry="8.2076578" />
+        <text
+           xml:space="preserve"
+           id="text2"
+           style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:133.333px;font-family:'JetBrainsMono Nerd Font Mono';-inkscape-font-specification:'JetBrainsMono Nerd Font Mono Ultra-Bold';text-align:center;letter-spacing:10px;white-space:pre;shape-inside:url(#rect3);fill:#222222;fill-opacity:1"
+           transform="translate(-14.766081,-6.9978339)"><tspan
+             x="61.635819"
+             y="161.63026"
+             id="tspan2">E</tspan></text>
+      </g>
+      <g
+         id="g3-0"
+         transform="matrix(0.80382255,0,0,0.80382255,0.558506,22.269699)">
+        <rect
+           style="fill:#222222;fill-opacity:1;stroke-width:0.934836"
+           id="rect2-6"
+           width="140"
+           height="140"
+           x="17.536301"
+           y="35.965881"
+           ry="8.2076578" />
+        <text
+           xml:space="preserve"
+           id="text2-2"
+           style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:133.333px;font-family:'JetBrainsMono Nerd Font Mono';-inkscape-font-specification:'JetBrainsMono Nerd Font Mono Ultra-Bold';text-align:center;letter-spacing:10px;white-space:pre;shape-inside:url(#rect3-3);fill:#ffffff;fill-opacity:1"
+           transform="translate(-14.766081,-6.9978339)"><tspan
+             x="61.635819"
+             y="161.63026"
+             id="tspan3">E</tspan></text>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:120px;font-family:'JetBrainsMono Nerd Font Mono';-inkscape-font-specification:'JetBrainsMono Nerd Font Mono Ultra-Bold';text-align:center;letter-spacing:10px;text-anchor:middle;fill:#353535;fill-opacity:1"
+       x="305.18286"
+       y="151.24747"
+       id="text4"><tspan
+         id="tspan4"
+         x="310.18286"
+         y="151.24747">FOOD</tspan></text>
+  </g>
+</svg>

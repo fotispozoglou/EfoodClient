@@ -24,7 +24,7 @@ body {
   width: 100%;
   font-family: arial;
   font-size: 15px;
-  background-color: #E6E6E6;
+  background-color: #F7F7F7;
   min-height: 100vh;
 }
 
@@ -271,7 +271,7 @@ input:focus, textarea:focus, select:focus{
 #loading {
   width: 100%;
   height: 100vh;
-  background-color: #e51c1c;
+  background-color: #f3f3f3;
   position: fixed;
   top: 0;
   display: flex;
@@ -974,11 +974,34 @@ textarea.input_field {
   color: #333;
 }
 
+#footer {
+  padding: 10px;
+  margin-top: 50px;
+  background-color: #f7f7f7;
+}
+
+#footer-content {
+  border-top: 1px solid #a09f9f;
+  margin: 0 20px;
+  display: flex;
+  flex-direction: row;
+}
+
 .copyright {
-  width: 100%;
   text-align: center;
   padding: 10px;
   font-weight: bold;
+}
+
+#footer-icons {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.footer-icon {
+  margin: auto 0;
+  font-size: 20px;
 }
 
 #user_account {

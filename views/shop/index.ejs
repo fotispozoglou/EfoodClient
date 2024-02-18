@@ -13,26 +13,36 @@
   </div>
   <div id="main_center">
     <input type="text" class="hidden" value="" placeholder="Search products" id="search_products_input">
+    <div id="cart_btn_container"  class="hidden">
+      <i id="cart_btn" class="fa-solid fa-shopping-basket"></i>
+    </div>
+    <div id="categories_btn_container" class="hidden">
+      <i id="categories_btn" class="fa-solid fa-fw fa-bars-progress"></i>
+      <p id="categories_btn_label">categories</p>
+    </div>
   </div>
   <div class="hidden" id="main_right">
     
   </div>
-  <div id="cart_btn_container"  class="hidden">
-    <i id="cart_btn" class="fa-solid fa-shopping-basket"></i>
-  </div>
-  <div id="categories_btn_container" class="hidden">
-    <i id="categories_btn" class="fa-solid fa-fw fa-bars-progress"></i>
-    <p id="categories_btn_label">categories</p>
-  </div>
   <div id="loading" class="is_loading"> 
-    <img id="loading_logo" src="/loading_logo.svg" alt="" width="229" height="156">
+    <img id="loading_logo" src="/efood_logo.svg" alt="" width="229" height="156">
   </div>
   <div id="top_progress_bar">
     <div id="top_progress"></div>
   </div>
 </div>
 <div id="footer" class="hidden">
-  <p class="copyright">© 2022 Fotis Pozoglou</p>
+  <div id="footer-content">
+    <p class="copyright">Fotis Pozoglou</p>
+    <div id="footer-icons">
+      <a href="https://www.linkedin.com/in/fotis-pozoglou" target="_black" class="footer-icon">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+      <a href="https://www.github.com/fotispozoglou" target="_black" class="footer-icon">
+        <i class="fa-brands fa-github"></i>
+      </a>
+    </div>
+  </div>
 </div>
 
 <%- include('../partials/rootClose.ejs'); %>
